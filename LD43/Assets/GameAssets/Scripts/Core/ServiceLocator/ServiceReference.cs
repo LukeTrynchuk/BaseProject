@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace RoboCorp.Core.Services
+namespace DogHouse.Core.Services
 {
+    /// <summary>
+    /// The Service Reference is a class that
+    /// contains the reference from the Service
+    /// Locator to a particular Service.
+    /// </summary>
 	public class ServiceReference<T> where T: class
 	{
 		#region Public Variables
-		public T Reference
-		{
-			get
-			{
-				return ServiceLocator.GetService<T> ();
-			}
-		}
+		public T Reference => ServiceLocator.GetService<T>();
 		#endregion
 
 		#region Private Variables
@@ -22,18 +21,12 @@ namespace RoboCorp.Core.Services
 		#endregion
 
 		#region Main Methods
-
 		public void AddRegistrationHandle(Action Handle)
 		{
 			ServiceLocator.AddOnRegisterHandle<T> (Handle);
 		}
 
-		public bool isRegistered()
-		{
-			if (Reference == null)
-				return false;
-			return true;
-		}
+		public bool isRegistered() => (Reference == null) ? false : true;
 		#endregion
 	}
 }

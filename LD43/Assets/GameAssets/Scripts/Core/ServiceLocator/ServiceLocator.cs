@@ -2,8 +2,14 @@
 using UnityEngine;
 using System;
 
-namespace RoboCorp.Core.Services
+namespace DogHouse.Core.Services
 {
+    /// <summary>
+    /// The Service Locator is a singleton
+    /// class that allows for the registering
+    /// of callbacks and access to individual
+    /// services.
+    /// </summary>
 	public sealed class ServiceLocator 
 	{
 		#region Private Variables
@@ -89,8 +95,6 @@ namespace RoboCorp.Core.Services
 			{
 				DispatchHandles (m_callbackHandles [typeof(T).Name]);
 			}
-
-			//RemoveHandles<T> ();
 		}
 		#endregion
 
