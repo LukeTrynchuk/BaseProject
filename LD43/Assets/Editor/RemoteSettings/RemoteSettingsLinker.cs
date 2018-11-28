@@ -9,8 +9,9 @@ using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEditor;
 using UnityEditor.Build;
+using UnityEngine.SceneManagement;
 #if UNITY_2018_1_OR_NEWER
-    using UnityEditor.Build.Reporting;
+using UnityEditor.Build.Reporting;
 #endif
 using Object = UnityEngine.Object;
 
@@ -40,11 +41,11 @@ namespace UnityEngine.Analytics
         }
 
         public int callbackOrder { get { return 0; } }
-#if UNITY_2018_1_OR_NEWER
-        public void OnPreprocessBuild(BuildReport report)
-#else
+//#if UNITY_2018_1_OR_NEWER
+        //public void OnPreprocessBuild(BuildReport report)
+//#else
         public void OnPreprocessBuild(BuildTarget target, string path)
-#endif
+//#endif
         {
             // OnPreprocessBuild is only called when building a player.
             buildingPlayer = true;
@@ -92,11 +93,11 @@ namespace UnityEngine.Analytics
             }
         }
 
-#if UNITY_2018_1_OR_NEWER
-        public void OnProcessScene(SceneManagement.Scene scene, BuildReport report)
-#else
+//#if UNITY_2018_1_OR_NEWER
+        //public void OnProcessScene(SceneManagement.Scene scene, BuildReport report)
+//#else
         public void OnProcessScene(SceneManagement.Scene scene)
-#endif
+//#endif
         {
             // In addition to the build process, OnProcessScene is also called on the current scene
             // when entering playmode in the Editor, but without OnPreprocessBuild.
