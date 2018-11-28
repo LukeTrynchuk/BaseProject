@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Collections;
 
-namespace Silverback.Phantom.Splash
+namespace DogHouse.Core.Logo
 {
     /// <summary>
     /// The Splash Screen Player will play a series of 
@@ -17,13 +17,13 @@ namespace Silverback.Phantom.Splash
         private Camera m_camera;
 
         [SerializeField]
-        private Image m_image;
+        private readonly Image m_image;
 
         [SerializeField]
         private SplashScreen[] m_splashImages;
 
         [SerializeField]
-        private UnityEvent m_onFinishedSplashImages;
+        private readonly UnityEvent m_onFinishedSplashImages;
 
         private Color m_backgroundColor = Color.black;
         private const float BACKGROUND_LERP_TIME = 1f;

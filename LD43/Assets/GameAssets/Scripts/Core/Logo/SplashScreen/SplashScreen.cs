@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Silverback.Phantom.Splash
+namespace DogHouse.Core.Logo
 {
     /// <summary>
     /// The Splash Screen Scriptable object is
