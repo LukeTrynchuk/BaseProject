@@ -10,6 +10,10 @@ namespace DogHouse.Services
     /// </summary>
     public class UnityBuiltInSceneManager : MonoBehaviour, ISceneManager
     {
+        #region Public Variables
+        public event System.Action OnAboutToLoadNewScene;
+        #endregion
+
         #region Private Variables
         [SerializeField]
         private float m_fadeTime;
@@ -62,6 +66,7 @@ namespace DogHouse.Services
 
         private void ExecuteLoad()
         {
+            OnAboutToLoadNewScene?.Invoke();
             SceneManager.LoadScene(m_currentScene);
         }
 

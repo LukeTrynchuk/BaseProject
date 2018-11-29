@@ -4,6 +4,7 @@ using UnityEngine;
 using DogHouse.Core.Audio;
 using System.Linq;
 using UnityEngine.Audio;
+using System;
 
 namespace DogHouse.Services
 {
@@ -29,20 +30,33 @@ namespace DogHouse.Services
         [SerializeField]
         private AudioMixerGroup m_sfxGroup;
 
+        private List<AudioAsset> m_stopOnSceneLoadAssets
+            = new List<AudioAsset>();
+
         private List<AudioSource> m_sources 
             = new List<AudioSource>();
+
+        private ServiceReference<ISceneManager> m_sceneManager 
+            = new ServiceReference<ISceneManager>();
         #endregion
 
         #region Main Methods
         void OnEnable()
         {
             GenerateAudioChannels();
+            FindStopOnLoadAudioAssets();
             RegisterService();
+            m_sceneManager.AddRegistrationHandle(HandleSceneManagerRegistered);
         }
 
         void OnDisable()
         {
             UnregisterService();
+
+            if(m_sceneManager.isRegistered())
+            {
+                m_sceneManager.Reference.OnAboutToLoadNewScene -= OnAboutToLoadScene;
+            }
         }
 
         public void UnregisterService()
@@ -68,6 +82,7 @@ namespace DogHouse.Services
         #region Utility Methods
         private void GenerateAudioChannels()
         {
+            if (m_sources.Count != 0) return;
             for (int i = 0; i < m_numberOfChannels; i++)
             {
                 CreateAudioChannel();
@@ -101,6 +116,15 @@ namespace DogHouse.Services
             return asset;
         }
 
+        private void FindStopOnLoadAudioAssets()
+        {
+            if (m_stopOnSceneLoadAssets.Count != 0) return;
+
+            m_stopOnSceneLoadAssets = m_audioAssets
+                                .Where(x => x.m_stopOnSceneLoad == true)
+                                .ToList();
+        }
+
         private void Play(AudioSource source, AudioAsset asset)
         {
             source.clip = asset.m_audioClip;
@@ -118,6 +142,41 @@ namespace DogHouse.Services
             }
 
             source.Play();
+        }
+
+        private void HandleSceneManagerRegistered()
+        {
+            m_sceneManager.Reference.OnAboutToLoadNewScene -= OnAboutToLoadScene;
+            m_sceneManager.Reference.OnAboutToLoadNewScene += OnAboutToLoadScene;
+        }
+
+        private void OnAboutToLoadScene()
+        {
+            foreach(AudioAsset asset in m_stopOnSceneLoadAssets)
+            {
+                AudioSource[] sources = sourcesPlayingAsset(asset);
+                StopSources(sources);
+            }
+        }
+
+        private AudioSource[] sourcesPlayingAsset(AudioAsset asset)
+        {
+            List<AudioSource> sourcesPlaying = m_sources
+                .Where(x => x.isPlaying)
+                .Where(x => x.clip == asset.m_audioClip)
+                .ToList();
+
+            return sourcesPlaying.ToArray();
+        }
+
+        private void StopSources(AudioSource[] sources)
+        {
+            foreach(AudioSource source in sources)
+            {
+                source.Stop();
+                source.loop = false;
+                source.clip = null;
+            }
         }
         #endregion
     }

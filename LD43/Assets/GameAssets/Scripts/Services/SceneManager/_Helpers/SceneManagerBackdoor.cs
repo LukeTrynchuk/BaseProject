@@ -1,4 +1,5 @@
-﻿using DogHouse.Core.Services;
+﻿using System;
+using DogHouse.Core.Services;
 using UnityEngine;
 
 namespace DogHouse.Services
@@ -10,9 +11,15 @@ namespace DogHouse.Services
     /// </summary>
     public class SceneManagerBackdoor : MonoBehaviour , ISceneManager
     {
+        #region Public Variables
+        [HideInInspector]
+        public event Action OnAboutToLoadNewScene;
+        #endregion
+
         #region Private Variables
         private ServiceReference<ISceneManager> m_sceneManager 
             = new ServiceReference<ISceneManager>();
+
         #endregion
 
         #region Main Methods
