@@ -12,6 +12,7 @@ namespace DogHouse.Services
     {
         #region Private Variables
         private const string LOGO_SCENE = "LogoSlideShow";
+        private const string MAIN_MENU = "MainMenu";
         #endregion
 
         #region Main Methods
@@ -20,7 +21,8 @@ namespace DogHouse.Services
         void OnDisable() => UnregisterService();
 
         public void LoadSlideShowScene() => Load(LOGO_SCENE);
-        
+        public void LoadMainMenuScene() => Load(MAIN_MENU);
+
         public void RegisterService()
         {
             ServiceLocator.Register<ISceneManager>(this);

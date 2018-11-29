@@ -14,5 +14,6 @@ namespace DogHouse.Services
     public interface ISceneManager : IService
     {
         void LoadSlideShowScene();
+        void LoadMainMenuScene();
     }
 }
