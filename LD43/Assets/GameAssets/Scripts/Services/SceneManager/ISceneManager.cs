@@ -1,5 +1,6 @@
 ﻿using DogHouse.Core.Services;
 using UnityEngine;
+using System;
 
 namespace DogHouse.Services
 {
@@ -13,6 +14,8 @@ namespace DogHouse.Services
     /// </summary>
     public interface ISceneManager : IService
     {
+        event Action OnAboutToLoadNewScene;
+
         void LoadSlideShowScene();
         void LoadMainMenuScene();
         void LoadGameScene();
