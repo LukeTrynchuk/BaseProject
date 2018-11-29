@@ -1,4 +1,5 @@
-﻿using DogHouse.Core.Services;
+﻿using System;
+using DogHouse.Core.Services;
 using UnityEngine;
 
 namespace DogHouse.Services
@@ -13,10 +14,12 @@ namespace DogHouse.Services
     {
         #region Public Variables
         public Camera Camera => GetCamera();
+        public event Action<Camera> OnNewCameraFound;
         #endregion
 
         #region Private Variables
         private Camera m_camera;
+
         #endregion
 
         #region Main Methods
@@ -43,10 +46,15 @@ namespace DogHouse.Services
             m_camera = GetMainCamera();
             if(m_camera != null)
             {
+                OnNewCameraFound?.Invoke(m_camera);
                 return m_camera;
             }
 
             m_camera = GetAnyCamera();
+            if(m_camera != null)
+            {
+                OnNewCameraFound?.Invoke(m_camera);
+            }
             return m_camera;
         }
         #endregion

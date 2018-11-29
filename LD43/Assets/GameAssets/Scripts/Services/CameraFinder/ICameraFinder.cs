@@ -1,4 +1,6 @@
 ﻿using DogHouse.Core.Services;
+using System;
+using UnityEngine;
 
 namespace DogHouse.Services
 {
@@ -10,6 +12,8 @@ namespace DogHouse.Services
     /// </summary>
     public interface ICameraFinder : IService
     {
+        event Action<Camera> OnNewCameraFound;
+
         UnityEngine.Camera Camera { get; }
     }
 }
