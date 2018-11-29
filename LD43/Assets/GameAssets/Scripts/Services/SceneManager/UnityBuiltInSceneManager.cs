@@ -17,6 +17,9 @@ namespace DogHouse.Services
         private ServiceReference<ICameraTransition> m_cameraTransition
             = new ServiceReference<ICameraTransition>();
 
+        private ServiceReference<IAudioMixerService> m_audioMixerService
+            = new ServiceReference<IAudioMixerService>();
+
         private const string LOGO_SCENE = "LogoSlideShow";
         private const string MAIN_MENU = "MainMenu";
         private const string GAME_SCENE = "Game";
@@ -38,7 +41,6 @@ namespace DogHouse.Services
         public void LoadMainMenuScene() => Load(MAIN_MENU);
         public void LoadGameScene() => Load(GAME_SCENE);
 
-
         public void RegisterService()
         {
             ServiceLocator.Register<ISceneManager>(this);
@@ -54,6 +56,7 @@ namespace DogHouse.Services
         private void Load(string sceneName)
         {
             m_currentScene = sceneName;
+            m_audioMixerService.Reference?.TransitionToTransitionMix(m_fadeTime * 0.75f);
             m_cameraTransition.Reference?.FadeIn(m_fadeTime, ExecuteLoad);
         }
 
@@ -65,6 +68,7 @@ namespace DogHouse.Services
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             m_cameraTransition.Reference?.FadeOut(m_fadeTime);
+            m_audioMixerService.Reference?.TransitionToGameMix(m_fadeTime * 0.75f);
         }
         #endregion
     }
