@@ -11,12 +11,25 @@ namespace DogHouse.Services
     public class UnityBuiltInSceneManager : MonoBehaviour, ISceneManager
     {
         #region Private Variables
+        [SerializeField]
+        private float m_fadeTime;
+
+        private ServiceReference<ICameraTransition> m_cameraTransition
+            = new ServiceReference<ICameraTransition>();
+
         private const string LOGO_SCENE = "LogoSlideShow";
         private const string MAIN_MENU = "MainMenu";
+        private string m_currentScene = "";
         #endregion
 
         #region Main Methods
-        void OnEnable() => RegisterService();
+        void OnEnable() 
+        {
+            RegisterService();
+
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
 
         void OnDisable() => UnregisterService();
 
@@ -37,7 +50,18 @@ namespace DogHouse.Services
         #region Utility Methods
         private void Load(string sceneName)
         {
-            SceneManager.LoadScene(sceneName);
+            m_currentScene = sceneName;
+            m_cameraTransition.Reference?.FadeIn(m_fadeTime, ExecuteLoad);
+        }
+
+        private void ExecuteLoad()
+        {
+            SceneManager.LoadScene(m_currentScene);
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            m_cameraTransition.Reference?.FadeOut(m_fadeTime);
         }
         #endregion
     }
