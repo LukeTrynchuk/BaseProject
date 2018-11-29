@@ -57,6 +57,14 @@ namespace DogHouse.Services
             }
             return m_camera;
         }
+
+        void Update()
+        {
+            if(m_camera == null)
+            {
+                m_camera = GetCamera();
+            }
+        }
         #endregion
 
         #region Utility Methods

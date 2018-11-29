@@ -23,13 +23,10 @@ namespace DogHouse.Service
 
         #region Private Variables
         [SerializeField]
-        private GameObject m_fadePrefab;
+        private GameObject m_fadeObject;
 
         private CameraTransitionState m_state 
-                = CameraTransitionState.IDLE_OUT;
-
-        private ServiceReference<ICameraFinder> m_cameraFinder 
-            = new ServiceReference<ICameraFinder>();
+                = CameraTransitionState.IDLE_IN;
 
         private ImageColorController m_imageColorController;
         private float m_alpha = 0f;
@@ -39,16 +36,12 @@ namespace DogHouse.Service
         public void OnEnable() 
         {
             RegisterService();
-            m_cameraFinder.AddRegistrationHandle(HandleCameraFinderRegistered);
+            m_imageColorController = m_fadeObject
+                .GetComponent<ImageColorController>();
         }
         void OnDisable() 
         {
             UnregisterService();
-            if(m_cameraFinder.isRegistered())
-            {
-                m_cameraFinder.Reference.OnNewCameraFound 
-                              -= HandleNewCameraFound;
-            }
         }
 
         public void RegisterService()
@@ -133,31 +126,6 @@ namespace DogHouse.Service
             imageColor.a = m_alpha;
             m_imageColorController.SetColor(imageColor);
         }
-
-        private void HandleCameraFinderRegistered()
-        {
-            if (m_cameraFinder.Reference.Camera != null)
-                HandleNewCameraFound(m_cameraFinder.Reference.Camera);
-
-            m_cameraFinder.Reference.OnNewCameraFound -= HandleNewCameraFound;
-            m_cameraFinder.Reference.OnNewCameraFound += HandleNewCameraFound;
-        }
-
-        private void HandleNewCameraFound(Camera camera)
-        {
-            if(m_imageColorController != null)
-            {
-                Destroy(m_imageColorController.gameObject);
-            }
-
-            GameObject imageObject = Instantiate(m_fadePrefab);
-            m_imageColorController = m_fadePrefab
-                .GetComponent<ImageColorController>();
-
-            imageObject.transform.parent = camera.transform;
-        }
         #endregion
     }
-
-
 }

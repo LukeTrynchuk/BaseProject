@@ -21,6 +21,7 @@ namespace DogHouse.Core.UI
         #region Main Methods
         public void SetColor(Color color)
         {
+            Debug.Log(color.a);
             m_image.color = color;
         }
         #endregion
