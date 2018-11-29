@@ -15,5 +15,6 @@ namespace DogHouse.Services
     {
         void LoadSlideShowScene();
         void LoadMainMenuScene();
+        void LoadGameScene();
     }
 }

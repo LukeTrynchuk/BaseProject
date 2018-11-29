@@ -19,6 +19,7 @@ namespace DogHouse.Services
 
         private const string LOGO_SCENE = "LogoSlideShow";
         private const string MAIN_MENU = "MainMenu";
+        private const string GAME_SCENE = "Game";
         private string m_currentScene = "";
         #endregion
 
@@ -35,6 +36,8 @@ namespace DogHouse.Services
 
         public void LoadSlideShowScene() => Load(LOGO_SCENE);
         public void LoadMainMenuScene() => Load(MAIN_MENU);
+        public void LoadGameScene() => Load(GAME_SCENE);
+
 
         public void RegisterService()
         {

@@ -26,6 +26,11 @@ namespace DogHouse.Services
             m_sceneManager.Reference?.LoadMainMenuScene();
         }
 
+        public void LoadGameScene()
+        {
+            m_sceneManager.Reference?.LoadGameScene();
+        }
+
         public void RegisterService() {}                                        //Were not going to register this. This class is just a backdoor and thus not necesarry to register as a service.
         #endregion
     }
