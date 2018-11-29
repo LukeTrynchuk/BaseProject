@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/GameAssets/Scenes/ProductionScenes/LogoSlideShow.unity
     guid: 390318aeaeece47318f98ac28688d338
   - enabled: 1
-    path: Assets/GameAssets/Scenes/ProductionScenes/MainMenu.unity
-    guid: ac43fe28b25104cf982282d9942bcb64
+    path: Assets/Field - Complete Main Menu/MainMenu.unity
+    guid: b347122d88833bd47a8dbe28cf51702e
   m_configObjects: {}
