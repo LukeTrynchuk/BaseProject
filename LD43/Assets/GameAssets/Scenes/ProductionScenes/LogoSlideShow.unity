@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 183033806}
   - component: {fileID: 183033807}
+  - component: {fileID: 183033808}
   m_Layer: 0
   m_Name: LogoSlideShowPlayer
   m_TagString: Untagged
@@ -162,9 +163,32 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ca890ea8b4f21487589d3863b27efeff, type: 2}
   m_onFinishedSplashImages:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 183033808}
+        m_MethodName: LoadMainMenuScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &183033808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183033805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6198c1d1aad1c460283f37c6efa3e619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &189261726
 GameObject:
   m_ObjectHideFlags: 0
