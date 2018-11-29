@@ -3,6 +3,7 @@ using DogHouse.Core.Services;
 using UnityEngine;
 using DogHouse.Core.Audio;
 using System.Linq;
+using UnityEngine.Audio;
 
 namespace DogHouse.Services
 {
@@ -15,15 +16,18 @@ namespace DogHouse.Services
     /// </summary>
     public class AudioService : MonoBehaviour, IAudioService
     {
-        #region Public Variables
-        #endregion
-
         #region Private Variables
         [SerializeField]
         private int m_numberOfChannels;
 
         [SerializeField]
         private AudioAsset[] m_audioAssets;
+
+        [SerializeField]
+        private AudioMixerGroup m_musicGroup;
+
+        [SerializeField]
+        private AudioMixerGroup m_sfxGroup;
 
         private List<AudioSource> m_sources 
             = new List<AudioSource>();
@@ -102,6 +106,17 @@ namespace DogHouse.Services
             source.clip = asset.m_audioClip;
             source.priority = (int)asset.m_priority;
             source.loop = asset.m_loop;
+
+            if(asset.m_type == AudioChannel.MUSIC)
+            {
+                source.outputAudioMixerGroup = m_musicGroup;
+            }
+
+            if(asset.m_type == AudioChannel.SFX)
+            {
+                source.outputAudioMixerGroup = m_sfxGroup;
+            }
+
             source.Play();
         }
         #endregion
