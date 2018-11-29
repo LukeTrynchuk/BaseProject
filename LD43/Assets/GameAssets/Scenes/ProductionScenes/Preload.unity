@@ -783,6 +783,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_numberOfChannels: 20
+  m_audioAssets:
+  - {fileID: 11400000, guid: cbf38d5ecf21c4602abd47b34224a750, type: 2}
 --- !u!1 &1887414404
 GameObject:
   m_ObjectHideFlags: 0

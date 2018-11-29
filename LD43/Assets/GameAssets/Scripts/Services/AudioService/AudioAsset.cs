@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using DogHouse.Services;
 
 namespace DogHouse.Core.Audio
 {
@@ -16,6 +17,7 @@ namespace DogHouse.Core.Audio
         public AudioClip m_audioClip;
         public bool m_stopOnSceneLoad;
         public bool m_loop;
+        public AudioChannel m_type;
 
         [Range(0,256)]
         public float m_priority;

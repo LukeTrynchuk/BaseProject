@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 712058f7aad4e4956b6db3ab6cdabfd4, type: 3}
   m_Name: MainMusic1
   m_EditorClassIdentifier: 
-  m_audioClip: {fileID: 0}
-  m_isMusic: 1
-  m_priority: 0
+  m_ID: MUSIC1
+  m_audioClip: {fileID: 8300000, guid: 139ee8c20fddf417fa55703ba6f97c6b, type: 3}
+  m_stopOnSceneLoad: 1
+  m_loop: 1
+  m_type: 0
+  m_priority: 80.8

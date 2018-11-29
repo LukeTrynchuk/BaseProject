@@ -14,4 +14,11 @@ namespace DogHouse.Services
     {
         void Play(string AssetID);
     }
+
+    [System.Serializable]
+    public enum AudioChannel
+    {
+        MUSIC,
+        SFX
+    }
 }
