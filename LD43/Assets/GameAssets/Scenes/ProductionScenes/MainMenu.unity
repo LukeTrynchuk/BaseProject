@@ -141,7 +141,37 @@ Transform:
   m_Children:
   - {fileID: 1300564427}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &440790300
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 440790301}
+  m_Layer: 0
+  m_Name: '[UI]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &440790301
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440790300}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.17098427, y: 0.3487841, z: -1.0315189}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &573114706
 GameObject:
@@ -172,7 +202,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &573114708
 MonoBehaviour:
@@ -233,7 +263,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 1887414404}
-    Icon: {fileID: 0}
+    Icon: {fileID: -4890957673588117743, guid: 0000000000000000d000000000000000, type: 0}
     IsIconCustom: 0
     IsIconRecursive: 0
     Background: {fileID: 2800000, guid: 5dfa5d4a4f1bc2346956ee4259d0444d, type: 3}
@@ -242,7 +272,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 573114706}
-    Icon: {fileID: 0}
+    Icon: {fileID: 8719354022047557850, guid: 0000000000000000d000000000000000, type: 0}
     IsIconCustom: 0
     IsIconRecursive: 0
     Background: {fileID: 2800000, guid: ca4530bd51581dc47847c3e5b35f4c91, type: 3}
@@ -251,10 +281,28 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 189261726}
-    Icon: {fileID: 0}
+    Icon: {fileID: -2871447564015461581, guid: 0000000000000000d000000000000000, type: 0}
     IsIconCustom: 0
     IsIconRecursive: 0
     Background: {fileID: 2800000, guid: 2af6b523993037540aa47f80d9d5ac90, type: 3}
+    IsBackgroundCustom: 0
+    IsBackgroundRecursive: 1
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 1577758437}
+    Icon: {fileID: 6338563257489195420, guid: 0000000000000000d000000000000000, type: 0}
+    IsIconCustom: 0
+    IsIconRecursive: 0
+    Background: {fileID: 2800000, guid: 5dfa5d4a4f1bc2346956ee4259d0444d, type: 3}
+    IsBackgroundCustom: 0
+    IsBackgroundRecursive: 0
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 440790300}
+    Icon: {fileID: 6355525250253861150, guid: 0000000000000000d000000000000000, type: 0}
+    IsIconCustom: 0
+    IsIconRecursive: 0
+    Background: {fileID: 2800000, guid: 6dc9ea4311ebb184494f51560ed772fc, type: 3}
     IsBackgroundCustom: 0
     IsBackgroundRecursive: 1
   ShowContent: 0
@@ -293,8 +341,8 @@ Camera:
   m_GameObject: {fileID: 1577758437}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.5747152, g: 0.8219011, b: 0.990566, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}

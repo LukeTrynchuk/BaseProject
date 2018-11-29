@@ -17,13 +17,13 @@ namespace DogHouse.Core.Logo
         private Camera m_camera;
 
         [SerializeField]
-        private readonly Image m_image;
+        private Image m_image;
 
         [SerializeField]
         private SplashScreen[] m_splashImages;
 
         [SerializeField]
-        private readonly UnityEvent m_onFinishedSplashImages;
+        private UnityEvent m_onFinishedSplashImages;
 
         private Color m_backgroundColor = Color.black;
         private const float BACKGROUND_LERP_TIME = 1f;
