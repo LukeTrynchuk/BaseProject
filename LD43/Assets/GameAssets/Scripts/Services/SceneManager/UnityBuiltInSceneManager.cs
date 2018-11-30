@@ -24,9 +24,13 @@ namespace DogHouse.Services
         private ServiceReference<IAudioMixerService> m_audioMixerService
             = new ServiceReference<IAudioMixerService>();
 
+        private ServiceReference<IAnalyticsService> m_analytcsService
+            = new ServiceReference<IAnalyticsService>();
+
         private const string LOGO_SCENE = "LogoSlideShow";
         private const string MAIN_MENU = "MainMenu";
         private const string GAME_SCENE = "Game";
+
         private string m_currentScene = "";
         #endregion
 
@@ -74,6 +78,7 @@ namespace DogHouse.Services
         {
             m_cameraTransition.Reference?.FadeOut(m_fadeTime);
             m_audioMixerService.Reference?.TransitionToGameMix(m_fadeTime * 0.75f);
+            m_analytcsService.Reference?.SendSceneLoadedEvent(scene.name);
         }
         #endregion
     }
