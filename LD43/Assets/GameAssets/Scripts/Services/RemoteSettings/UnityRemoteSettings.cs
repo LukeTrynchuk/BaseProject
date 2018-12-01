@@ -24,14 +24,15 @@ namespace DogHouse.Services
             = new Dictionary<string, System.Object>();
 
         private const string SHOW_MENU_OPTIONS_ID = "DISPLAY_MENU_OPTIONS";
+        private const string LOCALIZATION_URL = "LOCALIZATION_CSV";
         #endregion
 
         #region Main Methods
         void OnEnable() 
         {
-            RegisterService();
             RemoteSettings.Updated -= HandleRemoteSettingsUpdated;
             RemoteSettings.Updated += HandleRemoteSettingsUpdated;
+            RemoteSettings.ForceUpdate();
         }
 
         void OnDisable()
@@ -60,6 +61,12 @@ namespace DogHouse.Services
             m_remoteSettings.Add(SHOW_MENU_OPTIONS_ID,
                                  RemoteSettings.GetBool(SHOW_MENU_OPTIONS_ID));
 
+
+
+            m_remoteSettings.Add(LOCALIZATION_URL,
+                                 RemoteSettings.GetString(LOCALIZATION_URL));
+
+            RegisterService();
             OnRemoteSettingsUpdated?.Invoke();
         }
         #endregion

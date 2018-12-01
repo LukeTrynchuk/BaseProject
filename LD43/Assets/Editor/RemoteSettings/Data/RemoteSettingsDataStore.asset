@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rsKeyList:
   - key: DISPLAY_MENU_OPTIONS
-    value: true
+    value: false
     type: bool
+  - key: LOCALIZATION_CSV
+    value: https://docs.google.com/spreadsheets/d/1LonFK8Sw2QQJzCK6m8p0bdGWj06ykZH9nkSiPPp3LSY/edit?usp=sharing
+    type: string
