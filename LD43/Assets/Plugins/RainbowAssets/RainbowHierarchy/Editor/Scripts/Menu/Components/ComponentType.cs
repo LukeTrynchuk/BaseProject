@@ -1,0 +1,170 @@
+﻿namespace Borodar.RainbowHierarchy.Components
+{
+    public enum ComponentType
+    {
+        // General
+        GameObject,
+        Transform,
+        Prefab,
+        SceneAsset,
+        CsScript,
+        JsScript,
+        Shader,
+        ScriptableObject,
+        TextAsset,
+        DefaultAsset,
+        // Meshes
+        MeshFilter,
+        TextMesh,
+        MeshRenderer,
+        SkinnedMeshRenderer,
+        // Effects
+        ParticleSystem,
+        TrailRenderer,
+        LineRenderer,
+        LensFlare,
+        Projector,
+        // Physics
+        Rigidbody,
+        CharacterController,
+        BoxCollider,
+        SphereCollider,
+        CapsuleCollider,
+        MeshCollider,
+        WheelCollider,
+        TerrainCollider,
+        Cloth,
+        HingeJoint,
+        FixedJoint,
+        SpringJoint,
+        CharacterJoint,
+        ConfigurableJoint,
+        ConstantForce,
+        // Physics 2D
+        Rigidbody2D,
+        BoxCollider2D,
+        CircleCollider2D,
+        EdgeCollider2D,
+        PolygonCollider2D,
+        CapsuleCollider2D,
+        CompositeCollider2D,
+        DistanceJoint2D,
+        FixedJoint2D,
+        FrictionJoint2D,
+        HingeJoint2D,
+        RelativeJoint2D,
+        SliderJoint2D,
+        SpringJoint2D,
+        TargetJoint2D,
+        WheelJoint2D,
+        AreaEffector2D,
+        BuoyancyEffector2D,
+        PointEffector2D,
+        PlatformEffector2D,
+        SurfaceEffector2D,
+        ConstantForce2D,
+        // Navigation
+        NavMeshAgent,
+        OffMeshLink,
+        NavMeshObstacle,
+        // Audio
+        AudioListener,
+        AudioSource,
+        AudioReverbZone,
+        AudioLowPassFilter,
+        AudioHighPassFilter,
+        AudioEchoFilter,
+        AudioDistortionFilter,
+        AudioReverbFilter,
+        AudioChorusFilter,
+        // Video
+        VideoPlayer,
+        // Rendering
+        Camera,
+        Skybox,
+        FlareLayer,
+        Light,
+        LightProbeGroup,
+        LightProbeProxyVolume,
+        ReflectionProbe,
+        OcclusionArea,
+        OcclusionPortal,
+        LodGroup,
+        SpriteRenderer,
+        SortingGroup,
+        CanvasRenderer,
+        // Tilemap
+        #if UNITY_2017_2_OR_NEWER
+        Tilemap,
+        TilemapRenderer,
+        TilemapCollider2D,
+        #endif
+        // Layout
+        RectTransform,
+        Canvas,
+        CanvasGroup,
+        CanvasScaler,
+        LayoutElement,
+        ContentSizeFitter,
+        AspectRatioFitter,
+        HorizontalLayoutGroup,
+        VerticalLayoutGroup,
+        GridLayoutGroup,
+        // Playables
+        PlayableDirector,
+        // AR
+        #if UNITY_2017_2_OR_NEWER
+        WorldAnchor,
+        #endif
+        // Miscellaneous
+        BillboardRenderer,
+        Terrain,
+        Animator,
+        Animation,
+        #if UNITY_2017_2_OR_NEWER
+        Grid,
+        #endif
+        WindZone,
+        SpriteMask,
+        // Event
+        EventSystem,
+        HoloLensInputModule,
+        EventTrigger,
+        Physics2DRaycaster,
+        PhysicsRaycaster,
+        StandaloneInputModule,
+        GraphicRaycaster,
+        // Network
+        NetworkAnimator,
+        NetworkDiscovery,
+        NetworkIdentity,
+        NetworkLobbyManager,
+        NetworkManager,
+        NetworkManagerHud,
+        NetworkMigrationManager,
+        NetworkProximityChecker,
+        NetworkStartPosition,
+        NetworkTransform,
+        NetworkTransformChild,
+        NetworkTransformVisualizer,
+        // XR
+        #if UNITY_2017_2_OR_NEWER
+        SpatialMappingCollider,
+        SpatialMappingRenderer,
+        #endif
+        // UI
+        Text,
+        Image,
+        RawImage,
+        Mask,
+        Button,
+        InputField,
+        Toggle,
+        ToggleGroup,
+        Slider,
+        Scrollbar,
+        Dropdown,
+        ScrollRect,
+        Selectable
+    }
+}

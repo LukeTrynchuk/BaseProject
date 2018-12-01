@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a605ae222f4c1aa6db5b73124237e6, type: 3}
+  m_Name: HierarchyColorsStorage
+  m_EditorClassIdentifier: 
+  ColorHierarchyIcons:
+  - Color: 0
+    Icon: {fileID: 2800000, guid: 27b855d90c4900f479ce07379ec60ef6, type: 3}
+    Background: {fileID: 2800000, guid: ca4530bd51581dc47847c3e5b35f4c91, type: 3}
+  - Color: 1
+    Icon: {fileID: 2800000, guid: cd560daeef15e064fa22bceded8b23bb, type: 3}
+    Background: {fileID: 2800000, guid: 760b84b0faf68f94bb4a07407d2be0b5, type: 3}
+  - Color: 2
+    Icon: {fileID: 2800000, guid: 796de42de2d6e2a4d9f13b4236cd17ee, type: 3}
+    Background: {fileID: 2800000, guid: 8881012100f780549bf19fa3f332be69, type: 3}
+  - Color: 3
+    Icon: {fileID: 2800000, guid: 540daa42fdfa06b4fa0e543c8af72ebd, type: 3}
+    Background: {fileID: 2800000, guid: 4bbe0df18cd67424a92c74fbfe94f740, type: 3}
+  - Color: 4
+    Icon: {fileID: 2800000, guid: 8270c36bcd02bc94dbd5dd520f2e675c, type: 3}
+    Background: {fileID: 2800000, guid: 59d8a9cd11eb88946a0ed2cddad51fe6, type: 3}
+  - Color: 5
+    Icon: {fileID: 2800000, guid: 707caf5a04882a546be6c2396e3e8376, type: 3}
+    Background: {fileID: 2800000, guid: 96609417b412509409d131d954703cad, type: 3}
+  - Color: 6
+    Icon: {fileID: 2800000, guid: cd5d1c0865092cb4eb4fd473fe8108fd, type: 3}
+    Background: {fileID: 2800000, guid: 2ec1376570de47540a6e488f90c3b10f, type: 3}
+  - Color: 7
+    Icon: {fileID: 2800000, guid: c1edcccdffcb1ea49a1456ab1676c4f7, type: 3}
+    Background: {fileID: 2800000, guid: a7a5633f4ec443747848421ddaef8684, type: 3}
+  - Color: 8
+    Icon: {fileID: 2800000, guid: f255494612f02cc479258c18cf670a19, type: 3}
+    Background: {fileID: 2800000, guid: 2af6b523993037540aa47f80d9d5ac90, type: 3}
+  - Color: 9
+    Icon: {fileID: 2800000, guid: f5e931f1c46927f498d5bd8fbbf3a8c4, type: 3}
+    Background: {fileID: 2800000, guid: 2c67267a9ec0ffd408962c49ac7ae426, type: 3}
+  - Color: 10
+    Icon: {fileID: 2800000, guid: 855d96f65af5a704882b2ab3fc244207, type: 3}
+    Background: {fileID: 2800000, guid: 9b380ba09519eb9409e318ae1a0eb31f, type: 3}
+  - Color: 11
+    Icon: {fileID: 2800000, guid: 824f80e7c58023547bed1cadec2e8138, type: 3}
+    Background: {fileID: 2800000, guid: 393317e44c2e73a4b89bee7d49f7d9b9, type: 3}
+  - Color: 12
+    Icon: {fileID: 2800000, guid: efcef34c652f84748a726a037ab8b5f8, type: 3}
+    Background: {fileID: 2800000, guid: 6dc9ea4311ebb184494f51560ed772fc, type: 3}
+  - Color: 13
+    Icon: {fileID: 2800000, guid: 64c167d0ff9345046991ad6a57fe5fd9, type: 3}
+    Background: {fileID: 2800000, guid: b2bfb3cf0bf815948ad761d79a7cb9fc, type: 3}
+  - Color: 14
+    Icon: {fileID: 2800000, guid: 24858415dc9ae9445bb237b62d0aefe3, type: 3}
+    Background: {fileID: 2800000, guid: ff40d61e544214d49991c4602c16ec44, type: 3}
+  - Color: 15
+    Icon: {fileID: 2800000, guid: 9c0db41f15e15664882ac2b6c871b488, type: 3}
+    Background: {fileID: 2800000, guid: d94c43293c569fc4caa787ee7cd49a95, type: 3}
+  - Color: 16
+    Icon: {fileID: 2800000, guid: 34f8f01087c4f5b4a8780ad0a8cca367, type: 3}
+    Background: {fileID: 2800000, guid: 5dfa5d4a4f1bc2346956ee4259d0444d, type: 3}
+  - Color: 17
+    Icon: {fileID: 2800000, guid: 3300214fe1ca37840875a821f34b322a, type: 3}
+    Background: {fileID: 2800000, guid: ffddde9c05b4f5440a58eb61dba6f5b9, type: 3}
+  - Color: 18
+    Icon: {fileID: 2800000, guid: 87dcaf0b3de18f74b9935bcac8b19876, type: 3}
+    Background: {fileID: 2800000, guid: ecbe7d9ae83c89e4da414151dd5c91a1, type: 3}
+  - Color: 19
+    Icon: {fileID: 2800000, guid: 3a2ca04a3ba7a1f4986e7bfec5b86866, type: 3}
+    Background: {fileID: 2800000, guid: e90ab36ab75772f48bddb90aa64b46ba, type: 3}
+  - Color: 20
+    Icon: {fileID: 2800000, guid: 9ec7d6965ec8d094c9954ac8cccc7b20, type: 3}
+    Background: {fileID: 2800000, guid: f306374af45102343b672232983a1639, type: 3}
+  - Color: 21
+    Icon: {fileID: 2800000, guid: 36c5541bbd59d3547a979046121d25ab, type: 3}
+    Background: {fileID: 2800000, guid: ff3525bf462da364bb3c686a9f1e1c9c, type: 3}
+  - Color: 22
+    Icon: {fileID: 2800000, guid: 0fc09367926f2594d911aa2097cc2274, type: 3}
+    Background: {fileID: 2800000, guid: 025a9829850aaa84a8ce6486ebb51a75, type: 3}
+  - Color: 23
+    Icon: {fileID: 2800000, guid: 5c4627d5423053d4283aa9872de76f4f, type: 3}
+    Background: {fileID: 2800000, guid: d94a169ac52d1a249a5b66eee330e4b1, type: 3}
