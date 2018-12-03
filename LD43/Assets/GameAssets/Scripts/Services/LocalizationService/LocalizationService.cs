@@ -90,7 +90,7 @@ namespace DogHouse.Services
             {
                 foreach(string col in row)
                 {
-                    Debug.Log(col);
+                    //Debug.Log(col);
                 }
             }
 

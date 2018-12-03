@@ -12,6 +12,7 @@ namespace DogHouse.Services
         #region Private Variables
         private ServiceReference<IAudioService> m_audioService 
                 = new ServiceReference<IAudioService>();
+
         #endregion
 
         #region Main Methods
@@ -20,6 +21,12 @@ namespace DogHouse.Services
             m_audioService.Reference?.Play(AssetID);
         }
         
+        public AudioSource FetchAvailableAudioSource()
+        {
+            return m_audioService.Reference?
+                                 .FetchAvailableAudioSource();
+        }
+
         public void RegisterService() {}
         #endregion
     }

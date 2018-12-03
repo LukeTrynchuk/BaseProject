@@ -77,6 +77,11 @@ namespace DogHouse.Services
             if (source == null || asset == null) return;
             Play(source, asset);
         }
+
+        public AudioSource FetchAvailableAudioSource()
+        {
+            return GetAvailableAudioChannel();
+        }
         #endregion
 
         #region Utility Methods

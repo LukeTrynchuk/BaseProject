@@ -36,8 +36,8 @@ namespace DogHouse.General
         void Update()
         {
             DetermineMovementVector();
-            DetermineConfirmButtonPressed();
-            DetermineDeclineButtonPressed();
+            //DetermineConfirmButtonPressed();                                  //TODO : Replace these. Automated input system
+            //DetermineDeclineButtonPressed();
         }
 
         public void RegisterService() =>
