@@ -11,7 +11,7 @@ namespace DogHouse.Core.UI
     {
         #region Private Variables
         [SerializeField]
-        private Button m_button;
+        private Button m_button = null;
         #endregion
         
         #region Main Methods

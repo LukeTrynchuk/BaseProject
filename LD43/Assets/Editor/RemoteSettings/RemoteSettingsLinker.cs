@@ -21,7 +21,8 @@ namespace UnityEngine.Analytics
     // During a build, collect classes referenced by RemoteSettings components
     // in each scene and in prefabs, and write to a link.xml file to prevent
     // those classes from being stripped.
-    public class RemoteSettingsLinker : IPreprocessBuild, IProcessScene
+    //public class RemoteSettingsLinker : IPreprocessBuild, IProcessScene
+    public class RemoteSettingsLinker : IPreprocessBuildWithReport, IProcessSceneWithReport
     {
         const string k_LinkPath = "Assets/Editor/RemoteSettings/link.xml";
 
@@ -42,9 +43,9 @@ namespace UnityEngine.Analytics
 
         public int callbackOrder { get { return 0; } }
 //#if UNITY_2018_1_OR_NEWER
-        //public void OnPreprocessBuild(BuildReport report)
+        public void OnPreprocessBuild(BuildReport report)
 //#else
-        public void OnPreprocessBuild(BuildTarget target, string path)
+        //public void OnPreprocessBuild(BuildTarget target, string path)
 //#endif
         {
             // OnPreprocessBuild is only called when building a player.
@@ -94,9 +95,9 @@ namespace UnityEngine.Analytics
         }
 
 //#if UNITY_2018_1_OR_NEWER
-        //public void OnProcessScene(SceneManagement.Scene scene, BuildReport report)
+        public void OnProcessScene(SceneManagement.Scene scene, BuildReport report)
 //#else
-        public void OnProcessScene(SceneManagement.Scene scene)
+        //public void OnProcessScene(SceneManagement.Scene scene)
 //#endif
         {
             // In addition to the build process, OnProcessScene is also called on the current scene

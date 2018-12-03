@@ -19,10 +19,10 @@ namespace DogHouse.Services
 
         #region Private Variables
         [SerializeField]
-        private AudioMixerSnapshot m_gameMixSnapshot;
+        private AudioMixerSnapshot m_gameMixSnapshot = null;
 
         [SerializeField]
-        private AudioMixerSnapshot m_sceneTransitionSnapshot;
+        private AudioMixerSnapshot m_sceneTransitionSnapshot = null;
 
         #endregion
 

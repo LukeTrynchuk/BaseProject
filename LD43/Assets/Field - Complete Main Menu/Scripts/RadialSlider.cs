@@ -11,25 +11,25 @@ namespace Michsky.UI.FieldCompleteMainMenu
 
         [Header("OBJECTS")]
         [SerializeField]
-        private Image sliderImage;
+        private Image sliderImage = null;
         [SerializeField]
-        private Transform indicatorPivot;
+        private Transform indicatorPivot = null;
         [SerializeField]
-        private Text valueText;
+        private Text valueText = null;
 
         [Header("SETTINGS")]
         [SerializeField]
-        private int sliderID;
+        private int sliderID = 0;
         [SerializeField]
         private float maxValue = 100.0f;
         [SerializeField, Range(0, 8)]
-        private int decimals;
+        private int decimals = 1;
         [SerializeField]
-        private bool isPercent;
+        private bool isPercent = false;
         [SerializeField]
-        private bool rememberValue;
+        private bool rememberValue = false;
         [SerializeField]
-        private UnityEvent onValueChanged;
+        private UnityEvent onValueChanged = null;
 
         private GraphicRaycaster graphicRaycaster;
         private RectTransform hitRectTransform;

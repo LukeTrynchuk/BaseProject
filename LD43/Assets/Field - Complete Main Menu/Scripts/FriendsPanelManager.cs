@@ -6,7 +6,6 @@ namespace Michsky.UI.FieldCompleteMainMenu
     public class FriendsPanelManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         private Animator panelAnimator;
-        private bool isOpen = false;
 
         void Start()
         {

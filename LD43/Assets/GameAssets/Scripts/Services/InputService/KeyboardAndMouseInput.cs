@@ -20,23 +20,23 @@ namespace DogHouse.Services
         #region Private Variables
         [Header("Movement Keys")]
         [SerializeField]
-        private KeyCode m_movementUpKey;
+        private KeyCode m_movementUpKey = KeyCode.A;
 
         [SerializeField]
-        private KeyCode m_movementDownKey;
+        private KeyCode m_movementDownKey = KeyCode.A;
 
         [SerializeField]
-        private KeyCode m_movementLeftKey;
+        private KeyCode m_movementLeftKey = KeyCode.A;
 
         [SerializeField]
-        private KeyCode m_movementRightKey;
+        private KeyCode m_movementRightKey = KeyCode.A;
 
         [Header("Confirm / Decline Keys")]
         [SerializeField]
-        private KeyCode m_confirmKey;
+        private KeyCode m_confirmKey = KeyCode.A;
 
         [SerializeField]
-        private KeyCode m_declineKey;
+        private KeyCode m_declineKey = KeyCode.A;
 
         private Vector2 m_movementVector = new Vector2();
         #endregion

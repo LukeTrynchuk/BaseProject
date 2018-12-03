@@ -16,10 +16,10 @@ namespace SimplestMeshBaker
 
         private const int MAX_VERTEX_COUNT_PER_ONE_OBJECT = 65000;
 
-        private static Resolving colorResolving;
-        private static Resolving normalsResolving;
-        private static Resolving tangentsResolving;
-        private static Resolving uvResolving;
+        private static Resolving colorResolving = default(Resolving);
+        private static Resolving normalsResolving = default(Resolving);
+        private static Resolving tangentsResolving = default(Resolving);
+        private static Resolving uvResolving = default(Resolving);
 
         private static int objectNum;
         

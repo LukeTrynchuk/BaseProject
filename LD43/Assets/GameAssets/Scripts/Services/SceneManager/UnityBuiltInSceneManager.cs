@@ -16,7 +16,7 @@ namespace DogHouse.Services
 
         #region Private Variables
         [SerializeField]
-        private float m_fadeTime;
+        private float m_fadeTime = 0f;
 
         private ServiceReference<ICameraTransition> m_cameraTransition
             = new ServiceReference<ICameraTransition>();

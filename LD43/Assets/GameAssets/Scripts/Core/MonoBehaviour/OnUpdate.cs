@@ -11,7 +11,7 @@ namespace DogHouse.Core.Mono
     {
         #region Private Variables
         [SerializeField]
-        private UnityEvent m_onUpdate;
+        private UnityEvent m_onUpdate = null;
         #endregion
 
         #region Main Methods

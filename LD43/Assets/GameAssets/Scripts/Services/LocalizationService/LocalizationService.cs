@@ -81,6 +81,7 @@ namespace DogHouse.Services
                                     ?.FetchRemoteCSV(m_localizationUrl);
 
             InterpretCSV(csv);
+            OnLocalizationSynced?.Invoke();
         }
 
         private void InterpretCSV(string[][] data)
