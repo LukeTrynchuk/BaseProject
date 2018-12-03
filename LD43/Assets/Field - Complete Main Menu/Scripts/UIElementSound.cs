@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using DogHouse.Services;
+using DogHouse.Core.Services;
 
 namespace Michsky.UI.FieldCompleteMainMenu
 {
     public class UIElementSound : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     {
+        private ServiceReference<IAudioService> m_audioService
+            = new ServiceReference<IAudioService>();
+
         [Header("RESOURCES")]
         public AudioClip hoverSound;
         public AudioClip clickSound;
@@ -16,19 +20,9 @@ namespace Michsky.UI.FieldCompleteMainMenu
         public bool enableClickSound = true;
         public bool isNotification = false;
 
-        private AudioSource HoverSource { get { return GetComponent<AudioSource>(); } }
-        private AudioSource ClickSource { get { return GetComponent<AudioSource>(); } }
-        private AudioSource NotificationSource { get { return GetComponent<AudioSource>(); } }
-
-        void Start()
-        {
-            gameObject.AddComponent<AudioSource>();
-            HoverSource.clip = hoverSound;
-            ClickSource.clip = clickSound;
-
-            HoverSource.playOnAwake = false;
-            ClickSource.playOnAwake = false;
-        }
+        private AudioSource HoverSource => GetHoverSource();
+        private AudioSource ClickSource => GetClickSource();
+        private AudioSource NotificationSource => GetNotificationSource();
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -52,6 +46,19 @@ namespace Michsky.UI.FieldCompleteMainMenu
             {
                 NotificationSource.PlayOneShot(notificationSound);
             }
+        }
+
+        private AudioSource GetHoverSource() => FetchSource(hoverSound);
+        private AudioSource GetClickSource() => FetchSource(clickSound);
+        private AudioSource GetNotificationSource() => FetchSource(notificationSound);
+
+        private AudioSource FetchSource(AudioClip clip)
+        {
+            AudioSource source = m_audioService.Reference?
+                                               .FetchAvailableAudioSource();
+            if (source == null) return null;
+            source.clip = clip;
+            return source;
         }
     }
 }

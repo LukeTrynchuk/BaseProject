@@ -23,7 +23,7 @@ namespace DogHouse.Service
 
         #region Private Variables
         [SerializeField]
-        private GameObject m_fadeObject;
+        private GameObject m_fadeObject = null;
 
         private CameraTransitionState m_state 
                 = CameraTransitionState.IDLE_IN;

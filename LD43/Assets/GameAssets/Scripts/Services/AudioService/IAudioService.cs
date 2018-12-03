@@ -1,4 +1,5 @@
 ﻿using DogHouse.Core.Services;
+using UnityEngine;
 
 namespace DogHouse.Services
 {
@@ -13,6 +14,7 @@ namespace DogHouse.Services
     public interface IAudioService : IService
     {
         void Play(string AssetID);
+        AudioSource FetchAvailableAudioSource();
     }
 
     [System.Serializable]

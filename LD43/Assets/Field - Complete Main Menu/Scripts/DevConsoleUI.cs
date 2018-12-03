@@ -6,17 +6,15 @@ namespace Michsky.UI.FieldCompleteMainMenu
     {
         [Header("Setup")]
         [SerializeField]
-        private GameObject consoleObject;
+        private GameObject consoleObject = null;
         [SerializeField]
         private KeyCode hotkey = KeyCode.F12;
 
-        private bool isOn;
-        private bool isReady;
+        private bool isOn = false;
 
         private void Start()
         {
             SetVisible(false);
-            isReady = true;
         }
 
         private void Update()

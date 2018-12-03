@@ -17,10 +17,6 @@ namespace Michsky.UI.FieldCompleteMainMenu
         private string panelFadeIn = "NPI In";
         private string panelFadeOut = "NPI Out";
 
-        // [Header("INDICATOR ANIMS")]
-        private string buttonFadeIn = "NPIS In";
-        private string buttonFadeOut = "NPIS Out";
-
         private GameObject currentPanel;
         private GameObject nextPanel;
 
@@ -30,7 +26,6 @@ namespace Michsky.UI.FieldCompleteMainMenu
         [Header("SETTINGS")]
         public int currentPanelIndex = 0;
         [Range(1, 25)] public float speed = 3f;
-        private int currentButtonlIndex = 0;
 
         private Animator currentPanelAnimator;
         private Animator nextPanelAnimator;

@@ -14,16 +14,16 @@ namespace DogHouse.Core.Logo
     {
         #region Private Variables
         [SerializeField]
-        private Camera m_camera;
+        private Camera m_camera = null;
 
         [SerializeField]
-        private Image m_image;
+        private Image m_image = null;
 
         [SerializeField]
-        private SplashScreen[] m_splashImages;
+        private SplashScreen[] m_splashImages = null;
 
         [SerializeField]
-        private UnityEvent m_onFinishedSplashImages;
+        private UnityEvent m_onFinishedSplashImages = null;
 
         private Color m_backgroundColor = Color.black;
         private const float BACKGROUND_LERP_TIME = 1f;

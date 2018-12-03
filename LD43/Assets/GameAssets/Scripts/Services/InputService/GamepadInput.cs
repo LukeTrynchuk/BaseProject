@@ -36,14 +36,14 @@ namespace DogHouse.General
         void Update()
         {
             DetermineMovementVector();
-            DetermineConfirmButtonPressed();
-            DetermineDeclineButtonPressed();
+            //DetermineConfirmButtonPressed();                                  //TODO : Replace these. Automated input system
+            //DetermineDeclineButtonPressed();
         }
 
         public void RegisterService() =>
             ServiceLocator.Register<IInputService>(this);
 
-        public void UnregisterService() => 
+        public void UnregisterService() =>
             ServiceLocator.Unregister<IInputService>(this);
 
         #endregion
@@ -60,23 +60,24 @@ namespace DogHouse.General
         private void DetermineConfirmButtonPressed()
         {
             float confirmButton = 0f;
-            #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             confirmButton = Input.GetAxis(CONFIRM_WIN);
-            #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+#elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
             confirmButton = Input.GetAxis(CONFIRM_OSX);
-            #endif
+#endif
 
             if (confirmButton > 05f) OnConfirmButtonPressed?.Invoke();
         }
 
         private void DetermineDeclineButtonPressed()
         {
+
             float declineButton = 0f;
-            #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             declineButton = Input.GetAxis(DECLINE_WIN);
-            #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+#elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
             declineButton = Input.GetAxis(DECLINE_OSX);
-            #endif
+#endif
 
             if (declineButton > 05f) OnDeclineButtonPressed?.Invoke();
         }

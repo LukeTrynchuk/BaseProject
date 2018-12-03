@@ -12,7 +12,7 @@ namespace DogHouse.General
     {
         #region Private Variables
         [SerializeField]
-        private UnityEvent m_onStart;
+        private UnityEvent m_onStart = null;
         #endregion
 
         #region Main Methods

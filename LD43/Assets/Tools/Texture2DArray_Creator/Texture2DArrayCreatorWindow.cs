@@ -218,6 +218,7 @@ namespace Silverback.SilverShades.Tools
                 }
                 catch (Exception e)
                 {
+                    Debug.LogError(e.ToString());
                     continue;
                 }
             }

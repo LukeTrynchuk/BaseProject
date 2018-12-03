@@ -81,6 +81,7 @@ namespace DogHouse.Services
                                     ?.FetchRemoteCSV(m_localizationUrl);
 
             InterpretCSV(csv);
+            OnLocalizationSynced?.Invoke();
         }
 
         private void InterpretCSV(string[][] data)
@@ -89,7 +90,7 @@ namespace DogHouse.Services
             {
                 foreach(string col in row)
                 {
-                    Debug.Log(col);
+                    //Debug.Log(col);
                 }
             }
 

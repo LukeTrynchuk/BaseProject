@@ -19,16 +19,16 @@ namespace DogHouse.Services
     {
         #region Private Variables
         [SerializeField]
-        private int m_numberOfChannels;
+        private int m_numberOfChannels = 0;
 
         [SerializeField]
-        private AudioAsset[] m_audioAssets;
+        private AudioAsset[] m_audioAssets = null;
 
         [SerializeField]
-        private AudioMixerGroup m_musicGroup;
+        private AudioMixerGroup m_musicGroup = null;
 
         [SerializeField]
-        private AudioMixerGroup m_sfxGroup;
+        private AudioMixerGroup m_sfxGroup = null;
 
         private List<AudioAsset> m_stopOnSceneLoadAssets
             = new List<AudioAsset>();
@@ -76,6 +76,11 @@ namespace DogHouse.Services
 
             if (source == null || asset == null) return;
             Play(source, asset);
+        }
+
+        public AudioSource FetchAvailableAudioSource()
+        {
+            return GetAvailableAudioChannel();
         }
         #endregion
 

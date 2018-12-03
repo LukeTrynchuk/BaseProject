@@ -13,7 +13,7 @@ namespace DogHouse.Services
     {
         #region Public Variables
         [HideInInspector]
-        public event Action OnAboutToLoadNewScene;
+        public event Action OnAboutToLoadNewScene = null;
         #endregion
 
         #region Private Variables
@@ -38,7 +38,13 @@ namespace DogHouse.Services
             m_sceneManager.Reference?.LoadGameScene();
         }
 
-        public void RegisterService() {}                                        //Were not going to register this. This class is just a backdoor and thus not necesarry to register as a service.
+        public void RegisterService()                                           //Were not going to register this. This class is just a backdoor and thus not necesarry to register as a service.
+        {
+            #if UNITY_EDITOR
+            //Only doing this to prevent the console warning
+            OnAboutToLoadNewScene?.Invoke();
+            #endif
+        }                                        
         #endregion
     }
 }
