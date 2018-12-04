@@ -33,11 +33,11 @@ namespace DogHouse.Tools
 
         public void MyGUI()
         {
-            GUILayout.Label("LABEL");
         }
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             LoadData();
         }
 
@@ -60,7 +60,6 @@ namespace DogHouse.Tools
         private void LoadData()
         {
             string data = ReadData();
-            Debug.Log($"Read Data {data}");
             string[] lines = ExtractLines(data);
             FillReleaseDataList(lines);
         }
@@ -88,12 +87,13 @@ namespace DogHouse.Tools
         #region Low Level Functions
         private string ReadData()
         {
-            return GetResourceNotesAsset().text;
+            return File.ReadAllText(GetReleaseNotesURL());
         }
 
         private string[] ExtractLines(string input)
         {
-            string[] lines = input.Split(new char[] { '\n' }).Where(x => x != "").ToArray();
+            string[] lines = input.Split(new char[] { '\n' })
+                                  .Where(x => x != "").ToArray();
             return lines;
         }
 
@@ -102,8 +102,7 @@ namespace DogHouse.Tools
             List<string> lines = new List<string>();
             foreach (ReleaseData data in Values)
                 lines.Add(data.Message + "\n");
-
-            Debug.Log(lines.Count);
+                
             return lines.ToArray();
         }
 
@@ -115,28 +114,16 @@ namespace DogHouse.Tools
             return value;
         }
 
-        private TextAsset GetResourceNotesAsset()
-        {
-            TextAsset releaseData
-                = (TextAsset)Resources.Load("Core/ReleaseNotes");
-            return releaseData;
-        }
-
         private string GetReleaseNotesURL()
         {
             string url = Application.dataPath;
             url += "/GameAssets/Resources/Core/ReleaseNotes.txt";
-
-            Debug.Log(Application.dataPath);
-            Debug.Log(Application.absoluteURL);
-            Debug.Log(url);
 
             return url;
         }
 
         private void WriteFile(string url, string content)
         {
-            Debug.Log(File.Exists(url));
             File.WriteAllText(@url, content);
         }
         #endregion
