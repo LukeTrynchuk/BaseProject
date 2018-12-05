@@ -7,7 +7,7 @@ namespace DogHouse.Core.Logo
     /// used to contain information about a splash
     /// image that should be played in the editor.
     /// </summary>
-    [CreateAssetMenu(fileName = "NewSplashImage", menuName = "SplashImage")]
+    [CreateAssetMenu(fileName = "NewSplashImage", menuName = "Core/SplashImage")]
     public class SplashScreen : ScriptableObject
     {
         public Sprite Image;

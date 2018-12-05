@@ -19,7 +19,7 @@ namespace DogHouse.Core.Tools
         #endregion
 
         #region Main Methods
-        [MenuItem("Tools/Texture Combiner")]
+        [MenuItem("Tools/Core/Graphic/Texture Combiner")]
         static void Init()
         {
             TextureCombiner window = (TextureCombiner)GetWindow(typeof(TextureCombiner), false, "Texture Combiner");

@@ -19,7 +19,7 @@ namespace DogHouse.Core.Tools
         private bool m_normal;
         private bool m_mipmap;
 
-        [MenuItem("Tools/Texture 2D Array Generator")]
+        [MenuItem("Tools/Core/Graphic/Texture 2D Array Generator")]
         static void Init()
         {
             Texture2DArrayCreatorWindow window = (Texture2DArrayCreatorWindow)EditorWindow.GetWindow(typeof(Texture2DArrayCreatorWindow), false, "Texture 2D Array Generator");
