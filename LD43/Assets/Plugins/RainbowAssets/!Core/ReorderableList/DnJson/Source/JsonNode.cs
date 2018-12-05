@@ -80,7 +80,7 @@ namespace Borodar.RainbowAssets.Core.Json
         public static JsonNode ReadFrom(Stream stream)
         {
             if (stream == null) {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             return JsonReader.Create(stream).Read();
@@ -116,7 +116,7 @@ namespace Borodar.RainbowAssets.Core.Json
         public static JsonNode ReadFrom(TextReader reader)
         {
             if (reader == null) {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             return JsonReader.Create(reader).Read();
@@ -214,12 +214,9 @@ namespace Borodar.RainbowAssets.Core.Json
                     }
 
                 case MetaType.NodeType.Object:
-                    if (metaType.IsDictionaryStyleCollection) {
-                        return FromDictionaryStyleCollection((ICollection)value, metaType);
-                    }
-                    else {
-                        return JsonObjectNode.FromInstance(value);
-                    }
+                    return metaType.IsDictionaryStyleCollection
+                        ? FromDictionaryStyleCollection((ICollection)value, metaType)
+                        : JsonObjectNode.FromInstance(value);
 
                 default:
                     throw new InvalidOperationException("Was unable to convert input value.");
@@ -308,7 +305,7 @@ namespace Borodar.RainbowAssets.Core.Json
         /// <seealso cref="ConvertFrom(object)"/>
         public T ConvertTo<T>()
         {
-            return (T)this.ConvertTo(typeof(T));
+            return (T)ConvertTo(typeof(T));
         }
 
         /// <summary>
@@ -327,7 +324,7 @@ namespace Borodar.RainbowAssets.Core.Json
         /// <seealso cref="Write(IJsonWriter)"/>
         public override string ToString()
         {
-            return JsonUtility.ToJsonString(this, JsonWriterSettings.DefaultSettings);
+            return this.ToJsonString(JsonWriterSettings.DefaultSettings);
         }
 
         /// <summary>

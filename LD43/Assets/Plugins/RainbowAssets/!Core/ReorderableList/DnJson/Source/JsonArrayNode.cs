@@ -41,7 +41,7 @@ namespace Borodar.RainbowAssets.Core.Json
         public static JsonArrayNode FromArray<T>(T[] array)
         {
             if (array == null) {
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             }
 
             var node = new JsonArrayNode();
@@ -68,7 +68,7 @@ namespace Borodar.RainbowAssets.Core.Json
         public static JsonArrayNode FromCollection(IEnumerable collection)
         {
             if (collection == null) {
-                throw new ArgumentNullException("collection");
+                throw new ArgumentNullException(nameof(collection));
             }
 
             var node = new JsonArrayNode();
@@ -115,7 +115,7 @@ namespace Borodar.RainbowAssets.Core.Json
         public JsonArrayNode(JsonNode[] nodes)
         {
             if (nodes == null) {
-                throw new ArgumentNullException("nodes");
+                throw new ArgumentNullException(nameof(nodes));
             }
 
             this.nodes = new List<JsonNode>();
@@ -135,7 +135,7 @@ namespace Borodar.RainbowAssets.Core.Json
         public JsonArrayNode(IEnumerable<JsonNode> collection)
         {
             if (collection == null) {
-                throw new ArgumentNullException("collection");
+                throw new ArgumentNullException(nameof(collection));
             }
 
             this.nodes = new List<JsonNode>();
@@ -318,7 +318,7 @@ namespace Borodar.RainbowAssets.Core.Json
         public override object ConvertTo(Type type)
         {
             if (type == null) {
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             }
 
             if (type.IsArray) {

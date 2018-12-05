@@ -1,3 +1,4 @@
 Blah
 Fixed Annoying Bug
 Added Dash 
+Added Bash Attack

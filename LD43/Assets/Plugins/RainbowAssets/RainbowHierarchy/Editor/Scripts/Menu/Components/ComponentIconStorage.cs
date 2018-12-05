@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable 0618 //Hopefully Rainbow Heirachy is updated to fix this
+
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,7 +10,6 @@ using UnityEngine.Playables;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using UnityEngine.Video;
-using EditorUtility = Borodar.RainbowHierarchy.RainbowHierarchyEditorUtility;
 
 #if UNITY_2017_2_OR_NEWER
 using UnityEngine.Tilemaps;

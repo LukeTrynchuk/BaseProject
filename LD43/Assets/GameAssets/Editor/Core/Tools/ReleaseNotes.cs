@@ -17,15 +17,21 @@ namespace DogHouse.Core.Tools
     {
         #region Public Variables
         [TableList]
-        [OnInspectorGUI("MyGUI", false)]
+        [OnInspectorGUI(nameof(MyGUI), false)]
         public List<ReleaseData> Values;
+        #endregion
+
+        #region Private Variables
+        private const string WINDOW_TITLE = "Release Notes";
+        private const string SAVE_BUTTON_NAME = "Save Data";
+        private const string FILE_EXTENSION_URL = "/GameAssets/Resources/Core/ReleaseNotes.txt";
         #endregion
 
         #region Main Methods
         [MenuItem("Tools/Core/Build/Release Notes")]
         public static void ShowWindow()
         {
-            GetWindow<ReleaseNotes>("Release Notes").Show();
+            GetWindow<ReleaseNotes>(WINDOW_TITLE).Show();
         }
 
         public void MyGUI() {}
@@ -42,7 +48,7 @@ namespace DogHouse.Core.Tools
         }
 
         [LabelWidth(100)]
-        [Button(Expanded = false, Name = "Save Data", Style = ButtonStyle.CompactBox)]
+        [Button(Expanded = false, Name = SAVE_BUTTON_NAME, Style = ButtonStyle.CompactBox)]
         public void SaveData()
         {
             string[] lines = GenerateReleaseLines();
@@ -80,10 +86,8 @@ namespace DogHouse.Core.Tools
         #endregion
 
         #region Low Level Functions
-        private string ReadData()
-        {
-            return File.ReadAllText(GetReleaseNotesURL());
-        }
+        private string ReadData() =>
+            File.ReadAllText(GetReleaseNotesURL());
 
         private string[] ExtractLines(string input)
         {
@@ -101,26 +105,13 @@ namespace DogHouse.Core.Tools
             return lines.ToArray();
         }
 
-        private string CompactLines(string[] lines)
-        {
-            string value = "";
-            foreach (string line in lines)
-                value += line;
-            return value;
-        }
+        private string CompactLines(string[] lines) => string.Concat(lines);
 
-        private string GetReleaseNotesURL()
-        {
-            string url = Application.dataPath;
-            url += "/GameAssets/Resources/Core/ReleaseNotes.txt";
+        private string GetReleaseNotesURL() =>
+            Application.dataPath + FILE_EXTENSION_URL;
 
-            return url;
-        }
-
-        private void WriteFile(string url, string content)
-        {
+        private void WriteFile(string url, string content) => 
             File.WriteAllText(@url, content);
-        }
         #endregion
     }
 

@@ -51,10 +51,10 @@ namespace Borodar.RainbowAssets.Core.Json
         public static JsonReader Create(Stream stream)
         {
             if (stream == null) {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             if (!stream.CanRead) {
-                throw new ArgumentException("Cannot read from stream.", "stream");
+                throw new ArgumentException("Cannot read from stream.",nameof(stream));
             }
 
             return Create(new StreamReader(stream));
@@ -80,7 +80,7 @@ namespace Borodar.RainbowAssets.Core.Json
         public static JsonReader Create(TextReader reader)
         {
             if (reader == null) {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             return new JsonReader(reader);
@@ -111,7 +111,7 @@ namespace Borodar.RainbowAssets.Core.Json
         private JsonReader(TextReader reader)
         {
             if (reader == null) {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             this.jsonReader = reader;
