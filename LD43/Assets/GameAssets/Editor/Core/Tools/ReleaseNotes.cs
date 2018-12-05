@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using Sirenix.OdinInspector.Editor;
-using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Sirenix.OdinInspector.Editor.Drawers;
 using System.IO;
-using System;
 using System.Linq;
 
-namespace DogHouse.Tools
+namespace DogHouse.Core.Tools
 {
     /// <summary>
     /// ReleaseNotes is an editor tool that 
@@ -31,9 +28,7 @@ namespace DogHouse.Tools
             GetWindow<ReleaseNotes>("Release Notes").Show();
         }
 
-        public void MyGUI()
-        {
-        }
+        public void MyGUI() {}
 
         protected override void OnEnable()
         {

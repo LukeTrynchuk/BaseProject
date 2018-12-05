@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace DogHouse.General
+namespace DogHouse.Core.Mono
 {
     /// <summary>
     /// OnStart will invoke a unity event

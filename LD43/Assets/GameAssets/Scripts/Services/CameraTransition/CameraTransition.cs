@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections;
 using DogHouse.Core.Services;
-using DogHouse.Services;
 using UnityEngine;
 using DogHouse.Core.UI;
 
-namespace DogHouse.Service
+namespace DogHouse.Services
 {
     /// <summary>
     /// CameraTransition is an implementation of the
@@ -100,7 +99,6 @@ namespace DogHouse.Service
                 yield return null;
 
             } while (t < 1f);
-
 
             m_state = (FadeIn) ? CameraTransitionState.IDLE_IN 
                                : CameraTransitionState.IDLE_OUT;

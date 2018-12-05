@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System;
 
-namespace Silverback.SilverShades.Tools
+namespace DogHouse.Core.Tools
 {
     /// <summary>
     /// Texture2DArrayCreatorWindow will create the window
@@ -230,6 +228,5 @@ namespace Silverback.SilverShades.Tools
 
             return returnList;
         }
-
     }
 }

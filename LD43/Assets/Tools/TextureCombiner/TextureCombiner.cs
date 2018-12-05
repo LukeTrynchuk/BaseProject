@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
-using System;
 
-namespace Silverback.SilverShades.Tools
+namespace DogHouse.Core.Tools
 {
     /// <summary>
     /// The Texture Combiner is a tool that
@@ -24,7 +22,7 @@ namespace Silverback.SilverShades.Tools
         [MenuItem("Tools/Texture Combiner")]
         static void Init()
         {
-            TextureCombiner window = (TextureCombiner)EditorWindow.GetWindow(typeof(TextureCombiner), false, "Texture Combiner");
+            TextureCombiner window = (TextureCombiner)GetWindow(typeof(TextureCombiner), false, "Texture Combiner");
             window.Show();
         }
 
@@ -38,27 +36,11 @@ namespace Silverback.SilverShades.Tools
                 RenderTextureSlot(i);
                 GUILayout.Space(10);
             }
-
-            //RenderFinalImage();
         }
 
         #endregion
 
         #region Utility Methods
-        private static void RenderFinalImage()
-        {
-            if (m_finalTexture == null) return;
-
-            //Texture2D preview = AssetPreview.GetAssetPreview(m_finalTexture);
-
-            //Rect rect = GUILayoutUtility.GetRect(200, 200);
-            //Material material = new Material(Shader.Find("Unlit/Texture"));
-            //EditorGUI.DrawPreviewTexture(rect, m_finalTexture, material, ScaleMode.ScaleToFit);
-            //GUILayout.Label(preview);
-
-            GUILayout.Label(m_finalTexture);
-        }
-
         private static bool RenderChannelButton(bool value, Color channelColor)
         {
             var oldColor = GUI.backgroundColor;
