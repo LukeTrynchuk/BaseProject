@@ -40,16 +40,16 @@ namespace DogHouse.Core.Services
 			if (!DetermineServiceIsRegistered<T> ())
 				return;
 
-            if(GetService<T>() != null)
+            if(FetchService<T>() != null)
             {
-                if (GetService<T>().Equals(Service))
+                if (FetchService<T>().Equals(Service))
                 {
                     UnregisterService<T>();
                 }
             }
 		}
 
-		public static T GetService < T >()
+		public static T FetchService < T >()
 		{
 			Initialize ();
 

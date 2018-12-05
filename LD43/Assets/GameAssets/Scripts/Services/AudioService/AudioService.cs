@@ -72,8 +72,8 @@ namespace DogHouse.Services
 
         public void Play(string AssetID)
         {
-            AudioSource source = GetAvailableAudioChannel();
-            AudioAsset asset = FindAudioAsset(AssetID);
+            AudioSource source = FetchAvailableAudioChannel();
+            AudioAsset asset = FetchAudioAsset(AssetID);
 
             if (source == null || asset == null) return;
             Play(source, asset);
@@ -81,7 +81,7 @@ namespace DogHouse.Services
 
         public AudioSource FetchAvailableAudioSource()
         {
-            return GetAvailableAudioChannel();
+            return FetchAvailableAudioChannel();
         }
         #endregion
 
@@ -104,12 +104,12 @@ namespace DogHouse.Services
             channel.transform.parent = transform;
         }
 
-        private AudioSource GetAvailableAudioChannel()
+        private AudioSource FetchAvailableAudioChannel()
         {
             return m_sources.FirstOrDefault(x => x.isPlaying == false);
         }
 
-        private AudioAsset FindAudioAsset(string id)
+        private AudioAsset FetchAudioAsset(string id)
         {
             return m_audioAssets.FirstOrDefault(x => x.AssetID.Equals(id));
         }

@@ -10,7 +10,7 @@ namespace DogHouse.Core.Services
 	public class ServiceReference<T> where T: class
 	{
 		#region Public Variables
-		public T Reference => ServiceLocator.GetService<T>();
+		public T Reference => ServiceLocator.FetchService<T>();
 		#endregion
 
 		#region Main Methods
