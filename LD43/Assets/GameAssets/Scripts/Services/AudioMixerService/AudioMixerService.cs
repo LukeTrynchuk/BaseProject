@@ -14,21 +14,22 @@ namespace DogHouse.Services
     /// </summary>
     public class AudioMixerService : MonoBehaviour, IAudioMixerService
     {
-        #region Public Variables
-        #endregion
-
         #region Private Variables
         [SerializeField]
         private AudioMixerSnapshot m_gameMixSnapshot = null;
 
         [SerializeField]
         private AudioMixerSnapshot m_sceneTransitionSnapshot = null;
-
         #endregion
 
         #region Main Methods
-        void OnEnable() => RegisterService();
-        void OnDisable() => UnregisterService();
+        void OnEnable()  => RegisterService();
+
+        void OnDisable() 
+        {
+            UnregisterService();
+            StopAllCoroutines();
+        }
 
         public void RegisterService()
         {
@@ -42,19 +43,19 @@ namespace DogHouse.Services
 
         public void TransitionToGameMix(float time, Action callback = null)
         {
-            Transition(time, m_gameMixSnapshot);
+            TransitionSnapshot(time, m_gameMixSnapshot);
             if (callback != null) StartCoroutine(InvokeCallback(time, callback));
         }
 
         public void TransitionToTransitionMix(float time, Action callback = null)
         {
-            Transition(time, m_sceneTransitionSnapshot);
+            TransitionSnapshot(time, m_sceneTransitionSnapshot);
             if (callback != null) StartCoroutine(InvokeCallback(time, callback));
         }
         #endregion
 
         #region Utility Methods
-        private void Transition(float time, AudioMixerSnapshot snapshot)
+        private void TransitionSnapshot(float time, AudioMixerSnapshot snapshot)
         {
             snapshot.TransitionTo(time);
         }

@@ -2,6 +2,7 @@
 using DogHouse.Core.Services;
 using DogHouse.Services;
 using UnityEngine;
+using static UnityEngine.Input;
 
 namespace DogHouse.General
 {
@@ -63,7 +64,7 @@ namespace DogHouse.General
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             confirmButton = Input.GetAxis(CONFIRM_WIN);
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-            confirmButton = Input.GetAxis(CONFIRM_OSX);
+            confirmButton = GetAxis(CONFIRM_OSX);
 #endif
 
             if (confirmButton > 05f) OnConfirmButtonPressed?.Invoke();
@@ -76,7 +77,7 @@ namespace DogHouse.General
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             declineButton = Input.GetAxis(DECLINE_WIN);
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-            declineButton = Input.GetAxis(DECLINE_OSX);
+            declineButton = GetAxis(DECLINE_OSX);
 #endif
 
             if (declineButton > 05f) OnDeclineButtonPressed?.Invoke();
@@ -86,8 +87,8 @@ namespace DogHouse.General
         #region Low Level Functions
         private void CalculateMoveVector()
         {
-            m_moveVector.x = Input.GetAxis(HORIZONTAL_AXIS);
-            m_moveVector.y = Input.GetAxis(VERTICAL_AXIS);
+            m_moveVector.x = GetAxis(HORIZONTAL_AXIS);
+            m_moveVector.y = GetAxis(VERTICAL_AXIS);
         }
         #endregion
     }

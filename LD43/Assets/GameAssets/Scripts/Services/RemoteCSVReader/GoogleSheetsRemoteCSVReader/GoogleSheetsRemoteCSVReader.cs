@@ -13,8 +13,7 @@ namespace DogHouse.Services
         #region Main Methods
         public string[][] FetchRemoteCSV(string url)
         {
-            string[][] sheet = GoSheets.GetGoogleSheet(url);
-            return sheet;
+            return GoSheets.GetGoogleSheet(url);
         }
 
         void OnEnable() => RegisterService();

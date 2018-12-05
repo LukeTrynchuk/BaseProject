@@ -19,7 +19,7 @@ namespace DogHouse.Services
     {
         #region Private Variables
         [SerializeField]
-        private int m_numberOfChannels = 0;
+        private  int m_numberOfChannels = 0;
 
         [SerializeField]
         private AudioAsset[] m_audioAssets = null;
@@ -44,7 +44,7 @@ namespace DogHouse.Services
         void OnEnable()
         {
             GenerateAudioChannels();
-            FindStopOnLoadAudioAssets();
+            InitializeStopOnLoadAudioAssets();
             RegisterService();
             m_sceneManager.AddRegistrationHandle(HandleSceneManagerRegistered);
         }
@@ -53,9 +53,10 @@ namespace DogHouse.Services
         {
             UnregisterService();
 
-            if(m_sceneManager.isRegistered())
+            if(m_sceneManager.IsRegistered())
             {
-                m_sceneManager.Reference.OnAboutToLoadNewScene -= OnAboutToLoadScene;
+                m_sceneManager.Reference.OnAboutToLoadNewScene 
+                              -= HandleAboutToLoadScene;
             }
         }
 
@@ -105,43 +106,35 @@ namespace DogHouse.Services
 
         private AudioSource GetAvailableAudioChannel()
         {
-            AudioSource source = m_sources
-                                    .Where(x => x.isPlaying == false)
-                                    .FirstOrDefault();
-
-            return source;
+            return m_sources.FirstOrDefault(x => x.isPlaying == false);
         }
 
         private AudioAsset FindAudioAsset(string id)
         {
-            AudioAsset asset = m_audioAssets
-                                .Where(x => x.m_ID.Equals(id))
-                                .FirstOrDefault();
-
-            return asset;
+            return m_audioAssets.FirstOrDefault(x => x.AssetID.Equals(id));
         }
 
-        private void FindStopOnLoadAudioAssets()
+        private void InitializeStopOnLoadAudioAssets()
         {
             if (m_stopOnSceneLoadAssets.Count != 0) return;
 
             m_stopOnSceneLoadAssets = m_audioAssets
-                                .Where(x => x.m_stopOnSceneLoad == true)
+                                .Where(x => x.StopOnSceneLoad == true)
                                 .ToList();
         }
 
         private void Play(AudioSource source, AudioAsset asset)
         {
-            source.clip = asset.m_audioClip;
-            source.priority = (int)asset.m_priority;
-            source.loop = asset.m_loop;
+            source.clip = asset.Clip;
+            source.priority = (int)asset.Priority;
+            source.loop = asset.Loop;
 
-            if(asset.m_type == AudioChannel.MUSIC)
+            if(asset.AudioType == AudioChannel.MUSIC)
             {
                 source.outputAudioMixerGroup = m_musicGroup;
             }
 
-            if(asset.m_type == AudioChannel.SFX)
+            if(asset.AudioType == AudioChannel.SFX)
             {
                 source.outputAudioMixerGroup = m_sfxGroup;
             }
@@ -151,30 +144,28 @@ namespace DogHouse.Services
 
         private void HandleSceneManagerRegistered()
         {
-            m_sceneManager.Reference.OnAboutToLoadNewScene -= OnAboutToLoadScene;
-            m_sceneManager.Reference.OnAboutToLoadNewScene += OnAboutToLoadScene;
+            m_sceneManager.Reference.OnAboutToLoadNewScene -= HandleAboutToLoadScene;
+            m_sceneManager.Reference.OnAboutToLoadNewScene += HandleAboutToLoadScene;
         }
 
-        private void OnAboutToLoadScene()
+        private void HandleAboutToLoadScene()
         {
             foreach(AudioAsset asset in m_stopOnSceneLoadAssets)
             {
-                AudioSource[] sources = sourcesPlayingAsset(asset);
-                StopSources(sources);
+                AudioSource[] sources = FetchSourcesPlayingAsset(asset);
+                StopSourcesPlaying(sources);
             }
         }
 
-        private AudioSource[] sourcesPlayingAsset(AudioAsset asset)
+        private AudioSource[] FetchSourcesPlayingAsset(AudioAsset asset)
         {
-            List<AudioSource> sourcesPlaying = m_sources
+            return m_sources
                 .Where(x => x.isPlaying)
-                .Where(x => x.clip == asset.m_audioClip)
-                .ToList();
-
-            return sourcesPlaying.ToArray();
+                .Where(x => x.clip == asset.Clip)
+                .ToArray();
         }
 
-        private void StopSources(AudioSource[] sources)
+        private void StopSourcesPlaying(AudioSource[] sources)
         {
             foreach(AudioSource source in sources)
             {

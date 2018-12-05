@@ -10,7 +10,7 @@ namespace DogHouse.Core.UI
     public class ImageColorController : MonoBehaviour 
     {
         #region Public Variables
-        public Color ImageColor => (UnityEngine.Color)m_image?.color;
+        public Color ImageColor => (Color)m_image?.color;
         #endregion
 
         #region Private Variables
@@ -19,10 +19,7 @@ namespace DogHouse.Core.UI
         #endregion
         
         #region Main Methods
-        public void SetColor(Color color)
-        {
-            m_image.color = color;
-        }
+        public void SetColor(Color color) => m_image.color = color;
         #endregion
     }
 }

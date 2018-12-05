@@ -36,7 +36,7 @@ namespace DogHouse.Services
 
         #region Main Methods
 
-        public string LocalizeText(string LanguageID, string TextID)
+        public string FetchLocalizedText(string LanguageID, string TextID)
         {
             throw new NotImplementedException();
         }
@@ -69,7 +69,7 @@ namespace DogHouse.Services
         private void HandleRemoteSettingsServiceRegistered()
         {
             m_localizationUrl = m_remoteSettingsService.Reference?
-                                    .GetSettings<string>(LOCALIZATION_ID);
+                                    .FetchSetting<string>(LOCALIZATION_ID);
 
             m_remoteCSVReader
                 .AddRegistrationHandle(HandleRemoteCSVReaderRegistered);

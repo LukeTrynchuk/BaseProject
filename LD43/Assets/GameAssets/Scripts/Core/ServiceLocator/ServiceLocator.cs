@@ -23,7 +23,7 @@ namespace DogHouse.Core.Services
 		{
 			Initialize ();
 
-			if (ServiceAlreadyRegistered<T> ()) 
+			if (DetermineServiceIsRegistered<T> ()) 
 			{
 				ReplaceService<T> (service);
 				DispatchRegistrationHandles<T> ();
@@ -37,7 +37,7 @@ namespace DogHouse.Core.Services
 		{
 			Initialize ();
 
-			if (!ServiceAlreadyRegistered<T> ())
+			if (!DetermineServiceIsRegistered<T> ())
 				return;
 
             if(GetService<T>() != null)
@@ -62,11 +62,11 @@ namespace DogHouse.Core.Services
 			return default(T);
 		}
 
-		public static void AddOnRegisterHandle<T>(Action callback)
+		public static void AddRegistrationHandler<T>(Action callback)
 		{
 			Initialize ();
 
-			if (ServiceAlreadyRegistered<T> ()) 
+			if (DetermineServiceIsRegistered<T> ()) 
 			{
 				callback ();
 			}
@@ -76,17 +76,12 @@ namespace DogHouse.Core.Services
 		#endregion
 
 		#region Utility Methods
-		private static bool ServiceAlreadyRegistered<T>()
+        private static bool DetermineServiceIsRegistered<T>()
 		{
-			if (servicesDictionary.ContainsKey (typeof(T).Name)) 
-			{
-				return true;
-			}
+            return servicesDictionary.ContainsKey(typeof(T).Name);
+        }
 
-			return false;
-		}
-
-		private static void ReplaceService<T>(T NewService)
+        private static void ReplaceService<T>(T NewService)
 		{
 			Debug.LogWarning ("Service : " + typeof(T).Name + " is being replaced.");
 			servicesDictionary[typeof(T).Name] = NewService;
@@ -112,8 +107,7 @@ namespace DogHouse.Core.Services
 
 		private static void Initialize()
 		{
-			if (m_instance != null)
-				return;
+			if (m_instance != null) return;
 
 			m_instance = new ServiceLocator ();
 			servicesDictionary = new Dictionary < string, object >();

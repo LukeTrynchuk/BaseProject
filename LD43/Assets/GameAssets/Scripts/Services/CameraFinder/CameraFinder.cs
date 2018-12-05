@@ -13,13 +13,12 @@ namespace DogHouse.Services
     public class CameraFinder : MonoBehaviour, ICameraFinder
     {
         #region Public Variables
-        public Camera Camera => GetCamera();
+        public Camera Camera => FetchCamera();
         public event Action<Camera> OnNewCameraFound;
         #endregion
 
         #region Private Variables
         private Camera m_camera;
-
         #endregion
 
         #region Main Methods
@@ -36,21 +35,21 @@ namespace DogHouse.Services
             ServiceLocator.Unregister<ICameraFinder>(this);
         }
 
-        private Camera GetCamera()
+        private Camera FetchCamera()
         {
             if(m_camera != null) 
             {
                 return m_camera;
             }
 
-            m_camera = GetMainCamera();
+            m_camera = FetchMainCamera();
             if(m_camera != null)
             {
                 OnNewCameraFound?.Invoke(m_camera);
                 return m_camera;
             }
 
-            m_camera = GetAnyCamera();
+            m_camera = FetchAnyCamera();
             if(m_camera != null)
             {
                 OnNewCameraFound?.Invoke(m_camera);
@@ -62,22 +61,18 @@ namespace DogHouse.Services
         {
             if(m_camera == null)
             {
-                m_camera = GetCamera();
+                m_camera = FetchCamera();
             }
         }
         #endregion
 
         #region Utility Methods
-        private Camera GetMainCamera()
-        {
-            return Camera.main;
-        }
+        private Camera FetchMainCamera() => Camera.main;
 
-        private Camera GetAnyCamera()
+        private Camera FetchAnyCamera()
         {
-            Camera[] cameras = GameObject.FindObjectsOfType<Camera>();
-            if (cameras.Length > 0) return cameras[0];
-            return null;
+            Camera[] cameras = FindObjectsOfType<Camera>();
+            return cameras.Length > 0 ? cameras[0] : null;
         }
         #endregion
     }

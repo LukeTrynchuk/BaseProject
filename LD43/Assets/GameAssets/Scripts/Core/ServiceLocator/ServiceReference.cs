@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using System;
 
 namespace DogHouse.Core.Services
 {
@@ -16,17 +13,11 @@ namespace DogHouse.Core.Services
 		public T Reference => ServiceLocator.GetService<T>();
 		#endregion
 
-		#region Private Variables
-		private T instance;
-		#endregion
-
 		#region Main Methods
-		public void AddRegistrationHandle(Action Handle)
-		{
-			ServiceLocator.AddOnRegisterHandle<T> (Handle);
-		}
+		public void AddRegistrationHandle(Action Handle) =>
+			ServiceLocator.AddRegistrationHandler<T> (Handle);
 
-		public bool isRegistered() => (Reference == null) ? false : true;
+		public bool IsRegistered() => (Reference != null);
 		#endregion
 	}
 }

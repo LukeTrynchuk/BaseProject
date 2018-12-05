@@ -11,14 +11,11 @@ namespace DogHouse.Core.UI
     {
         #region Private Variables
         [SerializeField]
-        private Button m_button = null;
+        private Button m_button = default(Button);
         #endregion
         
         #region Main Methods
-        public void OnClick()
-        {
-            m_button?.onClick?.Invoke();
-        }
+        public void OnClick() => m_button?.onClick?.Invoke();
         #endregion
     }
 }

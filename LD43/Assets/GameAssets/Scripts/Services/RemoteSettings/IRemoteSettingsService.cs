@@ -13,6 +13,6 @@ namespace DogHouse.Services
     {
         event System.Action OnRemoteSettingsUpdated;
 
-        T GetSettings<T>(string SettingID);
+        T FetchSetting<T>(string SettingID);
     }
 }

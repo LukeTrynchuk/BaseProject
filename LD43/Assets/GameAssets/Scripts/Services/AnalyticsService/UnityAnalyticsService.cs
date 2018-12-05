@@ -17,7 +17,7 @@ namespace DogHouse.Services
         #endregion
 
         #region Private Variables
-        private const string m_version = "0.1";
+        private const string m_version = "0.1";                                 //TODO : This will be fetched from a VersionService in the future
         private const string VERSION_KEY = "Version";
 
         private const string GAME_START = "Game Started";

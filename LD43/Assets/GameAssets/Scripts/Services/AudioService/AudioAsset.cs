@@ -13,14 +13,14 @@ namespace DogHouse.Core.Audio
     public class AudioAsset : ScriptableObject
     {
         #region Public Variables
-        public string m_ID;
-        public AudioClip m_audioClip;
-        public bool m_stopOnSceneLoad;
-        public bool m_loop;
-        public AudioChannel m_type;
+        public string AssetID;
+        public AudioClip Clip;
+        public bool StopOnSceneLoad;
+        public bool Loop;
+        public AudioChannel AudioType;
 
         [Range(0,256)]
-        public float m_priority;
+        public float Priority;
         #endregion
     }
 }

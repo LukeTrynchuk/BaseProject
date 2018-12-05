@@ -29,6 +29,9 @@ namespace DogHouse.Services
 
         private ImageColorController m_imageColorController;
         private float m_alpha = 0f;
+
+        private bool CanFadeIn => m_state == CameraTransitionState.IDLE_OUT;
+        private bool CanFadeOut => m_state == CameraTransitionState.IDLE_IN;
         #endregion
 
         #region Main Methods
@@ -55,31 +58,31 @@ namespace DogHouse.Services
 
         public void FadeIn(float Time)
         {
-            if (!CanFadeIn()) return;
-            StartCoroutine(Transition(Time, true));
+            if (!CanFadeIn) return;
+            StartCoroutine(TransitionCamera(Time, true));
         }
 
         public void FadeOut(float Time)
         {
-            if (!CanFadeOut()) return;
-            StartCoroutine(Transition(Time, false));
+            if (!CanFadeOut) return;
+            StartCoroutine(TransitionCamera(Time, false));
         }
 
         public void FadeIn(float Time, Action callback)
         {
-            if (!CanFadeIn()) return;
-            StartCoroutine(Transition(Time, true, callback));
+            if (!CanFadeIn) return;
+            StartCoroutine(TransitionCamera(Time, true, callback));
         }
 
         public void FadeOut(float Time, Action callback)
         {
-            if (!CanFadeOut()) return;
-            StartCoroutine(Transition(Time, false, callback));
+            if (!CanFadeOut) return;
+            StartCoroutine(TransitionCamera(Time, false, callback));
         }
         #endregion
 
         #region Utility Methods
-        private IEnumerator Transition(float time, bool FadeIn, Action callback = null)
+        private IEnumerator TransitionCamera(float time, bool isFadingIn, Action callback = null)
         {
             m_state = CameraTransitionState.TRANSITIONING;
             float totalTime = 0f;
@@ -91,7 +94,7 @@ namespace DogHouse.Services
                 totalTime += Time.deltaTime;
                 t = totalTime / time;
 
-                alpha = (FadeIn) 
+                alpha = (isFadingIn) 
                     ? Mathf.Lerp(0, 1, t)
                     : Mathf.Lerp(1, 0, t);
 
@@ -100,20 +103,10 @@ namespace DogHouse.Services
 
             } while (t < 1f);
 
-            m_state = (FadeIn) ? CameraTransitionState.IDLE_IN 
-                               : CameraTransitionState.IDLE_OUT;
+            m_state = (isFadingIn) ? CameraTransitionState.IDLE_IN 
+                                   : CameraTransitionState.IDLE_OUT;
 
             callback?.Invoke();
-        }
-
-        private bool CanFadeIn()
-        {
-            return m_state == CameraTransitionState.IDLE_OUT;
-        }
-
-        private bool CanFadeOut()
-        {
-            return m_state == CameraTransitionState.IDLE_IN;
         }
 
         private void SetBackgroundAlpha(float alpha)

@@ -13,6 +13,6 @@ namespace DogHouse.Services
         event System.Action OnLocalizationSynced;
         bool IsSynced { get; }
 
-        string LocalizeText(string LanguageID, string TextID);
+        string FetchLocalizedText(string LanguageID, string TextID);
     }
 }

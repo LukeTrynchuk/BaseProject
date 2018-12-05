@@ -1070,7 +1070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5251d069f3b84c818c8657065064113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_numberOfChannels: 20
+  m_numberOfChannels: 25
   m_audioAssets:
   - {fileID: 11400000, guid: cbf38d5ecf21c4602abd47b34224a750, type: 2}
   m_musicGroup: {fileID: 243537387327208256, guid: 56ae6e5dc7ee34025be0d15d54ddc9f6,
