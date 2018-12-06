@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using DogHouse.Core.Services;
 using UnityEngine;
 using UnityEngine.Analytics;
+using static DogHouse.Core.Services.ServiceLocator;
 
 namespace DogHouse.Services
 {
@@ -13,9 +13,6 @@ namespace DogHouse.Services
     /// </summary>
     public class UnityAnalyticsService : MonoBehaviour, IAnalyticsService
     {
-        #region Public Variables
-        #endregion
-
         #region Private Variables
         private const string m_version = "0.1";                                 //TODO : This will be fetched from a VersionService in the future
         private const string VERSION_KEY = "Version";
@@ -26,25 +23,19 @@ namespace DogHouse.Services
         private const string SCENE_LOADED = "Scene Loaded";
         private const string LEVEL_STARTED = "Level Started";
         private const string START_BUTTON = "Start Button";
+
+        private const string LEVEL_NAME_KEY = "Level Name";
+        private const string SCENE_NAME_KEY = "Scene Name";
         #endregion
 
         #region Main Methods
-        void OnEnable() => RegisterService();
-        void OnDisable() => UnregisterService();
-
-        public void RegisterService()
-        {
-            ServiceLocator.Register<IAnalyticsService>(this);
-        }
-
-        public void UnregisterService()
-        {
-            ServiceLocator.Unregister<IAnalyticsService>(this);
-        }
-
-        public void SendGameStartEvent() => SendEvent(GAME_START);
-        public void SendLogosStartEvent() => SendEvent(LOGO_START);
-        public void SendLogosEndEvent() => SendEvent(LOGO_END);
+        void OnEnable()                           => RegisterService();
+        void OnDisable()                          => UnregisterService();
+        public void RegisterService()             => Register<IAnalyticsService>(this);
+        public void UnregisterService()           => Unregister<IAnalyticsService>(this);
+        public void SendGameStartEvent()          => SendEvent(GAME_START);
+        public void SendLogosStartEvent()         => SendEvent(LOGO_START);
+        public void SendLogosEndEvent()           => SendEvent(LOGO_END);
         public void SendStartButtonClickedEvent() => SendEvent(START_BUTTON);
 
         public void SendSceneLoadedEvent(string sceneName)
@@ -52,7 +43,7 @@ namespace DogHouse.Services
             SendEvent(SCENE_LOADED,
                       new Dictionary<string, object>
                       {
-                        {"Scene Name", sceneName}
+                        {SCENE_NAME_KEY, sceneName}
                       });
         }
 
@@ -61,7 +52,7 @@ namespace DogHouse.Services
             SendEvent(LEVEL_STARTED,
                       new Dictionary<string, object>
                       {
-                        {"Level Name", levelName}
+                        {LEVEL_NAME_KEY, levelName}
                       });
         }
 
@@ -70,7 +61,7 @@ namespace DogHouse.Services
             SendEvent(LEVEL_STARTED,
                       new Dictionary<string, object>
                       {
-                        {"Level Name", levelName}
+                        {LEVEL_NAME_KEY, levelName}
                       });
         }
         #endregion
