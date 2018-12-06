@@ -1,8 +1,8 @@
 ﻿using System;
-using DogHouse.Core.Services;
 using DogHouse.Services;
 using UnityEngine;
 using static UnityEngine.Input;
+using static DogHouse.Core.Services.ServiceLocator;
 
 namespace DogHouse.General
 {
@@ -41,12 +41,8 @@ namespace DogHouse.General
             //DetermineDeclineButtonPressed();
         }
 
-        public void RegisterService() =>
-            ServiceLocator.Register<IInputService>(this);
-
-        public void UnregisterService() =>
-            ServiceLocator.Unregister<IInputService>(this);
-
+        public void RegisterService()   => Register<IInputService>(this);
+        public void UnregisterService() => Unregister<IInputService>(this);
         #endregion
 
         #region Utility Methods
@@ -62,7 +58,7 @@ namespace DogHouse.General
         {
             float confirmButton = 0f;
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-            confirmButton = Input.GetAxis(CONFIRM_WIN);
+            confirmButton = GetAxis(CONFIRM_WIN);
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
             confirmButton = GetAxis(CONFIRM_OSX);
 #endif
@@ -75,7 +71,7 @@ namespace DogHouse.General
 
             float declineButton = 0f;
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-            declineButton = Input.GetAxis(DECLINE_WIN);
+            declineButton = GetAxis(DECLINE_WIN);
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
             declineButton = GetAxis(DECLINE_OSX);
 #endif

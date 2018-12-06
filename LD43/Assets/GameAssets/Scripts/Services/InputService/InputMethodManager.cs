@@ -12,10 +12,10 @@ namespace DogHouse.Services
     {
         #region Private Variables
         [SerializeField]
-        private GameObject m_keyboardMouseInput = null;
+        private GameObject m_keyboardMouseInput = default(GameObject);
 
         [SerializeField]
-        private GameObject m_gamepadService = null;
+        private GameObject m_gamepadService = default(GameObject);
 
         private InputState m_state = InputState.KEYBOARD;
 
@@ -31,7 +31,7 @@ namespace DogHouse.Services
 
         #region Main Methods
         private void OnEnable() => SwitchInputSystems();
-        private void Update() => SwitchInputSystems();
+        private void Update()   => SwitchInputSystems();
         #endregion
 
         #region Utility Methods
@@ -51,15 +51,9 @@ namespace DogHouse.Services
         private void SetState(InputState state)
         {
             m_state = state;
-            if (m_state == InputState.CONTROLLER)
-            {
-                m_gamepadService.SetActive(true);
-                m_keyboardMouseInput.SetActive(false);
-                return;
-            }
-
-            m_gamepadService.SetActive(false);
-            m_keyboardMouseInput.SetActive(true);
+            bool value = m_state == InputState.CONTROLLER;
+            m_gamepadService.SetActive(value);
+            m_keyboardMouseInput.SetActive(!value);
         }
         #endregion
     }

@@ -15,7 +15,7 @@ namespace DogHouse.Core.UI
 
         #region Private Variables
         [SerializeField]
-        private Image m_image = null;
+        private Image m_image = default(Image);
         #endregion
         
         #region Main Methods

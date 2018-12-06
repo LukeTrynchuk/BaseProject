@@ -1,5 +1,6 @@
-﻿using DogHouse.Core.Services;
-using UnityEngine;
+﻿using UnityEngine;
+using static GoSheets;
+using static DogHouse.Core.Services.ServiceLocator;
 
 namespace DogHouse.Services
 {
@@ -11,23 +12,11 @@ namespace DogHouse.Services
     public class GoogleSheetsRemoteCSVReader : MonoBehaviour, IRemoteCSVReader
     {
         #region Main Methods
-        public string[][] FetchRemoteCSV(string url)
-        {
-            return GoSheets.GetGoogleSheet(url);
-        }
-
+        public string[][] FetchRemoteCSV(string url) => GetGoogleSheet(url);
         void OnEnable() => RegisterService();
         void OnDisable() => UnregisterService();
-
-        public void UnregisterService()
-        {
-            ServiceLocator.Unregister<IRemoteCSVReader>(this);
-        }
-
-        public void RegisterService()
-        {
-            ServiceLocator.Register<IRemoteCSVReader>(this);
-        }
+        public void UnregisterService() => Unregister<IRemoteCSVReader>(this);
+        public void RegisterService() => Register<IRemoteCSVReader>(this);
         #endregion
     }
 }

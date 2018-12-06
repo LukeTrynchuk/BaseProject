@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using System;
+using static UnityEngine.Debug;
 
 namespace DogHouse.Core.Services
 {
@@ -14,134 +14,123 @@ namespace DogHouse.Core.Services
 	{
 		#region Private Variables
 		private static ServiceLocator m_instance;
-		private static Dictionary < string, object > servicesDictionary;
-		private static Dictionary < string, List<Action>> m_callbackHandles;
+
+        private static Dictionary < string, object > m_serviceDictionary
+        {
+            get
+            {
+                if (m_instance == null) Initialize();
+                return serviceDictionary;
+            }
+
+            set{ serviceDictionary = value; }
+        }
+		
+        private static Dictionary < string, List<Action>> m_callbackDictionary
+        {
+            get
+            {
+                if (m_instance == null) Initialize();
+                return callbackDictionary;
+            }
+
+            set{ callbackDictionary = value; }
+        }
+
+        private static Dictionary<string, object>       serviceDictionary;
+        private static Dictionary<string, List<Action>> callbackDictionary;
 		#endregion
 
 		#region Main Methods
 		public static void Register < T >(T service)
 		{
-			Initialize ();
-
-			if (DetermineServiceIsRegistered<T> ()) 
-			{
-				ReplaceService<T> (service);
-				DispatchRegistrationHandles<T> ();
-				return;
-			}
-			servicesDictionary[typeof(T).Name] = service;
-			DispatchRegistrationHandles<T> ();
+            if (CheckServiceIsRegistered<T>())  ReplaceServiceInstance<T>(service);
+            if (!CheckServiceIsRegistered<T>()) SetServiceInstance    <T>(service);
+            DispatchRegistrationHandles <T>();
 		}
 
 		public static void Unregister<T>(object Service)
 		{
-			Initialize ();
+			if (!CheckServiceIsRegistered<T> ())    return;
+            if (FetchService<T>() == null)          return;
+            if (!FetchService<T>().Equals(Service)) return;
 
-			if (!DetermineServiceIsRegistered<T> ())
-				return;
-
-            if(FetchService<T>() != null)
-            {
-                if (FetchService<T>().Equals(Service))
-                {
-                    UnregisterService<T>();
-                }
-            }
+            UnregisterService<T>();
 		}
 
-		public static T FetchService < T >()
-		{
-			Initialize ();
-
-			T instance = default(T);
-			if(servicesDictionary.ContainsKey(typeof(T).Name) == true)
-			{
-				instance = (T) servicesDictionary[typeof(T).Name];
-				return instance;
-			}
-			return default(T);
-		}
+		public static T FetchService <T>() =>
+                CheckServiceIsRegistered<T>() 
+                    ? FetchServiceInstance<T>() 
+                    : default(T);
 
 		public static void AddRegistrationHandler<T>(Action callback)
 		{
-			Initialize ();
-
-			if (DetermineServiceIsRegistered<T> ()) 
-			{
-				callback ();
-			}
-
+			if (CheckServiceIsRegistered<T> ()) callback ();
 			AddHandle<T> (callback);
 		}
 		#endregion
 
 		#region Utility Methods
-        private static bool DetermineServiceIsRegistered<T>()
+        private static void ReplaceServiceInstance<T>(T NewService)
 		{
-            return servicesDictionary.ContainsKey(typeof(T).Name);
-        }
-
-        private static void ReplaceService<T>(T NewService)
-		{
-			Debug.LogWarning ("Service : " + typeof(T).Name + " is being replaced.");
-			servicesDictionary[typeof(T).Name] = NewService;
+            SendServiceReplacementWarning<T>();
+            m_serviceDictionary[typeof(T).Name] = NewService;
 		}
 
 		private static void DispatchRegistrationHandles<T>()
 		{
-			if (HandleTypeAlreadyRegistered<T>()) 
-			{
-				DispatchHandles (m_callbackHandles [typeof(T).Name]);
-			}
+            if (!CheckHandleIsRegistered<T>()) return;
+		    DispatchHandles (m_callbackDictionary [typeof(T).Name]);
 		}
 		#endregion
 
 		#region Low Level Functions
 		private static void RemoveHandles<T>()
 		{
-			if (!HandleTypeAlreadyRegistered<T> ())
-				return;
-
-			m_callbackHandles.Remove (typeof(T).Name);
+			if (!CheckHandleIsRegistered<T> ()) return;
+			m_callbackDictionary.Remove (typeof(T).Name);
 		}
 
 		private static void Initialize()
 		{
 			if (m_instance != null) return;
 
-			m_instance = new ServiceLocator ();
-			servicesDictionary = new Dictionary < string, object >();
-			m_callbackHandles = new Dictionary < string, List<Action>> ();
+			m_instance           = new ServiceLocator ();
+			serviceDictionary    = new Dictionary < string, object >();
+			callbackDictionary   = new Dictionary < string, List<Action>> ();
 		}
 
 		private static void AddHandle<T>(Action Handle)
 		{
-			if(!HandleTypeAlreadyRegistered<T>())
-				m_callbackHandles [typeof(T).Name] = new List<Action> ();
+			if(!CheckHandleIsRegistered<T>())
+				m_callbackDictionary [typeof(T).Name] = new List<Action> ();
 
-			m_callbackHandles [typeof(T).Name].Add (Handle);
+			m_callbackDictionary [typeof(T).Name].Add (Handle);
 		}
 
 		private static void DispatchHandles(List<Action> Handles)
 		{
-			foreach (Action handle in Handles) 
-			{
-				handle ();
-			}
+			foreach (Action handle in Handles) handle?.Invoke();
 		}
 
-		private static bool HandleTypeAlreadyRegistered<T>()
-		{
-			if (m_callbackHandles.ContainsKey (typeof(T).Name))
-				return true;
-			return false;
-		}
+        private static bool CheckHandleIsRegistered<T>()        =>
+            m_callbackDictionary.ContainsKey(typeof(T).Name);
 
-		private static void UnregisterService<T>()
-		{
-			servicesDictionary [typeof(T).Name] = default(T);
-		}
+		private static void UnregisterService<T>()              =>
+			m_serviceDictionary [typeof(T).Name] = default(T);
 
-		#endregion
-	}
+        private static void SendServiceReplacementWarning<T>()  =>
+            LogWarning($"Service : {typeof(T).Name} is being replaced.");
+
+        private static bool CheckServiceIsRegistered<T>()       =>
+            m_serviceDictionary.ContainsKey(typeof(T).Name);
+
+        private static T FetchServiceInstance<T>()              =>
+            (T)m_serviceDictionary[typeof(T).Name];
+
+        private static void SetServiceInstance<T>(T instance)   =>
+            m_serviceDictionary[typeof(T).Name] = instance;
+
+        #endregion
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using static DogHouse.Core.Services.ServiceLocator;
 
 namespace DogHouse.Core.Services
 {
@@ -10,14 +11,14 @@ namespace DogHouse.Core.Services
 	public class ServiceReference<T> where T: class
 	{
 		#region Public Variables
-		public T Reference => ServiceLocator.FetchService<T>();
+		public T Reference => FetchService<T>();
 		#endregion
 
 		#region Main Methods
 		public void AddRegistrationHandle(Action Handle) =>
 			ServiceLocator.AddRegistrationHandler<T> (Handle);
 
-		public bool IsRegistered() => (Reference != null);
+		public bool CheckServiceRegistered() => (Reference != null);
 		#endregion
 	}
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
-using DogHouse.Core.Services;
 using UnityEngine;
 using DogHouse.Core.UI;
+using static DogHouse.Core.Services.ServiceLocator;
+using static UnityEngine.Mathf;
+using static UnityEngine.Time;
 
 namespace DogHouse.Services
 {
@@ -41,20 +43,10 @@ namespace DogHouse.Services
             m_imageColorController = m_fadeObject
                 .GetComponent<ImageColorController>();
         }
-        void OnDisable() 
-        {
-            UnregisterService();
-        }
 
-        public void RegisterService()
-        {
-            ServiceLocator.Register<ICameraTransition>(this);
-        }
-
-        public void UnregisterService()
-        {
-            ServiceLocator.Unregister<ICameraTransition>(this);
-        }
+        void OnDisable() => UnregisterService();
+        public void RegisterService() => Register<ICameraTransition>(this);
+        public void UnregisterService() => Unregister<ICameraTransition>(this);
 
         public void FadeIn(float Time)
         {
@@ -62,16 +54,16 @@ namespace DogHouse.Services
             StartCoroutine(TransitionCamera(Time, true));
         }
 
-        public void FadeOut(float Time)
-        {
-            if (!CanFadeOut) return;
-            StartCoroutine(TransitionCamera(Time, false));
-        }
-
         public void FadeIn(float Time, Action callback)
         {
             if (!CanFadeIn) return;
             StartCoroutine(TransitionCamera(Time, true, callback));
+        }
+
+        public void FadeOut(float Time)
+        {
+            if (!CanFadeOut) return;
+            StartCoroutine(TransitionCamera(Time, false));
         }
 
         public void FadeOut(float Time, Action callback)
@@ -91,12 +83,9 @@ namespace DogHouse.Services
 
             do
             {
-                totalTime += Time.deltaTime;
+                totalTime += deltaTime;
                 t = totalTime / time;
-
-                alpha = (isFadingIn) 
-                    ? Mathf.Lerp(0, 1, t)
-                    : Mathf.Lerp(1, 0, t);
+                alpha = (isFadingIn) ? Lerp(0, 1, t) : Lerp(1, 0, t);
 
                 SetBackgroundAlpha(alpha);
                 yield return null;

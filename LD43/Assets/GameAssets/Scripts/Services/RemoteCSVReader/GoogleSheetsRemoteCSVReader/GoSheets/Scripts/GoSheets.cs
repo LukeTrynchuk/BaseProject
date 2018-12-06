@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
 using System.Net;
 using System.Linq;
 using UnityEngine.Networking;
@@ -10,6 +8,8 @@ public static class GoSheets
 
     public static string[][] GetGoogleSheet(string url, string gid = "0")
     {
+        if (url.Equals("")) return null;
+
         ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         using (var client = new WebClient())
         {

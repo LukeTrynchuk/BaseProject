@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
-using DogHouse.Core.Services;
 using UnityEngine;
 using UnityEngine.Audio;
+using static DogHouse.Core.Services.ServiceLocator;
 
 namespace DogHouse.Services
 {
@@ -31,15 +31,8 @@ namespace DogHouse.Services
             StopAllCoroutines();
         }
 
-        public void RegisterService()
-        {
-            ServiceLocator.Register<IAudioMixerService>(this);
-        }
-
-        public void UnregisterService()
-        {
-            ServiceLocator.Unregister<IAudioMixerService>(this);
-        }
+        public void RegisterService() => Register<IAudioMixerService>(this);
+        public void UnregisterService() => Unregister<IAudioMixerService>(this);
 
         public void TransitionToGameMix(float time, Action callback = null)
         {
@@ -55,10 +48,8 @@ namespace DogHouse.Services
         #endregion
 
         #region Utility Methods
-        private void TransitionSnapshot(float time, AudioMixerSnapshot snapshot)
-        {
+        private void TransitionSnapshot(float time, AudioMixerSnapshot snapshot) =>
             snapshot.TransitionTo(time);
-        }
 
         private IEnumerator InvokeCallback(float time, Action callback)
         {
