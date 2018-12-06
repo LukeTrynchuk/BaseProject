@@ -5,6 +5,7 @@ using DogHouse.Core.Audio;
 using System.Linq;
 using UnityEngine.Audio;
 using System;
+using static DogHouse.Core.Services.ServiceLocator;
 
 namespace DogHouse.Services
 {
@@ -60,15 +61,8 @@ namespace DogHouse.Services
             }
         }
 
-        public void UnregisterService()
-        {
-            ServiceLocator.Unregister<IAudioService>(this);
-        }
-
-        public void RegisterService()
-        {
-            ServiceLocator.Register<IAudioService>(this);
-        }
+        public void UnregisterService() => Unregister<IAudioService>(this);
+        public void RegisterService()   => Register<IAudioService>(this);
 
         public void Play(string AssetID)
         {
@@ -104,15 +98,11 @@ namespace DogHouse.Services
             channel.transform.parent = transform;
         }
 
-        private AudioSource FetchAvailableAudioChannel()
-        {
-            return m_sources.FirstOrDefault(x => x.isPlaying == false);
-        }
+        private AudioSource FetchAvailableAudioChannel() => 
+            m_sources.FirstOrDefault(x => x.isPlaying == false);
 
-        private AudioAsset FetchAudioAsset(string id)
-        {
-            return m_audioAssets.FirstOrDefault(x => x.AssetID.Equals(id));
-        }
+        private AudioAsset FetchAudioAsset(string id) => 
+            m_audioAssets.FirstOrDefault(x => x.AssetID.Equals(id));
 
         private void InitializeStopOnLoadAudioAssets()
         {
