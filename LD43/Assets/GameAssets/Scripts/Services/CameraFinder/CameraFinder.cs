@@ -1,6 +1,6 @@
 ﻿using System;
-using DogHouse.Core.Services;
 using UnityEngine;
+using static DogHouse.Core.Services.ServiceLocator;
 
 namespace DogHouse.Services
 {
@@ -24,16 +24,8 @@ namespace DogHouse.Services
         #region Main Methods
         void OnEnable() => RegisterService();
         void OnDisable() => UnregisterService();
-
-        public void RegisterService()
-        {
-            ServiceLocator.Register<ICameraFinder>(this);
-        }
-
-        public void UnregisterService()
-        {
-            ServiceLocator.Unregister<ICameraFinder>(this);
-        }
+        public void RegisterService() => Register<ICameraFinder>(this);
+        public void UnregisterService() => Unregister<ICameraFinder>(this);
 
         private Camera FetchCamera()
         {
@@ -59,10 +51,8 @@ namespace DogHouse.Services
 
         void Update()
         {
-            if(m_camera == null)
-            {
-                m_camera = FetchCamera();
-            }
+            if (m_camera != null) return;
+            m_camera = FetchCamera();
         }
         #endregion
 

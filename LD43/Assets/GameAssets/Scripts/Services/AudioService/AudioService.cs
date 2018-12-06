@@ -4,7 +4,6 @@ using UnityEngine;
 using DogHouse.Core.Audio;
 using System.Linq;
 using UnityEngine.Audio;
-using System;
 using static DogHouse.Core.Services.ServiceLocator;
 
 namespace DogHouse.Services
