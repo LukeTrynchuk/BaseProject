@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using DogHouse.Core.Services;
-using DogHouse.Services;
 using UnityEngine;
+using static DogHouse.Core.Services.ServiceLocator;
+using static UnityEngine.RemoteSettings;
 
 namespace DogHouse.Services
 {
@@ -30,41 +29,32 @@ namespace DogHouse.Services
         #region Main Methods
         void OnEnable() 
         {
-            RemoteSettings.Updated -= HandleRemoteSettingsUpdated;
-            RemoteSettings.Updated += HandleRemoteSettingsUpdated;
-            RemoteSettings.ForceUpdate();
+            Updated -= HandleRemoteSettingsUpdated;
+            Updated += HandleRemoteSettingsUpdated;
+            ForceUpdate();
         }
 
         void OnDisable()
         {
-            RemoteSettings.Updated -= HandleRemoteSettingsUpdated;
+            Updated -= HandleRemoteSettingsUpdated;
             UnregisterService();
         }
 
         public T FetchSetting<T>(string SettingID) => 
             (T)m_remoteSettings[SettingID];
 
-        public void RegisterService()
-        {
-            ServiceLocator.Register<IRemoteSettingsService>(this);
-        }
-
-        public void UnregisterService()
-        {
-            ServiceLocator.Unregister<IRemoteSettingsService>(this);
-        }
+        public void RegisterService()   => Register<IRemoteSettingsService>(this);
+        public void UnregisterService() => Unregister<IRemoteSettingsService>(this);
         #endregion
 
         #region Utility Methods
         private void HandleRemoteSettingsUpdated()
         {
             m_remoteSettings.Add(SHOW_MENU_OPTIONS_ID,
-                                 RemoteSettings.GetBool(SHOW_MENU_OPTIONS_ID));
-
-
+                                 GetBool(SHOW_MENU_OPTIONS_ID));
 
             m_remoteSettings.Add(LOCALIZATION_URL,
-                                 RemoteSettings.GetString(LOCALIZATION_URL));
+                                 GetString(LOCALIZATION_URL));
 
             RegisterService();
             OnRemoteSettingsUpdated?.Invoke();
