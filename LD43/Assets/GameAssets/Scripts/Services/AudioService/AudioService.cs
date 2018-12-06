@@ -53,7 +53,7 @@ namespace DogHouse.Services
         {
             UnregisterService();
 
-            if(m_sceneManager.IsRegistered())
+            if(m_sceneManager.CheckServiceRegistered())
             {
                 m_sceneManager.Reference.OnAboutToLoadNewScene 
                               -= HandleAboutToLoadScene;
