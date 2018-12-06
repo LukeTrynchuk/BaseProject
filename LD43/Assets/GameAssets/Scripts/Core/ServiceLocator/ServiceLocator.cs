@@ -44,8 +44,8 @@ namespace DogHouse.Core.Services
 		#region Main Methods
 		public static void Register < T >(T service)
 		{
-            if (CheckServiceIsRegistered<T>()) ReplaceServiceInstance<T>(service);
-            if (!CheckHandleIsRegistered<T>()) SetServiceInstance    <T>(service);
+            if (CheckServiceIsRegistered<T>())  ReplaceServiceInstance<T>(service);
+            if (!CheckServiceIsRegistered<T>()) SetServiceInstance    <T>(service);
             DispatchRegistrationHandles <T>();
 		}
 

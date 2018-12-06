@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using DogHouse.Core.Services;
-using DogHouse.Services;
 using UnityEngine;
+using static DogHouse.Core.Services.ServiceLocator;
 
 namespace DogHouse.Services
 {
@@ -54,22 +52,15 @@ namespace DogHouse.Services
             UnregisterService();
         }
 
-        public void RegisterService()
-        {
-            ServiceLocator.Register<ILocalizationService>(this);
-        }
-
-        public void UnregisterService()
-        {
-            ServiceLocator.Unregister<ILocalizationService>(this);
-        }
+        public void RegisterService() => Register<ILocalizationService>(this);
+        public void UnregisterService() => Unregister<ILocalizationService>(this);
         #endregion
 
         #region Utility Methods
         private void HandleRemoteSettingsServiceRegistered()
         {
-            m_localizationUrl = m_remoteSettingsService.Reference?
-                                    .FetchSetting<string>(LOCALIZATION_ID);
+            m_localizationUrl = m_remoteSettingsService.Reference
+                                        .FetchSetting<string>(LOCALIZATION_ID);
 
             m_remoteCSVReader
                 .AddRegistrationHandle(HandleRemoteCSVReaderRegistered);

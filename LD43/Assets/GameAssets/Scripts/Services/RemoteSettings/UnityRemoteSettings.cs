@@ -40,7 +40,7 @@ namespace DogHouse.Services
             UnregisterService();
         }
 
-        public T FetchSetting<T>(string SettingID) => 
+        public T FetchSetting<T>(string SettingID) =>
             (T)m_remoteSettings[SettingID];
 
         public void RegisterService()   => Register<IRemoteSettingsService>(this);
