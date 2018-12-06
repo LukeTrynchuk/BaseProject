@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Collections;
+using static UnityEngine.Time;
+using static UnityEngine.Color;
 
 namespace DogHouse.Core.Logo
 {
@@ -25,7 +27,8 @@ namespace DogHouse.Core.Logo
         [SerializeField]
         private UnityEvent m_onFinishedSplashImages = null;
 
-        private Color m_backgroundColor = Color.black;
+        private Color m_backgroundColor = black;
+
         private const float BACKGROUND_LERP_TIME = 1f;
         private const float IMAGE_LERP_TIME = 0.5f;
         #endregion
@@ -40,7 +43,10 @@ namespace DogHouse.Core.Logo
             float tValue = 0f;
             Color startColor = m_backgroundColor;
 
-            m_image.color = new Color(m_image.color.r, m_image.color.g, m_image.color.b, 0f);
+            m_image.color = new Color(m_image.color.r, 
+                                      m_image.color.g, 
+                                      m_image.color.b, 
+                                      0f);
 
             for (int i = 0; i < m_splashImages.Length; i++)
             {
@@ -76,7 +82,7 @@ namespace DogHouse.Core.Logo
 
             do
             {
-                LerpBackgroundColor(ref tValue, startColor, Color.black);
+                LerpBackgroundColor(ref tValue, startColor, black);
                 yield return null;
             } while (tValue < 1f);
                 
@@ -86,21 +92,27 @@ namespace DogHouse.Core.Logo
 
         private void LerpBackgroundColor(ref float TValue, Color StartColor, Color TargetColor)
         {
-            TValue += Time.deltaTime / BACKGROUND_LERP_TIME;
-            m_backgroundColor = Color.Lerp(StartColor, TargetColor, TValue);
+            TValue += deltaTime / BACKGROUND_LERP_TIME;
+            m_backgroundColor = Lerp(StartColor, TargetColor, TValue);
             m_camera.backgroundColor = m_backgroundColor;
         }
 
         private void LerpImageOut(ref float TValue)
         {
-            TValue += Time.deltaTime / IMAGE_LERP_TIME;
-            m_image.color = new Color(m_image.color.r, m_image.color.g, m_image.color.b, 1f - TValue);
+            TValue += deltaTime / IMAGE_LERP_TIME;
+            m_image.color = new Color(m_image.color.r, 
+                                      m_image.color.g, 
+                                      m_image.color.b, 
+                                      1f - TValue);
         }
 
         private void LerpImageIn(ref float TValue)
         {
-            TValue += Time.deltaTime / IMAGE_LERP_TIME;
-            m_image.color = new Color(m_image.color.r, m_image.color.g, m_image.color.b, TValue);
+            TValue += deltaTime / IMAGE_LERP_TIME;
+            m_image.color = new Color(m_image.color.r,
+                                      m_image.color.g, 
+                                      m_image.color.b, 
+                                      TValue);
         }
         #endregion
     }

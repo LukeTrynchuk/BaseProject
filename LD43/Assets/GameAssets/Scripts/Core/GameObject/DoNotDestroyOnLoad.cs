@@ -12,10 +12,7 @@ namespace DogHouse.Core.GameObject
     public class DoNotDestroyOnLoad : MonoBehaviour
     {
         #region Main Methods
-        void Start()
-        {
-            DontDestroyOnLoad(gameObject);
-        }
+        void Start() => DontDestroyOnLoad(gameObject);
         #endregion
     }
 }

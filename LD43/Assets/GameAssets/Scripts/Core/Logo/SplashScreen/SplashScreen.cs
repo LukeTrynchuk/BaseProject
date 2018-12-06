@@ -16,6 +16,6 @@ namespace DogHouse.Core.Logo
         [Range(2f, 10f)]
         public float TimeOnScreen;
 
-        public Vector2 m_imageSize;
+        public Vector2 m_imageSize;                                             //TODO : RENAME THIS!!!
     }
 }
