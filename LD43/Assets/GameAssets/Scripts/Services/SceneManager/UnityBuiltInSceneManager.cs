@@ -1,6 +1,8 @@
 ﻿using DogHouse.Core.Services;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static DogHouse.Core.Services.ServiceLocator;
+using static UnityEngine.SceneManagement.SceneManager;
 
 namespace DogHouse.Services
 {
@@ -38,26 +40,21 @@ namespace DogHouse.Services
         void OnEnable() 
         {
             RegisterService();
-
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            sceneLoaded -= OnSceneLoaded;
+            sceneLoaded += OnSceneLoaded;
         }
 
-        void OnDisable() => UnregisterService();
+        void OnDisable() 
+        {
+            UnregisterService();
+            sceneLoaded -= OnSceneLoaded;
+        }
 
         public void LoadSlideShowScene() => Load(LOGO_SCENE);
         public void LoadMainMenuScene() => Load(MAIN_MENU);
         public void LoadGameScene() => Load(GAME_SCENE);
-
-        public void RegisterService()
-        {
-            ServiceLocator.Register<ISceneManager>(this);
-        }
-
-        public void UnregisterService()
-        {
-            ServiceLocator.Unregister<ISceneManager>(this);
-        }
+        public void RegisterService() => Register<ISceneManager>(this);
+        public void UnregisterService() => Unregister<ISceneManager>(this);
         #endregion
 
         #region Utility Methods
@@ -71,7 +68,7 @@ namespace DogHouse.Services
         private void ExecuteLoad()
         {
             OnAboutToLoadNewScene?.Invoke();
-            SceneManager.LoadScene(m_currentScene);
+            LoadScene(m_currentScene);
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
