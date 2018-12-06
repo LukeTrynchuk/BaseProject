@@ -1,15 +1,10 @@
 ﻿using UnityEngine;
-using Silverback.SilverScaffold.Core.ServiceLocator;
-using Silverback.Phantom.Services;
 using UnityEditor;
-using System.Collections;
 using System.Collections.Generic;
-using System;
 using System.Linq;
 using System.IO;
-using System.Threading;
 
-namespace Silverback.Phantom.Tools
+namespace DogHouse.Core.Tools
 {
     /// <summary>
     /// ClownMaskGenerator is an editor tool that
@@ -22,8 +17,6 @@ namespace Silverback.Phantom.Tools
         private static List<TextureColorPair> m_pairs;
         private static TextureColorPair m_newPair;
         private static Vector2 m_vertScrollPos;
-        private static float m_progress = 0f;
-        private static bool m_generating = false;
         private static string m_path = "";
         #endregion
 
