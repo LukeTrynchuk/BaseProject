@@ -36,7 +36,7 @@ namespace DogHouse.General
 
         void Update()
         {
-            DetermineMovementVector();
+            CalculateMovementVector();
             //DetermineConfirmButtonPressed();                                  //TODO : Replace these. Automated input system
             //DetermineDeclineButtonPressed();
         }
@@ -46,15 +46,15 @@ namespace DogHouse.General
         #endregion
 
         #region Utility Methods
-        private void DetermineMovementVector()
+        private void CalculateMovementVector()
         {
-            CalculateMoveVector();
+            CalculateVector();
             if (m_moveVector.magnitude < 0.2f) return;
 
             OnMovementVectorCalculated?.Invoke(m_moveVector);
         }
 
-        private void DetermineConfirmButtonPressed()
+        private void CheckConfirmButtonPressed()
         {
             float confirmButton = 0f;
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
@@ -66,7 +66,7 @@ namespace DogHouse.General
             if (confirmButton > 05f) OnConfirmButtonPressed?.Invoke();
         }
 
-        private void DetermineDeclineButtonPressed()
+        private void CheckDeclineButtonPressed()
         {
 
             float declineButton = 0f;
@@ -81,7 +81,7 @@ namespace DogHouse.General
         #endregion
 
         #region Low Level Functions
-        private void CalculateMoveVector()
+        private void CalculateVector()
         {
             m_moveVector.x = GetAxis(HORIZONTAL_AXIS);
             m_moveVector.y = GetAxis(VERTICAL_AXIS);
