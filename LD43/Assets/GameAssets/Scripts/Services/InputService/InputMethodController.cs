@@ -8,7 +8,7 @@ namespace DogHouse.Services
     /// InputMethodManager is a component that controls
     /// which method of input is used.
     /// </summary>
-    public class InputMethodManager : MonoBehaviour
+    public class InputMethodController : MonoBehaviour
     {
         #region Private Variables
         [SerializeField]
@@ -31,7 +31,7 @@ namespace DogHouse.Services
 
         #region Main Methods
         private void OnEnable() => SwitchInputSystems();
-        private void Update()   => SwitchInputSystems();
+        private void Update() => SwitchInputSystems();
         #endregion
 
         #region Utility Methods

@@ -52,8 +52,8 @@ namespace DogHouse.Services
         void Update()
         {
             CalculateMovementVector();
-            DetectConfirmButtonPressed();
-            DetectDeclineButtonPressed();
+            CheckConfirmButtonPressed();
+            CheckDeclineButtonPressed();
         }
         #endregion
 
@@ -90,7 +90,7 @@ namespace DogHouse.Services
             }
         }
 
-        private void DetectConfirmButtonPressed()
+        private void CheckConfirmButtonPressed()
         {
             if(GetKeyUp(m_confirmKey))
             {
@@ -98,7 +98,7 @@ namespace DogHouse.Services
             }
         }
 
-        private void DetectDeclineButtonPressed()
+        private void CheckDeclineButtonPressed()
         {
             if(GetKeyUp(m_declineKey))
             {
