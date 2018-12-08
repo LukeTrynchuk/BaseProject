@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
-using static DogHouse.Core.Services.ServiceLocator;
+using DogHouse.Core.Services;
 
 namespace DogHouse.Services
 {
@@ -11,7 +11,7 @@ namespace DogHouse.Services
     /// service is responsible for keeping track 
     /// of the Main camera in the scene. 
     /// </summary>
-    public class CameraFinder : MonoBehaviour, ICameraFinder
+    public class CameraFinder : BaseService<ICameraFinder>, ICameraFinder
     {
         #region Public Variables
         public Camera Camera => FetchCamera();
@@ -26,11 +26,6 @@ namespace DogHouse.Services
         #endregion
 
         #region Main Methods
-        void OnEnable() => RegisterService();
-        void OnDisable() => UnregisterService();
-        public void RegisterService() => Register<ICameraFinder>(this);
-        public void UnregisterService() => Unregister<ICameraFinder>(this);
-
         void Start()
         {
             CameraFetchDelegates = new List<CameraDelegate>();
