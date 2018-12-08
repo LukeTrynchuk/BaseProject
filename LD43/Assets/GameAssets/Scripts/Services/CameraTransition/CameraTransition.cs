@@ -86,8 +86,8 @@ namespace DogHouse.Services
                 totalTime += deltaTime;
                 t = totalTime / time;
                 alpha = (isFadingIn) ? Lerp(0, 1, t) : Lerp(1, 0, t);
-
                 SetBackgroundAlpha(alpha);
+
                 yield return null;
 
             } while (t < 1f);
@@ -100,8 +100,9 @@ namespace DogHouse.Services
 
         private void SetBackgroundAlpha(float alpha)
         {
-            m_alpha = alpha;
             if (m_imageColorController == null) return;
+
+            m_alpha = alpha;
             Color imageColor = m_imageColorController.ImageColor;
             imageColor.a = m_alpha;
             m_imageColorController.SetColor(imageColor);

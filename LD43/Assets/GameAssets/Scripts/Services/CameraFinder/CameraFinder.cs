@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
 using static DogHouse.Core.Services.ServiceLocator;
 
 namespace DogHouse.Services
@@ -19,6 +20,9 @@ namespace DogHouse.Services
 
         #region Private Variables
         private Camera m_camera;
+
+        private delegate Camera CameraDelegate();
+        private List<CameraDelegate> CameraFetchDelegates;
         #endregion
 
         #region Main Methods
@@ -27,25 +31,26 @@ namespace DogHouse.Services
         public void RegisterService() => Register<ICameraFinder>(this);
         public void UnregisterService() => Unregister<ICameraFinder>(this);
 
+        void Start()
+        {
+            CameraFetchDelegates = new List<CameraDelegate>();
+            CameraFetchDelegates.Add(new CameraDelegate(FetchMainCamera));
+            CameraFetchDelegates.Add(new CameraDelegate(FetchAnyCamera));
+        }
+
         private Camera FetchCamera()
         {
-            if(m_camera != null) 
-            {
-                return m_camera;
-            }
+            if(m_camera != null) return m_camera;
 
-            m_camera = FetchMainCamera();
-            if(m_camera != null)
+            foreach(CameraDelegate cameraDelegate in CameraFetchDelegates)
             {
+                m_camera = cameraDelegate.Invoke();
+                if (m_camera == null) continue;
+
                 OnNewCameraFound?.Invoke(m_camera);
                 return m_camera;
             }
 
-            m_camera = FetchAnyCamera();
-            if(m_camera != null)
-            {
-                OnNewCameraFound?.Invoke(m_camera);
-            }
             return m_camera;
         }
 
@@ -61,7 +66,7 @@ namespace DogHouse.Services
 
         private Camera FetchAnyCamera()
         {
-            Camera[] cameras = FindObjectsOfType<Camera>();
+            Camera[] cameras = GameObject.FindObjectsOfType<Camera>();
             return cameras.Length > 0 ? cameras[0] : null;
         }
         #endregion

@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 using static DogHouse.Core.Services.ServiceLocator;
 using static UnityEngine.Input;
+using static UnityEngine.Vector2;
 
 namespace DogHouse.Services
 {
@@ -10,6 +12,9 @@ namespace DogHouse.Services
     /// of the input service using the keyboard and
     /// mouse and devices.
     /// </summary>
+
+    //private delegate 
+
     public class KeyboardAndMouseInput : MonoBehaviour, IInputService
     {
         #region Public Variables
@@ -39,8 +44,10 @@ namespace DogHouse.Services
         [SerializeField]
         private KeyCode m_declineKey = KeyCode.A;
 
-        private Vector2 m_movementVector = new Vector2();
         private const float INPUT_DEADZONE = 0.2f;
+
+        private delegate void InputMethod();
+        private List<InputMethod> m_inputMethods;
         #endregion
 
         #region Main Methods
@@ -49,50 +56,36 @@ namespace DogHouse.Services
         public void RegisterService() => Register<IInputService>(this);
         public void UnregisterService() => Unregister<IInputService>(this);
 
+        void Start()
+        {
+            m_inputMethods = new List<InputMethod>();
+            m_inputMethods.Add(new InputMethod(CalculateMovementVector));
+            m_inputMethods.Add(new InputMethod(CheckConfirmButtonPressed));
+            m_inputMethods.Add(new InputMethod(CheckDeclineButtonPressed));
+        }
+
         void Update()
         {
-            CalculateMovementVector();
-            CheckConfirmButtonPressed();
-            CheckDeclineButtonPressed();
+            foreach (InputMethod method in m_inputMethods)
+                method?.Invoke();
         }
         #endregion
 
         #region Utility Methods
         private void CalculateMovementVector()
         {
-            m_movementVector.x = 0;
-            m_movementVector.y = 0;
+            Vector2 movementVec = CalculateRawAxisMovement();
+            movementVec.Normalize();
 
-            if(GetKeyDown(m_movementUpKey))
+            if (movementVec.magnitude > INPUT_DEADZONE)
             {
-                m_movementVector += Vector2.up;
-            }
-
-            if (GetKeyDown(m_movementLeftKey))
-            {
-                m_movementVector += Vector2.left;
-            }
-
-            if (GetKeyDown(m_movementDownKey))
-            {
-                m_movementVector += Vector2.down;
-            }
-
-            if (GetKeyDown(m_movementRightKey))
-            {
-                m_movementVector += Vector2.right;
-            }
-
-            m_movementVector.Normalize();
-            if(m_movementVector.magnitude > INPUT_DEADZONE)
-            {
-                OnMovementVectorCalculated?.Invoke(m_movementVector);
+                OnMovementVectorCalculated?.Invoke(movementVec);
             }
         }
 
         private void CheckConfirmButtonPressed()
         {
-            if(GetKeyUp(m_confirmKey))
+            if (GetKeyUp(m_confirmKey))
             {
                 OnConfirmButtonPressed?.Invoke();
             }
@@ -100,10 +93,22 @@ namespace DogHouse.Services
 
         private void CheckDeclineButtonPressed()
         {
-            if(GetKeyUp(m_declineKey))
+            if (GetKeyUp(m_declineKey))
             {
                 OnDeclineButtonPressed?.Invoke();
             }
+        }
+        #endregion
+
+        #region Low Level Functions
+        private Vector2 CalculateRawAxisMovement()
+        {
+            Vector2 vec = new Vector2();
+            if (GetKeyDown(m_movementUpKey)) vec += up;
+            if (GetKeyDown(m_movementLeftKey)) vec += left;
+            if (GetKeyDown(m_movementDownKey)) vec += down;
+            if (GetKeyDown(m_movementRightKey)) vec += right;
+            return vec;
         }
         #endregion
     }

@@ -38,6 +38,8 @@ namespace DogHouse.Core.Logo
         #endregion
 
         #region Utility Methods
+        //Normally, a method should only have up to 1 level of indentation. I
+        //make the exception for Coroutines.
         private IEnumerator _PlaySequence()
         {
             float tValue = 0f;
