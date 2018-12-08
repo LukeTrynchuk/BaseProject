@@ -10,7 +10,7 @@ namespace DogHouse.Services
     /// UnityBuiltInSceneManager will use the built
     /// in Unity Scene Manager to load new scenes.
     /// </summary>
-    public class UnityBuiltInSceneManager : MonoBehaviour, ISceneManager
+    public class UnityBuiltInSceneManager : BaseService<ISceneManager>, ISceneManager
     {
         #region Public Variables
         public event System.Action OnAboutToLoadNewScene;
@@ -40,24 +40,22 @@ namespace DogHouse.Services
         #endregion
 
         #region Main Methods
-        void OnEnable() 
+        public override void OnEnable() 
         {
-            RegisterService();
+            base.OnEnable();
             sceneLoaded -= HandleSceneLoaded;
             sceneLoaded += HandleSceneLoaded;
         }
 
-        void OnDisable() 
+        public override void OnDisable() 
         {
-            UnregisterService();
+            base.OnDisable();
             sceneLoaded -= HandleSceneLoaded;
         }
 
         public void LoadSlideShowScene() => Load(LOGO_SCENE);
         public void LoadMainMenuScene() => Load(MAIN_MENU);
         public void LoadGameScene() => Load(GAME_SCENE);
-        public void RegisterService() => Register<ISceneManager>(this);
-        public void UnregisterService() => Unregister<ISceneManager>(this);
         #endregion
 
         #region Utility Methods
