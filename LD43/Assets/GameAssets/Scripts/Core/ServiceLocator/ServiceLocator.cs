@@ -42,12 +42,19 @@ namespace DogHouse.Core.Services
 		#endregion
 
 		#region Main Methods
-		public static void Register < T >(T service)
+        public static void Register < T >(T service)
 		{
             if (CheckServiceIsRegistered<T>())  ReplaceServiceInstance<T>(service);
             if (!CheckServiceIsRegistered<T>()) SetServiceInstance    <T>(service);
             DispatchRegistrationHandles <T>();
 		}
+
+        public static void Register(string typeName, object service)
+        {
+            if (CheckServiceIsRegisterd(typeName)) ReplaceServiceInstance(typeName, service);
+            if (!CheckServiceIsRegisterd(typeName)) SetServiceInstance(typeName, service);
+            DispatchRegistrationHandles(typeName);
+        }
 
 		public static void Unregister<T>(object Service)
 		{
@@ -58,10 +65,26 @@ namespace DogHouse.Core.Services
             UnregisterService<T>();
 		}
 
+        public static void Unregister(string typeName, object service)
+        {
+            if (!CheckServiceIsRegisterd(typeName)) return;
+            if (FetchServiceObject(typeName) == null) return;
+            if (!FetchServiceObject(typeName).Equals(service)) return;
+
+            UnregisterService(typeName);
+        }
+
 		public static T FetchService <T>() =>
                 CheckServiceIsRegistered<T>() 
                     ? FetchServiceInstance<T>() 
                     : default(T);
+
+        private static object FetchServiceObject(string typeName)
+        {
+            return CheckServiceIsRegisterd(typeName)
+                ? FetchServiceInstance(typeName)
+                : null;
+        }
 
 		public static void AddRegistrationHandler<T>(Action callback)
 		{
@@ -77,11 +100,23 @@ namespace DogHouse.Core.Services
             m_serviceDictionary[typeof(T).Name] = NewService;
 		}
 
+        private static void ReplaceServiceInstance(string typeName, object newService)
+        {
+            SendServiceReplacementWarning(typeName);
+            m_serviceDictionary[typeName] = newService;
+        }
+
 		private static void DispatchRegistrationHandles<T>()
 		{
             if (!CheckHandleIsRegistered<T>()) return;
 		    DispatchHandles (m_callbackDictionary [typeof(T).Name]);
 		}
+
+        private static void DispatchRegistrationHandles(string typeName)
+        {
+            if (!CheckHandleIsRegistered(typeName)) return;
+            DispatchHandles(m_callbackDictionary[typeName]);
+        }
 		#endregion
 
 		#region Low Level Functions
@@ -113,24 +148,51 @@ namespace DogHouse.Core.Services
 			foreach (Action handle in Handles) handle?.Invoke();
 		}
 
+
         private static bool CheckHandleIsRegistered<T>()        =>
             m_callbackDictionary.ContainsKey(typeof(T).Name);
+
+        private static bool CheckHandleIsRegistered(string typeName) =>
+            m_callbackDictionary.ContainsKey(typeName);
+
+
 
 		private static void UnregisterService<T>()              =>
 			m_serviceDictionary [typeof(T).Name] = default(T);
 
+        private static void UnregisterService(string typeName) =>
+            m_serviceDictionary[typeName] = null;
+
+
+
         private static void SendServiceReplacementWarning<T>()  =>
             LogWarning($"Service : {typeof(T).Name} is being replaced.");
+
+        private static void SendServiceReplacementWarning(string typeName) =>
+            LogWarning($"Service : {typeName} is being replaced.");
+
+
 
         private static bool CheckServiceIsRegistered<T>()       =>
             m_serviceDictionary.ContainsKey(typeof(T).Name);
 
+        private static bool CheckServiceIsRegisterd(string typeName) =>
+            m_serviceDictionary.ContainsKey(typeName);
+
+
+
         private static T FetchServiceInstance<T>()              =>
             (T)m_serviceDictionary[typeof(T).Name];
+
+        private static object FetchServiceInstance(string typeName) =>
+            m_serviceDictionary[typeName];
+
 
         private static void SetServiceInstance<T>(T instance)   =>
             m_serviceDictionary[typeof(T).Name] = instance;
 
+        private static void SetServiceInstance(string typeName, object service) =>
+            m_serviceDictionary[typeName] = service;
         #endregion
     }
 }

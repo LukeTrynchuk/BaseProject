@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using DogHouse.Core.UI;
-using static DogHouse.Core.Services.ServiceLocator;
+using DogHouse.Core.Services;
 using static UnityEngine.Mathf;
 using static UnityEngine.Time;
 
@@ -16,7 +16,7 @@ namespace DogHouse.Services
     /// for things such as transitioning between scenes
     /// or menus.
     /// </summary>
-    public class CameraTransition : MonoBehaviour, ICameraTransition
+    public class CameraTransition : BaseService<ICameraTransition>, ICameraTransition
     {
         #region Public Variables
         public CameraTransitionState State => m_state;
@@ -37,16 +37,11 @@ namespace DogHouse.Services
         #endregion
 
         #region Main Methods
-        public void OnEnable() 
+        void Start()
         {
-            RegisterService();
             m_imageColorController = m_fadeObject
                 .GetComponent<ImageColorController>();
         }
-
-        void OnDisable() => UnregisterService();
-        public void RegisterService() => Register<ICameraTransition>(this);
-        public void UnregisterService() => Unregister<ICameraTransition>(this);
 
         public void FadeIn(float Time)
         {

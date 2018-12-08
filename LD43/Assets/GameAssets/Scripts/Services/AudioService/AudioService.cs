@@ -4,7 +4,6 @@ using UnityEngine;
 using DogHouse.Core.Audio;
 using System.Linq;
 using UnityEngine.Audio;
-using static DogHouse.Core.Services.ServiceLocator;
 
 namespace DogHouse.Services
 {
@@ -15,7 +14,7 @@ namespace DogHouse.Services
     /// each with an audio source to play multiple
     /// audio files at once.
     /// </summary>
-    public class AudioService : MonoBehaviour, IAudioService
+    public class AudioService : BaseService<IAudioService>, IAudioService
     {
         #region Private Variables
         [SerializeField]
@@ -41,17 +40,17 @@ namespace DogHouse.Services
         #endregion
 
         #region Main Methods
-        void OnEnable()
+        public override void OnEnable()
         {
             GenerateAudioChannels();
             InitializeStopOnLoadAudioAssets();
-            RegisterService();
             m_sceneManager.AddRegistrationHandle(HandleSceneManagerRegistered);
+            base.OnEnable();
         }
 
-        void OnDisable()
+        public override void OnDisable()
         {
-            UnregisterService();
+            base.OnDisable();
 
             if(m_sceneManager.CheckServiceRegistered())
             {
@@ -59,9 +58,6 @@ namespace DogHouse.Services
                               -= HandleAboutToLoadScene;
             }
         }
-
-        public void UnregisterService() => Unregister<IAudioService>(this);
-        public void RegisterService()   => Register<IAudioService>(this);
 
         public void Play(string AssetID)
         {

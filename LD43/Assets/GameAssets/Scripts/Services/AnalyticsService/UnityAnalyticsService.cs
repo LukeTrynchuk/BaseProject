@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Analytics;
-using static DogHouse.Core.Services.ServiceLocator;
+using DogHouse.Core.Services;
 
 namespace DogHouse.Services
 {
@@ -11,7 +10,7 @@ namespace DogHouse.Services
     /// is responsible for implementing a system to
     /// send analytics data to a remote server.
     /// </summary>
-    public class UnityAnalyticsService : MonoBehaviour, IAnalyticsService
+    public class UnityAnalyticsService : BaseService<IAnalyticsService>, IAnalyticsService
     {
         #region Private Variables
         private const string m_version = "0.1";                                 //TODO : This will be fetched from a VersionService in the future
@@ -29,10 +28,6 @@ namespace DogHouse.Services
         #endregion
 
         #region Main Methods
-        void OnEnable()                           => RegisterService();
-        void OnDisable()                          => UnregisterService();
-        public void RegisterService()             => Register<IAnalyticsService>(this);
-        public void UnregisterService()           => Unregister<IAnalyticsService>(this);
         public void SendGameStartEvent()          => SendEvent(GAME_START);
         public void SendLogosStartEvent()         => SendEvent(LOGO_START);
         public void SendLogosEndEvent()           => SendEvent(LOGO_END);

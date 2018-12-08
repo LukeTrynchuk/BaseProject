@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
-using static DogHouse.Core.Services.ServiceLocator;
+using DogHouse.Core.Services;
 
 namespace DogHouse.Services
 {
@@ -12,7 +12,7 @@ namespace DogHouse.Services
     /// the built in unity controls to control the audio
     /// levels.
     /// </summary>
-    public class AudioMixerService : MonoBehaviour, IAudioMixerService
+    public class AudioMixerService : BaseService<IAudioMixerService>, IAudioMixerService
     {
         #region Private Variables
         [SerializeField]
@@ -23,16 +23,11 @@ namespace DogHouse.Services
         #endregion
 
         #region Main Methods
-        void OnEnable()  => RegisterService();
-
-        void OnDisable() 
+        public override void OnDisable() 
         {
-            UnregisterService();
+            base.OnDisable();
             StopAllCoroutines();
         }
-
-        public void RegisterService() => Register<IAudioMixerService>(this);
-        public void UnregisterService() => Unregister<IAudioMixerService>(this);
 
         public void TransitionToGameMix(float time, Action callback = null)
         {
