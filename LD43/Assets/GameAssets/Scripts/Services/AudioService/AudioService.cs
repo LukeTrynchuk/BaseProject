@@ -118,15 +118,9 @@ namespace DogHouse.Services
             source.priority = (int)asset.Priority;
             source.loop = asset.Loop;
 
-            if(asset.AudioType == AudioChannel.MUSIC)
-            {
-                source.outputAudioMixerGroup = m_musicGroup;
-            }
-
-            if(asset.AudioType == AudioChannel.SFX)
-            {
-                source.outputAudioMixerGroup = m_sfxGroup;
-            }
+            source.outputAudioMixerGroup = (asset.AudioType == AudioChannel.MUSIC)
+                ? m_musicGroup
+                : m_sfxGroup;
 
             source.Play();
         }
