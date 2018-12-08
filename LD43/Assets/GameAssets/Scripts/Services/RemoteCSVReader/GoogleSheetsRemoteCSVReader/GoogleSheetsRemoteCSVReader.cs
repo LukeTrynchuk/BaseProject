@@ -1,6 +1,5 @@
-﻿using UnityEngine;
+﻿using DogHouse.Core.Services;
 using static GoSheets;
-using static DogHouse.Core.Services.ServiceLocator;
 
 namespace DogHouse.Services
 {
@@ -9,14 +8,10 @@ namespace DogHouse.Services
     /// of the IRemoteCSVReader. It uses the google
     /// sheets to read from a csv sheet.
     /// </summary>
-    public class GoogleSheetsRemoteCSVReader : MonoBehaviour, IRemoteCSVReader
+    public class GoogleSheetsRemoteCSVReader : BaseService<IRemoteCSVReader>, IRemoteCSVReader
     {
         #region Main Methods
         public string[][] FetchRemoteCSV(string url) => GetGoogleSheet(url);
-        void OnEnable() => RegisterService();
-        void OnDisable() => UnregisterService();
-        public void UnregisterService() => Unregister<IRemoteCSVReader>(this);
-        public void RegisterService() => Register<IRemoteCSVReader>(this);
         #endregion
     }
 }
