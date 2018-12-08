@@ -11,12 +11,12 @@ namespace DogHouse.Core.Services
     public abstract class BaseService<T> : MonoBehaviour, IService where T : IService
     {
         #region Main Methods
-        protected void OnEnable()
+        public virtual void OnEnable()
         {
             RegisterService();
         }
 
-        protected void OnDisable()
+        public virtual void OnDisable()
         {
             UnregisterService();
         }

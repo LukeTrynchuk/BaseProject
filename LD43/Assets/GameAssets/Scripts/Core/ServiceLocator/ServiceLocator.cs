@@ -71,7 +71,7 @@ namespace DogHouse.Core.Services
             if (FetchServiceObject(typeName) == null) return;
             if (!FetchServiceObject(typeName).Equals(service)) return;
 
-            Unregister(typeName, service);
+            UnregisterService(typeName);
         }
 
 		public static T FetchService <T>() =>
