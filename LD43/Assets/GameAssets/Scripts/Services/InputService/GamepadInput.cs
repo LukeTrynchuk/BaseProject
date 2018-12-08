@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections;
 using DogHouse.Services;
 using UnityEngine;
 using static UnityEngine.Input;
@@ -28,17 +30,25 @@ namespace DogHouse.General
         private const string CONFIRM_OSX = "ConfirmButton_OSX";
         private const string DECLINE_WIN = "DeclineButton_WIN";
         private const string DECLINE_OSX = "DeclineButton_OSX";
+
+        private delegate void InputMethod();
+        private List<InputMethod> m_inputMethods;
         #endregion
 
         #region Main Methods
         void OnEnable() => RegisterService();
         void OnDisable() => UnregisterService();
 
+        void Start()
+        {
+            m_inputMethods = new List<InputMethod>();
+            m_inputMethods.Add(new InputMethod(CalculateMovementVector));
+        }
+
         void Update()
         {
-            CalculateMovementVector();
-            //DetermineConfirmButtonPressed();                                  //TODO : Replace these. Automated input system
-            //DetermineDeclineButtonPressed();
+            foreach (InputMethod method in m_inputMethods)
+                method?.Invoke();
         }
 
         public void RegisterService()   => Register<IInputService>(this);
@@ -68,7 +78,6 @@ namespace DogHouse.General
 
         private void CheckDeclineButtonPressed()
         {
-
             float declineButton = 0f;
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             declineButton = GetAxis(DECLINE_WIN);

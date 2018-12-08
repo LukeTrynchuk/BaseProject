@@ -11,9 +11,6 @@ namespace DogHouse.Services
     /// service is responsible for keeping track 
     /// of the Main camera in the scene. 
     /// </summary>
-
-    public delegate Camera CameraDelegate();
-
     public class CameraFinder : MonoBehaviour, ICameraFinder
     {
         #region Public Variables
@@ -23,6 +20,8 @@ namespace DogHouse.Services
 
         #region Private Variables
         private Camera m_camera;
+
+        private delegate Camera CameraDelegate();
         private List<CameraDelegate> CameraFetchDelegates;
         #endregion
 
