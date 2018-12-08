@@ -32,22 +32,25 @@ namespace DogHouse.Services
         private const string LOGO_SCENE = "LogoSlideShow";
         private const string MAIN_MENU = "MainMenu";
         private const string GAME_SCENE = "Game";
+        private const float FADE_TIME_SCALAR = 0.75f;
 
         private string m_currentScene = "";
+
+        private float m_audioMixTime => m_fadeTime * FADE_TIME_SCALAR;
         #endregion
 
         #region Main Methods
         void OnEnable() 
         {
             RegisterService();
-            sceneLoaded -= OnSceneLoaded;
-            sceneLoaded += OnSceneLoaded;
+            sceneLoaded -= HandleSceneLoaded;
+            sceneLoaded += HandleSceneLoaded;
         }
 
         void OnDisable() 
         {
             UnregisterService();
-            sceneLoaded -= OnSceneLoaded;
+            sceneLoaded -= HandleSceneLoaded;
         }
 
         public void LoadSlideShowScene() => Load(LOGO_SCENE);
@@ -61,7 +64,7 @@ namespace DogHouse.Services
         private void Load(string sceneName)
         {
             m_currentScene = sceneName;
-            m_audioMixerService.Reference?.TransitionToTransitionMix(m_fadeTime * 0.75f);
+            m_audioMixerService.Reference?.TransitionToTransitionMix(m_audioMixTime);
             m_cameraTransition.Reference?.FadeIn(m_fadeTime, ExecuteLoad);
         }
 
@@ -71,10 +74,10 @@ namespace DogHouse.Services
             LoadScene(m_currentScene);
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             m_cameraTransition.Reference?.FadeOut(m_fadeTime);
-            m_audioMixerService.Reference?.TransitionToGameMix(m_fadeTime * 0.75f);
+            m_audioMixerService.Reference?.TransitionToGameMix(m_audioMixTime);
             m_analytcsService.Reference?.SendSceneLoadedEvent(scene.name);
         }
         #endregion
