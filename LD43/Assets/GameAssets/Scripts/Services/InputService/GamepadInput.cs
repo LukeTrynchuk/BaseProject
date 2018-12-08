@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
 using DogHouse.Services;
+using DogHouse.Core.Services;
 using UnityEngine;
 using static UnityEngine.Input;
-using static DogHouse.Core.Services.ServiceLocator;
 
 namespace DogHouse.General
 {
@@ -13,7 +12,7 @@ namespace DogHouse.General
     /// the input service. The gamepad input uses
     /// a game pad for input.
     /// </summary>
-    public class GamepadInput : MonoBehaviour, IInputService
+    public class GamepadInput : BaseService<IInputService>, IInputService
     {
         #region Public Variables
         public event Action<Vector2> OnMovementVectorCalculated;
@@ -36,9 +35,6 @@ namespace DogHouse.General
         #endregion
 
         #region Main Methods
-        void OnEnable() => RegisterService();
-        void OnDisable() => UnregisterService();
-
         void Start()
         {
             m_inputMethods = new List<InputMethod>();
@@ -50,9 +46,6 @@ namespace DogHouse.General
             foreach (InputMethod method in m_inputMethods)
                 method?.Invoke();
         }
-
-        public void RegisterService()   => Register<IInputService>(this);
-        public void UnregisterService() => Unregister<IInputService>(this);
         #endregion
 
         #region Utility Methods

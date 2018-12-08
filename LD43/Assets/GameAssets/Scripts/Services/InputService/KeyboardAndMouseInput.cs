@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
-using static DogHouse.Core.Services.ServiceLocator;
+using DogHouse.Core.Services;
 using static UnityEngine.Input;
 using static UnityEngine.Vector2;
 
@@ -12,10 +12,7 @@ namespace DogHouse.Services
     /// of the input service using the keyboard and
     /// mouse and devices.
     /// </summary>
-
-    //private delegate 
-
-    public class KeyboardAndMouseInput : MonoBehaviour, IInputService
+    public class KeyboardAndMouseInput : BaseService<IInputService>, IInputService
     {
         #region Public Variables
         public event Action<Vector2> OnMovementVectorCalculated;
@@ -51,11 +48,6 @@ namespace DogHouse.Services
         #endregion
 
         #region Main Methods
-        void OnEnable() => RegisterService();
-        void OnDisable() => UnregisterService();
-        public void RegisterService() => Register<IInputService>(this);
-        public void UnregisterService() => Unregister<IInputService>(this);
-
         void Start()
         {
             m_inputMethods = new List<InputMethod>();
