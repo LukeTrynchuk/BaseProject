@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 using DogHouse.Core.UI;
 using DogHouse.Core.Services;
@@ -34,6 +33,12 @@ namespace DogHouse.Services
 
         private bool CanFadeIn => m_state == CameraTransitionState.IDLE_OUT;
         private bool CanFadeOut => m_state == CameraTransitionState.IDLE_IN;
+
+        private float m_totalTime = 0f;
+        private float m_transitionTime = 0f;
+        private Action m_callback = null;
+        private bool m_fadingIn = false;
+        private Color m_imageColor = default(Color);
         #endregion
 
         #region Main Methods
@@ -43,64 +48,75 @@ namespace DogHouse.Services
                 .GetComponent<ImageColorController>();
         }
 
+        void Update()
+        {
+            if (m_state != CameraTransitionState.TRANSITIONING) return;
+            TransitionCamera();
+        }
+
         public void FadeIn(float Time)
         {
             if (!CanFadeIn) return;
-            StartCoroutine(TransitionCamera(Time, true));
+            m_transitionTime = Time;
+            m_fadingIn = true;
+            m_totalTime = 0f;
+            m_state = CameraTransitionState.TRANSITIONING;
         }
 
         public void FadeIn(float Time, Action callback)
         {
             if (!CanFadeIn) return;
-            StartCoroutine(TransitionCamera(Time, true, callback));
+            m_transitionTime = Time;
+            m_callback = callback;
+            m_fadingIn = true;
+            m_totalTime = 0f;
+            m_state = CameraTransitionState.TRANSITIONING;
         }
 
         public void FadeOut(float Time)
         {
             if (!CanFadeOut) return;
-            StartCoroutine(TransitionCamera(Time, false));
+            m_transitionTime = Time;
+            m_fadingIn = false;
+            m_totalTime = 0f;
+            m_state = CameraTransitionState.TRANSITIONING;
         }
 
         public void FadeOut(float Time, Action callback)
         {
             if (!CanFadeOut) return;
-            StartCoroutine(TransitionCamera(Time, false, callback));
+            m_transitionTime = Time;
+            m_callback = callback;
+            m_fadingIn = false;
+            m_totalTime = 0f;
+            m_state = CameraTransitionState.TRANSITIONING;
         }
         #endregion
 
         #region Utility Methods
-        private IEnumerator TransitionCamera(float time, bool isFadingIn, Action callback = null)
+        private void TransitionCamera()
         {
-            m_state = CameraTransitionState.TRANSITIONING;
-            float totalTime = 0f;
-            float t = 0f;
-            float alpha = 0f;
+            m_totalTime += deltaTime;
+            m_alpha = (m_fadingIn) ? Lerp(0, 1, m_totalTime / m_transitionTime) :
+                Lerp(1, 0, m_totalTime / m_transitionTime);
+            SetBackgroundAlpha();
 
-            do
+            if(m_totalTime / m_transitionTime >= 1f)
             {
-                totalTime += deltaTime;
-                t = totalTime / time;
-                alpha = (isFadingIn) ? Lerp(0, 1, t) : Lerp(1, 0, t);
-                SetBackgroundAlpha(alpha);
+                m_state = (m_fadingIn) ? CameraTransitionState.IDLE_IN 
+                                       : CameraTransitionState.IDLE_OUT;
 
-                yield return null;
-
-            } while (t < 1f);
-
-            m_state = (isFadingIn) ? CameraTransitionState.IDLE_IN 
-                                   : CameraTransitionState.IDLE_OUT;
-
-            callback?.Invoke();
+                m_callback?.Invoke();
+            }
         }
 
-        private void SetBackgroundAlpha(float alpha)
+        private void SetBackgroundAlpha()
         {
             if (m_imageColorController == null) return;
 
-            m_alpha = alpha;
-            Color imageColor = m_imageColorController.ImageColor;
-            imageColor.a = m_alpha;
-            m_imageColorController.SetColor(imageColor);
+            m_imageColor = m_imageColorController.ImageColor;
+            m_imageColor.a = m_alpha;
+            m_imageColorController.SetColor(m_imageColor);
         }
         #endregion
     }
