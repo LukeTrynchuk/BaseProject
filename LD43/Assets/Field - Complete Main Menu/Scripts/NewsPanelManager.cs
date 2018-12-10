@@ -51,7 +51,11 @@ namespace Michsky.UI.FieldCompleteMainMenu
             if (newPanel == sizeOfList)
             {
                 nextPanelAnimator = nextPanel.GetComponent<Animator>();
-                nextPanelAnimator.Play(panelFadeOut);
+
+                if(nextPanelAnimator.enabled && nextPanelAnimator.gameObject.activeSelf && nextPanelAnimator.isActiveAndEnabled)
+                {
+                    nextPanelAnimator?.Play(panelFadeOut);
+                }
 
                 newPanel = 0;
                 currentPanelIndex = 0;
@@ -59,7 +63,11 @@ namespace Michsky.UI.FieldCompleteMainMenu
                 nextPanel = panels[currentPanelIndex];
 
                 nextPanelAnimator = nextPanel.GetComponent<Animator>();
-                nextPanelAnimator.Play(panelFadeIn);
+
+                if(nextPanelAnimator.enabled && nextPanelAnimator.gameObject.activeSelf && nextPanelAnimator.isActiveAndEnabled)
+                {
+                    nextPanelAnimator?.Play(panelFadeIn);
+                }
             }
 
             else
@@ -74,8 +82,15 @@ namespace Michsky.UI.FieldCompleteMainMenu
 
                 nextPanelAnimator = nextPanel.GetComponent<Animator>();
 
-                currentPanelAnimator.Play(panelFadeOut);
-                nextPanelAnimator.Play(panelFadeIn);
+                if(currentPanelAnimator.enabled && currentPanelAnimator.gameObject.activeSelf && currentPanelAnimator.isActiveAndEnabled)
+                {
+                    currentPanelAnimator?.Play(panelFadeOut);
+                }
+
+                if(nextPanelAnimator.enabled && nextPanelAnimator.gameObject.activeSelf && currentPanelAnimator.isActiveAndEnabled)
+                {
+                    nextPanelAnimator?.Play(panelFadeIn);
+                }
 
                 newPanel += 1;
             }

@@ -12,10 +12,10 @@ namespace DogHouse.Core.Mono
     {
         #region Private Variables
         [SerializeField]
-        private UnityEvent m_onEnable;
+        private UnityEvent m_onEnable = default(UnityEvent);
 
         [SerializeField]
-        private UnityEvent m_onDisable;
+        private UnityEvent m_onDisable = default(UnityEvent);
         #endregion
 
         #region Main Methods
