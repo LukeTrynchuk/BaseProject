@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Collections;
+using DogHouse.Core.Data;
 using static UnityEngine.Time;
 using static UnityEngine.Color;
 
@@ -16,21 +17,31 @@ namespace DogHouse.Core.Logo
     {
         #region Private Variables
         [SerializeField]
-        private Camera m_camera = null;
+        private Logos m_logos;
 
-        [SerializeField]
-        private Image m_image = null;
+        //Logo Player
+            //Image Displayer
+                //Camera Package
+                    [SerializeField]
+                    private Camera m_camera = null;
+                    private Color m_backgroundColor = black;
 
-        [SerializeField]
-        private SplashScreen[] m_splashImages = null;
+                //Image Field
+                    [SerializeField]
+                    private Image m_image = null;
 
+            //Splash Screen Content
+                //Logo(s)
+                    [SerializeField]
+                    private SplashScreen[] m_splashImages = null;
+
+                //Logo Settings
+                    private const float BACKGROUND_LERP_TIME = 1f;
+                    private const float IMAGE_LERP_TIME = 0.5f;
+        
+        //Event Package
         [SerializeField]
         private UnityEvent m_onFinishedSplashImages = null;
-
-        private Color m_backgroundColor = black;
-
-        private const float BACKGROUND_LERP_TIME = 1f;
-        private const float IMAGE_LERP_TIME = 0.5f;
         #endregion
 
         #region Main Methods

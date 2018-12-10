@@ -155,6 +155,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a36f5a922d1843fca4b60b1ab3549e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_logos:
+    m_logos:
+    - m_logo: {fileID: 0}
   m_camera: {fileID: 1577758439}
   m_image: {fileID: 1124490114}
   m_splashImages:
