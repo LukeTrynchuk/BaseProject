@@ -19,16 +19,6 @@ namespace Michsky.UI.FieldCompleteMainMenu
         public void Login()
         {
             switchPanelMain.Animate();
-            /*
-            if (usernameText.text == username && passwordText.text == password)
-            {
-            }
-            else
-            {
-                wrongAnimator.Play("Notification In");
-                soundScript.Notification();
-            }
-            */
         }
     }
 }

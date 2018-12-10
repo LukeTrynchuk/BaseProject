@@ -60,31 +60,48 @@ namespace Michsky.UI.FieldCompleteMainMenu
             }
         }
 
+        private void OnDisable()
+        {
+            CancelInvoke();
+        }
+
         public void PanelAnim(int newPanel)
         {
-            if (newPanel != currentPanelIndex)
+            if (newPanel == currentPanelIndex) return;
+
+            panels[newPanel].SetActive(true);
+
+            currentPanel = panels[currentPanelIndex];
+
+            currentPanelIndex = newPanel;
+            nextPanel = panels[currentPanelIndex];
+
+            currentPanelAnimator = currentPanel.GetComponent<Animator>();
+            nextPanelAnimator = nextPanel.GetComponent<Animator>();
+
+            currentPanelAnimator.Play(panelFadeOut);
+            nextPanelAnimator.Play(panelFadeIn);
+
+            currentButton = buttons[currentButtonlIndex];
+
+            currentButtonlIndex = newPanel;
+            nextButton = buttons[currentButtonlIndex];
+
+            currentButtonAnimator = currentButton.GetComponent<Animator>();
+            nextButtonAnimator = nextButton.GetComponent<Animator>();
+
+            currentButtonAnimator.Play(buttonFadeOut);
+            nextButtonAnimator.Play(buttonFadeIn);
+
+
+            Invoke(nameof(TurnOffOtherPanels), 0.25f);
+        }
+
+        private void TurnOffOtherPanels()
+        {
+            for (int i = 0; i < panels.Count; i++)
             {
-                currentPanel = panels[currentPanelIndex];
-
-                currentPanelIndex = newPanel;
-                nextPanel = panels[currentPanelIndex];
-
-                currentPanelAnimator = currentPanel.GetComponent<Animator>();
-                nextPanelAnimator = nextPanel.GetComponent<Animator>();
-
-                currentPanelAnimator.Play(panelFadeOut);
-                nextPanelAnimator.Play(panelFadeIn);
-
-                currentButton = buttons[currentButtonlIndex];
-
-                currentButtonlIndex = newPanel;
-                nextButton = buttons[currentButtonlIndex];
-
-                currentButtonAnimator = currentButton.GetComponent<Animator>();
-                nextButtonAnimator = nextButton.GetComponent<Animator>();
-
-                currentButtonAnimator.Play(buttonFadeOut);
-                nextButtonAnimator.Play(buttonFadeIn);
+                panels[i].SetActive(i == currentPanelIndex);
             }
         }
     }

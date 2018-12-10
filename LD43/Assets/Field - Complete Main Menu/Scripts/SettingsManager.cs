@@ -69,7 +69,12 @@ namespace Michsky.UI.FieldCompleteMainMenu
             }
         }
 
-        void Start()
+        public void Reset()
+        {
+            ResetData();
+        }
+
+        private void ResetData()
         {
             currentButton = buttons[currentPanelIndex];
             currentButtonAnimator = currentButton.GetComponent<Animator>();
