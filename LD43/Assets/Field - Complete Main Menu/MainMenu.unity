@@ -7378,7 +7378,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00003350027}
+  m_AnchoredPosition: {x: 0, y: -0.00005076949}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &193353673
@@ -25211,6 +25211,7 @@ GameObject:
   - component: {fileID: 730339757}
   - component: {fileID: 730339756}
   - component: {fileID: 730339755}
+  - component: {fileID: 730339759}
   m_Layer: 5
   m_Name: Settings Panel
   m_TagString: Untagged
@@ -25278,6 +25279,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 730339753}
   m_CullTransparentMesh: 0
+--- !u!114 &730339759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730339753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a7cf7c59312429cbacc2584c42de6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_onEnable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1589764713}
+        m_MethodName: Reset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_onDisable:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &736385055
 GameObject:
   m_ObjectHideFlags: 0
