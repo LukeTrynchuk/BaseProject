@@ -69,8 +69,7 @@ namespace Michsky.UI.FieldCompleteMainMenu
         {
             if (newPanel == currentPanelIndex) return;
 
-            foreach (GameObject panel in panels) panel.SetActive(true);
-
+            panels[newPanel].SetActive(true);
 
             currentPanel = panels[currentPanelIndex];
 
