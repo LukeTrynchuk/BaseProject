@@ -95,7 +95,7 @@ namespace Michsky.UI.FieldCompleteMainMenu
             nextButtonAnimator.Play(buttonFadeIn);
 
 
-            Invoke(nameof(TurnOffOtherPanels), 1.5f);
+            Invoke(nameof(TurnOffOtherPanels), 0.25f);
         }
 
         private void TurnOffOtherPanels()
