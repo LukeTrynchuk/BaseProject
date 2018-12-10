@@ -38,13 +38,7 @@ namespace Michsky.UI.FieldCompleteMainMenu
 
         void Start()
         {
-            currentButton = buttons[currentPanelIndex];
-            currentButtonAnimator = currentButton.GetComponent<Animator>();
-            currentButtonAnimator.Play(buttonFadeIn);
-
-            currentPanel = panels[currentPanelIndex];
-            currentPanelAnimator = currentPanel.GetComponent<Animator>();
-            currentPanelAnimator.Play(panelFadeIn);
+            ResetPanels();
         }
 
         public void PanelAnim(int newPanel)
@@ -73,6 +67,22 @@ namespace Michsky.UI.FieldCompleteMainMenu
                 currentButtonAnimator.Play(buttonFadeOut);
                 nextButtonAnimator.Play(buttonFadeIn);
             }
+        }
+
+        public void Reset()
+        {
+            ResetPanels();
+        }
+
+        private void ResetPanels()
+        {
+            currentButton = buttons[currentPanelIndex];
+            currentButtonAnimator = currentButton.GetComponent<Animator>();
+            currentButtonAnimator.Play(buttonFadeIn);
+
+            currentPanel = panels[currentPanelIndex];
+            currentPanelAnimator = currentPanel.GetComponent<Animator>();
+            currentPanelAnimator.Play(panelFadeIn);
         }
     }
 }
