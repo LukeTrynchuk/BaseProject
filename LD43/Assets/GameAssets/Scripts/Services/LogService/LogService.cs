@@ -1,5 +1,4 @@
 ﻿using DogHouse.Core.Services;
-using UnityEngine;
 using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 
@@ -12,29 +11,10 @@ namespace DogHouse.Services
     /// </summary>
     public class LogService : BaseService<ILogService>, ILogService
     {
-        #region Private Variables
-        [SerializeField]
-        private bool m_displayDebugs = false;
-        #endregion
-
         #region Main Methods
-        public void Log(string message)
-        {
-            if (!m_displayDebugs) return;
-            ConsoleLog(message);
-        }
-
-        public void LogError(string message)
-        {
-            if (!m_displayDebugs) return;
-            ConsoleLogError(message);
-        }
-
-        public void LogWarning(string message)
-        {
-            if (!m_displayDebugs) return;
-            ConsoleLogWarning(message);
-        }
+        public void Log(string message) => ConsoleLog(message);
+        public void LogError(string message) => ConsoleLogError(message);
+        public void LogWarning(string message) => ConsoleLogWarning(message);
         #endregion
 
         #region Utility Methods
