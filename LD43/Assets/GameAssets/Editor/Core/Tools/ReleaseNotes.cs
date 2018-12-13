@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace DogHouse.Core.Tools
 {
@@ -17,14 +18,17 @@ namespace DogHouse.Core.Tools
     {
         #region Public Variables
         [TableList]
-        [OnInspectorGUI(nameof(MyGUI), false)]
+        [OnInspectorGUI(nameof(MyGUI), true)]
         public List<ReleaseData> Values;
         #endregion
 
         #region Private Variables
+        private string m_allReleaseNotes = "";
+
         private const string WINDOW_TITLE = "Release Notes";
         private const string SAVE_BUTTON_NAME = "Save Data";
-        private const string FILE_EXTENSION_URL = "/GameAssets/Resources/Core/ReleaseNotes/ReleaseNotes";
+        private const string FILE_DIRECTORY = "/GameAssets/Resources/Core/ReleaseNotes/";
+        private const string FILE_EXTENSION_URL = FILE_DIRECTORY + "ReleaseNotes";
         #endregion
 
         #region Main Methods
@@ -34,7 +38,14 @@ namespace DogHouse.Core.Tools
             GetWindow<ReleaseNotes>(WINDOW_TITLE).Show();
         }
 
-        public void MyGUI() {}
+        public void MyGUI() 
+        {
+            if (GUILayout.Button("Save Data")) SaveData();
+
+            GUILayout.Label("CURRENT NOTES : ");
+            GUILayout.Space(15);
+            GUILayout.Label(m_allReleaseNotes);
+        }
 
         protected override void OnEnable()
         {
@@ -47,8 +58,6 @@ namespace DogHouse.Core.Tools
             SaveData();
         }
 
-        [LabelWidth(100)]
-        [Button(Expanded = false, Name = SAVE_BUTTON_NAME, Style = ButtonStyle.CompactBox)]
         public void SaveData()
         {
             string[] lines = GenerateReleaseLines();
@@ -60,7 +69,9 @@ namespace DogHouse.Core.Tools
         #region Utility Methods
         private void LoadData()
         {
-            string data = ReadData();
+            LoadAllReleaseNotes();
+
+            string data = ReadData(GetReleaseNotesURL());
             string[] lines = ExtractLines(data);
             FillReleaseDataList(lines);
         }
@@ -83,17 +94,28 @@ namespace DogHouse.Core.Tools
             }
             Values = releaseDatas;
         }
+
+        private void LoadAllReleaseNotes()
+        {
+            string[] files = GetAllFilePaths();
+            StringBuilder releaseData = new StringBuilder();
+            foreach(string file in files)
+            {
+                releaseData.Append(ReadData(file));
+            }
+            m_allReleaseNotes = releaseData.ToString();
+        }
         #endregion
 
         #region Low Level Functions
-        private string ReadData() 
+        private string ReadData(string path) 
         {
-            if(!File.Exists(GetReleaseNotesURL()))
+            if(!File.Exists(path))
             {
-                File.Create(GetReleaseNotesURL());
+                File.Create(path);
             }
 
-            return File.ReadAllText(GetReleaseNotesURL());
+            return File.ReadAllText(path);
         }
 
         private string[] ExtractLines(string input)
@@ -121,6 +143,10 @@ namespace DogHouse.Core.Tools
             File.WriteAllText(@url, content);
 
         private string GetURL() => $"{FILE_EXTENSION_URL}{SystemInfo.deviceUniqueIdentifier}.txt";
+
+        private string[] GetAllFilePaths()
+            => Directory.GetFiles(Application.dataPath + FILE_DIRECTORY)
+                     .Where(x => x.EndsWith(".meta") == false).ToArray();
         #endregion
     }
 
