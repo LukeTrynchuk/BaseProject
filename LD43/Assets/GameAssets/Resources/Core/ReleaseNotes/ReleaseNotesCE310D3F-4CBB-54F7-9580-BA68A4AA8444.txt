@@ -1,0 +1,8 @@
+Added Basic Movement
+Added Projectiles
+Added Enemies
+Added Maze Generation
+Added Obstacles
+Added Breakables
+BAZOOKA!!!
+This releases adds many new features!!!!
