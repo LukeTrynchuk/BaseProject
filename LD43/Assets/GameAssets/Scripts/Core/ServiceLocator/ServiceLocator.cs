@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using DogHouse.Services;
 using static UnityEngine.Debug;
 
 namespace DogHouse.Core.Services
@@ -39,6 +40,9 @@ namespace DogHouse.Core.Services
 
         private static Dictionary<string, object>       serviceDictionary;
         private static Dictionary<string, List<Action>> callbackDictionary;
+
+        private static ServiceReference<ILogService> m_logService 
+            = new ServiceReference<ILogService>();
 		#endregion
 
 		#region Main Methods
@@ -165,11 +169,11 @@ namespace DogHouse.Core.Services
 
 
 
-        private static void SendServiceReplacementWarning<T>()  =>
-            LogWarning($"Service : {typeof(T).Name} is being replaced.");
+        private static void SendServiceReplacementWarning<T>() =>
+            m_logService.Reference?.LogWarning($"Service : {typeof(T).Name} is being replaced.");
 
         private static void SendServiceReplacementWarning(string typeName) =>
-            LogWarning($"Service : {typeName} is being replaced.");
+            m_logService.Reference?.LogWarning($"Service : {typeName} is being replaced.");
 
 
 
