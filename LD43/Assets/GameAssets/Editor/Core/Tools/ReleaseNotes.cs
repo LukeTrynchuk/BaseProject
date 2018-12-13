@@ -24,7 +24,7 @@ namespace DogHouse.Core.Tools
         #region Private Variables
         private const string WINDOW_TITLE = "Release Notes";
         private const string SAVE_BUTTON_NAME = "Save Data";
-        private const string FILE_EXTENSION_URL = "/GameAssets/Resources/Core/ReleaseNotes.txt";
+        private const string FILE_EXTENSION_URL = "/GameAssets/Resources/Core/ReleaseNotes/ReleaseNotes";
         #endregion
 
         #region Main Methods
@@ -86,8 +86,15 @@ namespace DogHouse.Core.Tools
         #endregion
 
         #region Low Level Functions
-        private string ReadData() =>
-            File.ReadAllText(GetReleaseNotesURL());
+        private string ReadData() 
+        {
+            if(!File.Exists(GetReleaseNotesURL()))
+            {
+                File.Create(GetReleaseNotesURL());
+            }
+
+            return File.ReadAllText(GetReleaseNotesURL());
+        }
 
         private string[] ExtractLines(string input)
         {
@@ -108,10 +115,12 @@ namespace DogHouse.Core.Tools
         private string CompactLines(string[] lines) => string.Concat(lines);
 
         private string GetReleaseNotesURL() =>
-            Application.dataPath + FILE_EXTENSION_URL;
+            Application.dataPath + GetURL();
 
         private void WriteFile(string url, string content) => 
             File.WriteAllText(@url, content);
+
+        private string GetURL() => $"{FILE_EXTENSION_URL}{SystemInfo.deviceUniqueIdentifier}.txt";
         #endregion
     }
 
