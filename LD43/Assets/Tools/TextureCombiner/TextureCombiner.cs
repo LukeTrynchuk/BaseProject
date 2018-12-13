@@ -16,6 +16,7 @@ namespace DogHouse.Core.Tools
         private static Texture2D[] m_textures;
         private static bool[,] m_channelMatrix;
         private static Texture2D m_finalTexture;
+        private Vector2 m_vertScrollPos;
         #endregion
 
         #region Main Methods
@@ -31,11 +32,14 @@ namespace DogHouse.Core.Tools
             if (m_textures == null || m_channelMatrix == null) InitalizeData();
             RenderCommandButtons();
 
+            m_vertScrollPos = EditorGUILayout.BeginScrollView(m_vertScrollPos);
+
             for (int i = 0; i < 4; i++)
             {
                 RenderTextureSlot(i);
                 GUILayout.Space(10);
             }
+            EditorGUILayout.EndScrollView();
         }
 
         #endregion

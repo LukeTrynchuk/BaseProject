@@ -18,6 +18,7 @@ namespace DogHouse.Core.Tools
         private string m_outputName;
         private bool m_normal;
         private bool m_mipmap;
+        private Vector2 m_vertScrollPos;
 
         [MenuItem("Tools/Core/Graphic/Texture 2D Array Generator")]
         static void Init()
@@ -29,7 +30,7 @@ namespace DogHouse.Core.Tools
 
         private void OnGUI()
         {
-            
+
 
 
             GUILayout.Space(15f);
@@ -41,7 +42,7 @@ namespace DogHouse.Core.Tools
             GUILayout.EndHorizontal();
 
             EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
-
+            m_vertScrollPos = EditorGUILayout.BeginScrollView(m_vertScrollPos);
             GUILayout.BeginHorizontal();
 
             if(m_imagePath == null)
@@ -98,6 +99,8 @@ namespace DogHouse.Core.Tools
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
+
+            EditorGUILayout.EndScrollView();
         }
 
         private void SetPath(out string Path)
