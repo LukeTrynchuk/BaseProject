@@ -21,7 +21,7 @@ namespace DogHouse.Core.Tools
         #endregion
 
         #region Main Methods
-        [MenuItem("Tools/Clown Mask Generator")]
+        [MenuItem("Tools/Core/Graphic/Clown Mask Generator")]
         static void Init()
         {
             ClownMaskGenerator window = (ClownMaskGenerator)EditorWindow.GetWindow(typeof(ClownMaskGenerator), false, "Clown Mask Generator");
