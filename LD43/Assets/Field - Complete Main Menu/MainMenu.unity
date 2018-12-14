@@ -19710,6 +19710,7 @@ GameObject:
   - component: {fileID: 564156758}
   - component: {fileID: 564156757}
   - component: {fileID: 564156756}
+  - component: {fileID: 564156759}
   m_Layer: 5
   m_Name: Clothing Panel
   m_TagString: Untagged
@@ -19776,6 +19777,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 564156754}
   m_CullTransparentMesh: 0
+--- !u!223 &564156759
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564156754}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &564744544
 GameObject:
   m_ObjectHideFlags: 0
@@ -49686,6 +49708,7 @@ GameObject:
   - component: {fileID: 1392744605}
   - component: {fileID: 1392744604}
   - component: {fileID: 1392744603}
+  - component: {fileID: 1392744606}
   m_Layer: 5
   m_Name: Weapons Panel
   m_TagString: Untagged
@@ -49752,6 +49775,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1392744601}
   m_CullTransparentMesh: 0
+--- !u!223 &1392744606
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392744601}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &1393300592
 GameObject:
   m_ObjectHideFlags: 0
@@ -57016,6 +57060,7 @@ GameObject:
   - component: {fileID: 1560646538}
   - component: {fileID: 1560646537}
   - component: {fileID: 1560646539}
+  - component: {fileID: 1560646540}
   m_Layer: 5
   m_Name: Stats Panel
   m_TagString: Untagged
@@ -57082,6 +57127,27 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!223 &1560646540
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560646535}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &1560897125
 GameObject:
   m_ObjectHideFlags: 0
@@ -71863,6 +71929,7 @@ GameObject:
   - component: {fileID: 1934553882}
   - component: {fileID: 1934553881}
   - component: {fileID: 1934553880}
+  - component: {fileID: 1934553883}
   m_Layer: 5
   m_Name: Soldier Panel
   m_TagString: Untagged
@@ -71929,6 +71996,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1934553878}
   m_CullTransparentMesh: 0
+--- !u!223 &1934553883
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934553878}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &1941227715
 GameObject:
   m_ObjectHideFlags: 0
@@ -78426,6 +78514,7 @@ GameObject:
   - component: {fileID: 2100757884}
   - component: {fileID: 2100757883}
   - component: {fileID: 2100757887}
+  - component: {fileID: 2100757888}
   m_Layer: 5
   m_Name: Trophies Panel
   m_TagString: Untagged
@@ -78554,6 +78643,27 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!223 &2100757888
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100757881}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &2107585014
 GameObject:
   m_ObjectHideFlags: 0
