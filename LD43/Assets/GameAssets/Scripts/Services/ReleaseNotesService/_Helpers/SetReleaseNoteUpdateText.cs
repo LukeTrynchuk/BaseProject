@@ -13,7 +13,7 @@ namespace DogHouse.Services
     {
         #region Private Variables
         [SerializeField]
-        private Text m_text;
+        private Text m_text = default(Text);
 
         private ServiceReference<IReleaseNotesService> m_releaseNotes 
             = new ServiceReference<IReleaseNotesService>();

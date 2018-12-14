@@ -69,7 +69,8 @@ namespace Michsky.UI.FieldCompleteMainMenu
         {
             if (newPanel == currentPanelIndex) return;
 
-            panels[newPanel].SetActive(true);
+            //panels[newPanel].SetActive(true);
+            panels[newPanel].GetComponent<Canvas>().enabled = true;
 
             currentPanel = panels[currentPanelIndex];
 
@@ -101,7 +102,7 @@ namespace Michsky.UI.FieldCompleteMainMenu
         {
             for (int i = 0; i < panels.Count; i++)
             {
-                panels[i].SetActive(i == currentPanelIndex);
+                panels[i].GetComponent<Canvas>().enabled = (i == currentPanelIndex);
             }
         }
     }
