@@ -17,6 +17,26 @@ namespace DogHouse.Services
             if (!File.Exists(path)) return default(string);
             return File.ReadAllText(path);
         }
+
+        public string[] ReadDirectory(string directoryPath)
+        {
+            if (!Directory.Exists(directoryPath)) return default(string[]);
+            string[] paths = FetchFilePaths(directoryPath);
+            string[] files = new string[paths.Length];
+
+            for (int i = 0; i < paths.Length; i++)
+                files[i] = ReadFile(paths[i]);
+
+            return files;
+        }
+        #endregion
+
+        #region Utility Methods
+        private string[] FetchFilePaths(string directoryPath)
+        {
+            if (!Directory.Exists(directoryPath)) return default(string[]);
+            return Directory.GetFiles(directoryPath);
+        }
         #endregion
     }
 }
