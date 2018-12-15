@@ -31,6 +31,9 @@ namespace DogHouse.Services
         private ServiceReference<ILoadingScreenService> m_loadingScreenService
             = new ServiceReference<ILoadingScreenService>();
 
+        private ServiceReference<ILogService> m_logService 
+            = new ServiceReference<ILogService>();
+
         private const string LOGO_SCENE = "LogoSlideShow";
         private const string MAIN_MENU = "MainMenu";
         private const string GAME_SCENE = "Game";
@@ -40,6 +43,7 @@ namespace DogHouse.Services
         private string m_currentScene = "";
 
         private float m_audioMixTime => m_fadeTime * FADE_TIME_SCALAR;
+        private SceneManagerState m_state = SceneManagerState.IDLE;
         #endregion
 
         #region Main Methods
@@ -56,14 +60,44 @@ namespace DogHouse.Services
             sceneLoaded -= HandleSceneLoaded;
         }
 
-        public void LoadSlideShowScene() => Load(LOGO_SCENE);
-        public void LoadMainMenuScene() => Load(MAIN_MENU);
-        public void LoadGameScene() => Load(GAME_SCENE);
+        public void LoadSlideShowScene() 
+        {
+            if(m_state != SceneManagerState.IDLE)
+            {
+                m_logService.Reference?.LogError("SCENE ALREADY BEING LOADED");
+                return;
+            }
+
+            Load(LOGO_SCENE);
+        }
+
+        public void LoadMainMenuScene()
+        {
+            if (m_state != SceneManagerState.IDLE)
+            {
+                m_logService.Reference?.LogError("SCENE ALREADY BEING LOADED");
+                return;
+            }
+
+            Load(MAIN_MENU);
+        }
+
+        public void LoadGameScene() 
+        {
+            if (m_state != SceneManagerState.IDLE)
+            {
+                m_logService.Reference?.LogError("SCENE ALREADY BEING LOADED");
+                return;
+            }
+
+            Load(GAME_SCENE);
+        }
         #endregion
 
         #region Utility Methods
         private void Load(string sceneName)
         {
+            m_state = SceneManagerState.LOADING;
             m_currentScene = sceneName;
             m_audioMixerService.Reference?.TransitionToTransitionMix(m_audioMixTime);
             m_cameraTransition.Reference?.FadeIn(m_fadeTime, LoadIntoEmptyBuffer);
@@ -77,20 +111,46 @@ namespace DogHouse.Services
 
         private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            if (scene.name.Equals("Preload")) return;
+
             if(scene.name.Equals(EMPTY_BUFFER))
             {
-                ExecuteLoad();
+                HandleBufferSceneLoaded();
                 return;
             }
 
+            Invoke(nameof(HandleTargetSceneLoaded),1f);
+        }
+
+        private void HandleBufferSceneLoaded()
+        {
+            ExecuteLoad();
+        }
+
+        private void HandleTargetSceneLoaded()
+        {
             m_cameraTransition.Reference?.FadeOut(m_fadeTime);
             m_audioMixerService.Reference?.TransitionToGameMix(m_audioMixTime);
-            m_analytcsService.Reference?.SendSceneLoadedEvent(scene.name);
+            m_analytcsService.Reference?.SendSceneLoadedEvent(m_currentScene);
+            m_currentScene = default(string);
+            m_state = SceneManagerState.IDLE;
         }
 
         private void LoadIntoEmptyBuffer()
         {
+            if (m_state == SceneManagerState.IDLE) return;
             LoadSceneAsync(EMPTY_BUFFER);
+        }
+
+        private bool CheckCanLoad()
+        {
+            if (m_state != SceneManagerState.IDLE)
+            {
+                m_logService.Reference?.LogError("SCENE ALREADY BEING LOADED");
+                return false;
+            }
+
+            return true;
         }
         #endregion
     }

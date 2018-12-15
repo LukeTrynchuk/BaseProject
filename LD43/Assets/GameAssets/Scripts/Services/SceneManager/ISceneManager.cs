@@ -20,4 +20,10 @@ namespace DogHouse.Services
         void LoadMainMenuScene();
         void LoadGameScene();
     }
+
+    public enum SceneManagerState
+    {
+        IDLE,
+        LOADING
+    }
 }

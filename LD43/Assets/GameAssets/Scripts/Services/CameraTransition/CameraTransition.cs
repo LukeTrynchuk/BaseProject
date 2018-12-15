@@ -26,7 +26,7 @@ namespace DogHouse.Services
         private GameObject m_fadeObject = null;
 
         private CameraTransitionState m_state 
-                = CameraTransitionState.IDLE_IN;
+                = CameraTransitionState.IDLE_OUT;
 
         private ImageColorController m_imageColorController;
         private float m_alpha = 0f;
@@ -51,12 +51,17 @@ namespace DogHouse.Services
         void Update()
         {
             if (m_state != CameraTransitionState.TRANSITIONING) return;
+            
             TransitionCamera();
         }
 
         public void FadeIn(float Time)
         {
-            if (!CanFadeIn) return;
+            if (!CanFadeIn)
+            {
+                Debug.LogError("CANNOT TRANSITION");
+                return;
+            }
             m_transitionTime = Time;
             m_fadingIn = true;
             m_totalTime = 0f;
@@ -65,7 +70,12 @@ namespace DogHouse.Services
 
         public void FadeIn(float Time, Action callback)
         {
-            if (!CanFadeIn) return;
+            if (!CanFadeIn)
+            {
+                Debug.LogError("CANNOT TRANSITION");
+                return;
+            }
+
             m_transitionTime = Time;
             m_callback = callback;
             m_fadingIn = true;
@@ -75,7 +85,11 @@ namespace DogHouse.Services
 
         public void FadeOut(float Time)
         {
-            if (!CanFadeOut) return;
+            if (!CanFadeOut)
+            {
+                Debug.LogError("CANNOT TRANSITION");
+                return;
+            }
             m_transitionTime = Time;
             m_fadingIn = false;
             m_totalTime = 0f;
@@ -84,7 +98,11 @@ namespace DogHouse.Services
 
         public void FadeOut(float Time, Action callback)
         {
-            if (!CanFadeOut) return;
+            if (!CanFadeOut)
+            {
+                Debug.LogError("CANNOT TRANSITION");
+                return;
+            }
             m_transitionTime = Time;
             m_callback = callback;
             m_fadingIn = false;
