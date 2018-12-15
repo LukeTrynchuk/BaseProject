@@ -69,7 +69,8 @@ namespace Michsky.UI.FieldCompleteMainMenu
         {
             if (newPanel == currentPanelIndex) return;
 
-            panels[newPanel].SetActive(true);
+            //panels[newPanel].SetActive(true);
+            //panels[newPanel].GetComponent<Canvas>().enabled = true;
 
             currentPanel = panels[currentPanelIndex];
 
@@ -94,14 +95,14 @@ namespace Michsky.UI.FieldCompleteMainMenu
             nextButtonAnimator.Play(buttonFadeIn);
 
 
-            Invoke(nameof(TurnOffOtherPanels), 0.25f);
+            //Invoke(nameof(TurnOffOtherPanels), 0.25f);
         }
 
         private void TurnOffOtherPanels()
         {
             for (int i = 0; i < panels.Count; i++)
             {
-                panels[i].SetActive(i == currentPanelIndex);
+                panels[i].GetComponent<Canvas>().enabled = (i == currentPanelIndex);
             }
         }
     }
