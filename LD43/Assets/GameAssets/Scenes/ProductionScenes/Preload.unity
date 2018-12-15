@@ -450,6 +450,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9099927410410867977, guid: a85ccd9482e0f409a9b2c9df24cd6ac0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 9998
+      objectReference: {fileID: 0}
     - target: {fileID: 38434869435783428, guid: a85ccd9482e0f409a9b2c9df24cd6ac0,
         type: 3}
       propertyPath: m_Color.a
@@ -1276,7 +1281,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 99
+  m_SortingOrder: 9999
   m_TargetDisplay: 0
 --- !u!1 &1559438261
 GameObject:
