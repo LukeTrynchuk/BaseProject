@@ -28,6 +28,9 @@ namespace DogHouse.Services
         private ServiceReference<IAnalyticsService> m_analytcsService
             = new ServiceReference<IAnalyticsService>();
 
+        private ServiceReference<ILoadingScreenService> m_loadingScreenService
+            = new ServiceReference<ILoadingScreenService>();
+
         private const string LOGO_SCENE = "LogoSlideShow";
         private const string MAIN_MENU = "MainMenu";
         private const string GAME_SCENE = "Game";
@@ -69,7 +72,7 @@ namespace DogHouse.Services
         private void ExecuteLoad()
         {
             OnAboutToLoadNewScene?.Invoke();
-            LoadScene(m_currentScene);
+            LoadSceneAsync(m_currentScene);
         }
 
         private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -87,7 +90,7 @@ namespace DogHouse.Services
 
         private void LoadIntoEmptyBuffer()
         {
-            LoadScene(EMPTY_BUFFER);
+            LoadSceneAsync(EMPTY_BUFFER);
         }
         #endregion
     }
