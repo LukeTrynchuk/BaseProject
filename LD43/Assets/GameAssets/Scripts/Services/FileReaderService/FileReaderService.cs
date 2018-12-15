@@ -65,6 +65,13 @@ namespace DogHouse.Services
             Thread thread = new Thread( ()=> ReadDirectoryAsynchonously(directoryPath, callback, omittedFileExtensions));
             thread.Start();
         }
+
+        public void ReadFileAsync(string path, Action<string> callback)
+        {
+            if (!File.Exists(path)) return;
+            Thread thread = new Thread(() => ReadFileAsynchronously(path, callback));
+            thread.Start();
+        }
         #endregion
 
         #region Utility Methods
@@ -97,6 +104,22 @@ namespace DogHouse.Services
                 result = ReadDirectory(directoryPath, omittedFileExtensions);    
             }
             catch (Exception e)
+            {
+                m_logService.Reference?.LogError(e.Message);
+            }
+
+            callback?.Invoke(result);
+        }
+
+        private void ReadFileAsynchronously(string path, Action<string> callback)
+        {
+            string result = null;
+
+            try
+            {
+                result = ReadFile(path);
+            }
+            catch(Exception e)
             {
                 m_logService.Reference?.LogError(e.Message);
             }

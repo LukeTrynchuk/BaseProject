@@ -12,6 +12,7 @@ namespace DogHouse.Services
     public interface IFileReaderService : IService
     {
         string ReadFile(string path);
+        void ReadFileAsync(string path, Action<string> callback);
 
         string[] ReadDirectory(string directoryPath, string[] omittedFileExtensions = null);
         void ReadDirectoryAsync(string directoryPath, Action<string[]> callback, string[] omittedFileExtensions = null);
