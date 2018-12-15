@@ -37,11 +37,14 @@ namespace DogHouse.Services
 
         private ServiceReference<ISceneManager> m_sceneManager 
             = new ServiceReference<ISceneManager>();
+
+        private GameObject m_audioClone = default(GameObject);
         #endregion
 
         #region Main Methods
         public override void OnEnable()
         {
+            SetupClone();
             GenerateAudioChannels();
             InitializeStopOnLoadAudioAssets();
             m_sceneManager.AddRegistrationHandle(HandleSceneManagerRegistered);
@@ -86,11 +89,8 @@ namespace DogHouse.Services
 
         private void CreateAudioChannel()
         {
-            GameObject channel = new GameObject();
-            AudioSource source = channel.AddComponent<AudioSource>();
-            source.playOnAwake = false;
-            m_sources.Add(source);
-            channel.transform.parent = transform;
+            GameObject channel = Instantiate(m_audioClone, transform);
+            m_sources.Add(channel.GetComponent<AudioSource>());
         }
 
         private AudioSource FetchAvailableAudioChannel() => 
@@ -152,6 +152,14 @@ namespace DogHouse.Services
                 source.loop = false;
                 source.clip = null;
             }
+        }
+
+        private void SetupClone()
+        {
+            m_audioClone = new GameObject();
+            AudioSource source = m_audioClone.AddComponent<AudioSource>();
+            source.playOnAwake = false;
+            m_audioClone.transform.parent = transform;
         }
         #endregion
     }
