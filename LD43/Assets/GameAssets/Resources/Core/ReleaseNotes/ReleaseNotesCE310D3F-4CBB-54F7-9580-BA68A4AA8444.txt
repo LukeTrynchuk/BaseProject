@@ -6,3 +6,4 @@ Added Obstacles
 Added Breakables
 BAZOOKA!!!
 This releases adds many new features!!!!
+Added More Effecient Main Menu
