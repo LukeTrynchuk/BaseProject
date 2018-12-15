@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eed265c6d9da43e2a7fee96420d2c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_loadingCanvas: {fileID: 0}
+  m_loadingCanvas: {fileID: 1488174758}
 --- !u!1 &573114706
 GameObject:
   m_ObjectHideFlags: 0

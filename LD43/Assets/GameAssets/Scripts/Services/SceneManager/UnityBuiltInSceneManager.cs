@@ -86,6 +86,7 @@ namespace DogHouse.Services
         private void Load(string sceneName)
         {
             m_state = SceneManagerState.LOADING;
+            m_loadingScreenService.Reference?.SetDisplay(true);
             m_currentScene = sceneName;
             m_audioMixerService.Reference?.TransitionToTransitionMix(m_audioMixTime);
             m_cameraTransition.Reference?.FadeIn(m_fadeTime, LoadIntoEmptyBuffer);
@@ -116,6 +117,7 @@ namespace DogHouse.Services
             m_audioMixerService.Reference?.TransitionToGameMix(m_audioMixTime);
             m_analytcsService.Reference?.SendSceneLoadedEvent(m_currentScene);
             m_currentScene = default(string);
+            m_loadingScreenService.Reference?.SetDisplay(false);
             m_state = SceneManagerState.IDLE;
         }
 
