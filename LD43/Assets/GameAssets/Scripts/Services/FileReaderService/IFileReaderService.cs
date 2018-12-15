@@ -11,6 +11,7 @@ namespace DogHouse.Services
     public interface IFileReaderService : IService
     {
         string ReadFile(string path);
-        string[] ReadDirectory(string directoryPath);
+
+        string[] ReadDirectory(string directoryPath, string[] omittedFileExtensions = null);
     }
 }

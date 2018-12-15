@@ -1,5 +1,7 @@
 ﻿using DogHouse.Core.Services;
 using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DogHouse.Services
 {
@@ -18,10 +20,10 @@ namespace DogHouse.Services
             return File.ReadAllText(path);
         }
 
-        public string[] ReadDirectory(string directoryPath)
+        public string[] ReadDirectory(string directoryPath, string[] omittedFileExtensions = null)
         {
             if (!Directory.Exists(directoryPath)) return default(string[]);
-            string[] paths = FetchFilePaths(directoryPath);
+            string[] paths = FetchFilePaths(directoryPath, omittedFileExtensions);
             string[] files = new string[paths.Length];
 
             for (int i = 0; i < paths.Length; i++)
@@ -32,10 +34,14 @@ namespace DogHouse.Services
         #endregion
 
         #region Utility Methods
-        private string[] FetchFilePaths(string directoryPath)
+        private string[] FetchFilePaths(string directoryPath, string[] omittedFileExtensions = null)
         {
             if (!Directory.Exists(directoryPath)) return default(string[]);
-            return Directory.GetFiles(directoryPath);
+            List<string> paths = Directory.GetFiles(directoryPath).ToList();
+            if (omittedFileExtensions == null) return paths.ToArray();
+
+            paths = paths.Where(x => !omittedFileExtensions.Any(x.EndsWith)).ToList();
+            return paths.ToArray();
         }
         #endregion
     }

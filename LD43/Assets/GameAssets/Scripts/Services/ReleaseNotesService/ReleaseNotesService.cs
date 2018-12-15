@@ -21,6 +21,7 @@ namespace DogHouse.Services
 
         private string m_releaseNotes = default(string);
         private const string FILE_DIRECTORY = "/GameAssets/Resources/Core/ReleaseNotes/";
+        private string[] m_omitExtensions = { ".meta" };
         #endregion
 
         #region Main Methods
@@ -36,12 +37,20 @@ namespace DogHouse.Services
         private void HandleFileReaderRegistered()
         {
             string directory = Application.dataPath + FILE_DIRECTORY;
-            string[] files = m_fileReader.Reference?.ReadDirectory(directory);
+
+            string[] files = m_fileReader.Reference?
+                                .ReadDirectory(directory, m_omitExtensions);
+
+            m_releaseNotes = BuildReleaseNotes(files);
+        }
+
+        private string BuildReleaseNotes(string[] fileContents)
+        {
             StringBuilder releaseData = new StringBuilder();
-            foreach (string file in files)
+            foreach (string file in fileContents)
                 releaseData.Append(file);
 
-            m_releaseNotes = releaseData.ToString();
+            return releaseData.ToString();
         }
         #endregion
     }
