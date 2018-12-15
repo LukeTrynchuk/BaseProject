@@ -43,6 +43,7 @@ namespace DogHouse.Services
         private const float LOAD_OVERLAP_TIME = 2.5f;
 
         private string m_currentScene = "";
+        private bool m_displayLoadingScreen = false;
 
         private float m_audioMixTime => m_fadeTime * FADE_TIME_SCALAR;
         private SceneManagerState m_state = SceneManagerState.IDLE;
@@ -66,18 +67,21 @@ namespace DogHouse.Services
         public void LoadSlideShowScene() 
         {
             if (!CheckCanLoad()) return;
+            m_displayLoadingScreen = false;
             Load(LOGO_SCENE);
         }
 
         public void LoadMainMenuScene()
         {
             if (!CheckCanLoad()) return;
+            m_displayLoadingScreen = true;
             Load(MAIN_MENU);
         }
 
         public void LoadGameScene() 
         {
             if (!CheckCanLoad()) return;
+            m_displayLoadingScreen = true;
             Load(GAME_SCENE);
         }
         #endregion
@@ -86,7 +90,7 @@ namespace DogHouse.Services
         private void Load(string sceneName)
         {
             m_state = SceneManagerState.LOADING;
-            m_loadingScreenService.Reference?.SetDisplay(true);
+            m_loadingScreenService.Reference?.SetDisplay(m_displayLoadingScreen);
             m_currentScene = sceneName;
             m_audioMixerService.Reference?.TransitionToTransitionMix(m_audioMixTime);
             m_cameraTransition.Reference?.FadeIn(m_fadeTime, LoadIntoEmptyBuffer);
