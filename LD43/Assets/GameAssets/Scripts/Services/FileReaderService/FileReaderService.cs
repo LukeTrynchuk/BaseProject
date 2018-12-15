@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace DogHouse.Services
 {
@@ -13,23 +14,48 @@ namespace DogHouse.Services
     /// </summary>
     public class FileReaderService : BaseService<IFileReaderService>, IFileReaderService
     {
+        #region Private Variables
+        private ServiceReference<ILogService> m_logService 
+            = new ServiceReference<ILogService>();
+        #endregion
+
         #region Main Methods
         public string ReadFile(string path)
         {
             if (!File.Exists(path)) return default(string);
-            return File.ReadAllText(path);
+
+            try
+            {
+                return File.ReadAllText(path);
+            }
+            catch(Exception e)
+            {
+                m_logService.Reference?.LogError(e.Message);
+            }
+
+            return default(string);
         }
 
         public string[] ReadDirectory(string directoryPath, string[] omittedFileExtensions = null)
         {
             if (!Directory.Exists(directoryPath)) return default(string[]);
-            string[] paths = FetchFilePaths(directoryPath, omittedFileExtensions);
-            string[] files = new string[paths.Length];
 
-            for (int i = 0; i < paths.Length; i++)
-                files[i] = ReadFile(paths[i]);
+            try
+            {
+                string[] paths = FetchFilePaths(directoryPath, omittedFileExtensions);
+                string[] files = new string[paths.Length];
 
-            return files;
+                for (int i = 0; i < paths.Length; i++)
+                    files[i] = ReadFile(paths[i]);
+
+                return files;
+            } 
+            catch(Exception e)
+            {
+                m_logService.Reference?.LogError(e.Message);
+            }
+
+            return default(string[]);
         }
         #endregion
 
@@ -37,11 +63,21 @@ namespace DogHouse.Services
         private string[] FetchFilePaths(string directoryPath, string[] omittedFileExtensions = null)
         {
             if (!Directory.Exists(directoryPath)) return default(string[]);
-            List<string> paths = Directory.GetFiles(directoryPath).ToList();
-            if (omittedFileExtensions == null) return paths.ToArray();
 
-            paths = paths.Where(x => !omittedFileExtensions.Any(x.EndsWith)).ToList();
-            return paths.ToArray();
+            try
+            {
+                List<string> paths = Directory.GetFiles(directoryPath).ToList();
+                if (omittedFileExtensions == null) return paths.ToArray();
+
+                paths = paths.Where(x => !omittedFileExtensions.Any(x.EndsWith)).ToList();
+                return paths.ToArray();
+            }
+            catch (Exception e)
+            {
+                m_logService.Reference?.LogError(e.Message);
+            }
+
+            return default(string[]);
         }
         #endregion
     }
