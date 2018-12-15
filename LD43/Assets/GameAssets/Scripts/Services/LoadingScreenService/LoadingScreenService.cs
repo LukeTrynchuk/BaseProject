@@ -1,4 +1,5 @@
 ﻿using DogHouse.Core.Services;
+using UnityEngine;
 
 namespace DogHouse.Services
 {
@@ -10,21 +11,13 @@ namespace DogHouse.Services
     /// </summary>
     public class LoadingScreenService : BaseService<ILoadingScreenService>, ILoadingScreenService
     {
-        #region Public Variables
-        #endregion
-
         #region Private Variables
-        private bool m_isLoading = false;
+        [SerializeField]
+        private Canvas m_loadingCanvas = default(Canvas);
         #endregion
 
         #region Main Methods
-        public void SetDisplay(bool value)
-        {
-            m_isLoading = value;
-        }
-        #endregion
-
-        #region Utility Methods
+        public void SetDisplay(bool value) => m_loadingCanvas.enabled = value;
         #endregion
     }
 }
