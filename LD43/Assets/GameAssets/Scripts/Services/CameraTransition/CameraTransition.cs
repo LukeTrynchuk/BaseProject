@@ -28,6 +28,9 @@ namespace DogHouse.Services
         private CameraTransitionState m_state 
                 = CameraTransitionState.IDLE_OUT;
 
+        private ServiceReference<ILogService> m_logService 
+            = new ServiceReference<ILogService>();
+
         private ImageColorController m_imageColorController;
         private float m_alpha = 0f;
 
@@ -55,63 +58,36 @@ namespace DogHouse.Services
             TransitionCamera();
         }
 
-        public void FadeIn(float Time)
-        {
-            if (!CanFadeIn)
-            {
-                Debug.LogError("CANNOT TRANSITION");
-                return;
-            }
-            m_transitionTime = Time;
-            m_fadingIn = true;
-            m_totalTime = 0f;
-            m_state = CameraTransitionState.TRANSITIONING;
-        }
+        public void FadeIn(float Time) =>
+            SetTransitionValues(Time, CanFadeIn, true);
 
-        public void FadeIn(float Time, Action callback)
-        {
-            if (!CanFadeIn)
-            {
-                Debug.LogError("CANNOT TRANSITION");
-                return;
-            }
+        public void FadeIn(float Time, Action callback) =>
+            SetTransitionValues(Time, CanFadeIn, true, callback);
 
-            m_transitionTime = Time;
-            m_callback = callback;
-            m_fadingIn = true;
-            m_totalTime = 0f;
-            m_state = CameraTransitionState.TRANSITIONING;
-        }
+        public void FadeOut(float Time) =>
+            SetTransitionValues(Time, CanFadeOut, false);
 
-        public void FadeOut(float Time)
-        {
-            if (!CanFadeOut)
-            {
-                Debug.LogError("CANNOT TRANSITION");
-                return;
-            }
-            m_transitionTime = Time;
-            m_fadingIn = false;
-            m_totalTime = 0f;
-            m_state = CameraTransitionState.TRANSITIONING;
-        }
+        public void FadeOut(float Time, Action callback) => 
+            SetTransitionValues(Time, CanFadeOut, false, callback);
 
-        public void FadeOut(float Time, Action callback)
-        {
-            if (!CanFadeOut)
-            {
-                Debug.LogError("CANNOT TRANSITION");
-                return;
-            }
-            m_transitionTime = Time;
-            m_callback = callback;
-            m_fadingIn = false;
-            m_totalTime = 0f;
-            m_state = CameraTransitionState.TRANSITIONING;
-        }
         #endregion
 
         #region Utility Methods
+        private void SetTransitionValues(float Time, bool CheckBool, bool fadeIn, Action callback = null)
+        {
+            if (!CheckBool)
+            {
+                m_logService.Reference?.LogError("CANNOT TRANSITION");
+                return;
+            }
+
+            m_transitionTime = Time;
+            m_callback = callback;
+            m_fadingIn = fadeIn;
+            m_totalTime = 0f;
+            m_state = CameraTransitionState.TRANSITIONING;
+        }
+
         private void TransitionCamera()
         {
             m_totalTime += deltaTime;

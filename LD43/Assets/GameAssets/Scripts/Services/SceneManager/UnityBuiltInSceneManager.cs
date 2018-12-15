@@ -34,11 +34,13 @@ namespace DogHouse.Services
         private ServiceReference<ILogService> m_logService 
             = new ServiceReference<ILogService>();
 
+        private const string PRELOAD_SCENE = "Preload";
         private const string LOGO_SCENE = "LogoSlideShow";
         private const string MAIN_MENU = "MainMenu";
         private const string GAME_SCENE = "Game";
         private const string EMPTY_BUFFER = "_EmptySwitchBuffer";
         private const float FADE_TIME_SCALAR = 0.75f;
+        private const float LOAD_OVERLAP_TIME = 2.5f;
 
         private string m_currentScene = "";
 
@@ -58,38 +60,24 @@ namespace DogHouse.Services
         {
             base.OnDisable();
             sceneLoaded -= HandleSceneLoaded;
+            CancelInvoke();
         }
 
         public void LoadSlideShowScene() 
         {
-            if(m_state != SceneManagerState.IDLE)
-            {
-                m_logService.Reference?.LogError("SCENE ALREADY BEING LOADED");
-                return;
-            }
-
+            if (!CheckCanLoad()) return;
             Load(LOGO_SCENE);
         }
 
         public void LoadMainMenuScene()
         {
-            if (m_state != SceneManagerState.IDLE)
-            {
-                m_logService.Reference?.LogError("SCENE ALREADY BEING LOADED");
-                return;
-            }
-
+            if (!CheckCanLoad()) return;
             Load(MAIN_MENU);
         }
 
         public void LoadGameScene() 
         {
-            if (m_state != SceneManagerState.IDLE)
-            {
-                m_logService.Reference?.LogError("SCENE ALREADY BEING LOADED");
-                return;
-            }
-
+            if (!CheckCanLoad()) return;
             Load(GAME_SCENE);
         }
         #endregion
@@ -111,20 +99,15 @@ namespace DogHouse.Services
 
         private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            if (scene.name.Equals("Preload")) return;
+            if (scene.name.Equals(PRELOAD_SCENE)) return;
 
             if(scene.name.Equals(EMPTY_BUFFER))
             {
-                HandleBufferSceneLoaded();
+                ExecuteLoad();
                 return;
             }
 
-            Invoke(nameof(HandleTargetSceneLoaded),1f);
-        }
-
-        private void HandleBufferSceneLoaded()
-        {
-            ExecuteLoad();
+            Invoke(nameof(HandleTargetSceneLoaded), LOAD_OVERLAP_TIME);
         }
 
         private void HandleTargetSceneLoaded()
