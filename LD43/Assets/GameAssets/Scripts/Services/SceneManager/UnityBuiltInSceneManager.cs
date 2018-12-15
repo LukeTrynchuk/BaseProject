@@ -1,7 +1,6 @@
 ﻿using DogHouse.Core.Services;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static DogHouse.Core.Services.ServiceLocator;
 using static UnityEngine.SceneManagement.SceneManager;
 
 namespace DogHouse.Services
@@ -32,6 +31,7 @@ namespace DogHouse.Services
         private const string LOGO_SCENE = "LogoSlideShow";
         private const string MAIN_MENU = "MainMenu";
         private const string GAME_SCENE = "Game";
+        private const string EMPTY_BUFFER = "_EmptySwitchBuffer";
         private const float FADE_TIME_SCALAR = 0.75f;
 
         private string m_currentScene = "";
@@ -63,7 +63,7 @@ namespace DogHouse.Services
         {
             m_currentScene = sceneName;
             m_audioMixerService.Reference?.TransitionToTransitionMix(m_audioMixTime);
-            m_cameraTransition.Reference?.FadeIn(m_fadeTime, ExecuteLoad);
+            m_cameraTransition.Reference?.FadeIn(m_fadeTime, LoadIntoEmptyBuffer);
         }
 
         private void ExecuteLoad()
@@ -74,9 +74,20 @@ namespace DogHouse.Services
 
         private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            if(scene.name.Equals(EMPTY_BUFFER))
+            {
+                ExecuteLoad();
+                return;
+            }
+
             m_cameraTransition.Reference?.FadeOut(m_fadeTime);
             m_audioMixerService.Reference?.TransitionToGameMix(m_audioMixTime);
             m_analytcsService.Reference?.SendSceneLoadedEvent(scene.name);
+        }
+
+        private void LoadIntoEmptyBuffer()
+        {
+            LoadScene(EMPTY_BUFFER);
         }
         #endregion
     }
