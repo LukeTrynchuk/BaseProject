@@ -16,6 +16,9 @@ namespace DogHouse.Services
     public class ReleaseNotesService : BaseService<IReleaseNotesService>, IReleaseNotesService
     {
         #region Private Variables
+        private ServiceReference<IFileReaderService> m_fileReader 
+            = new ServiceReference<IFileReaderService>();
+
         private string m_releaseNotes = "";
         private const string FILE_DIRECTORY = "/GameAssets/Resources/Core/ReleaseNotes/";
         #endregion
@@ -25,26 +28,25 @@ namespace DogHouse.Services
      
         void Start()
         {
-            string[] files = GetAllFilePaths();
-            StringBuilder releaseData = new StringBuilder();
-            foreach(string file in files)
-            {
-                releaseData.Append(ReadFile(file));
-            }
-            m_releaseNotes = releaseData.ToString();
+            m_fileReader.AddRegistrationHandle(HandleFileReaderRegistered);
         }
         #endregion
 
         #region Utility Methods
-        private string ReadFile(string path)
-        {
-            if (!File.Exists(path)) return default(string);
-            return File.ReadAllText(path);
-        }
-
         private string[] GetAllFilePaths() =>
             Directory.GetFiles(Application.dataPath + FILE_DIRECTORY)
                      .Where(x => x.EndsWith(".meta") == false).ToArray();
+
+        private void HandleFileReaderRegistered()
+        {
+            string[] paths = GetAllFilePaths();
+            StringBuilder releaseData = new StringBuilder();
+            foreach (string path in paths)
+            {
+                releaseData.Append(m_fileReader.Reference?.ReadFile(path));
+            }
+            m_releaseNotes = releaseData.ToString();
+        }
         #endregion
     }
 }
