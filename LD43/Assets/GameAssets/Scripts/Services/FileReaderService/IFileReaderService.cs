@@ -1,4 +1,5 @@
 ﻿using DogHouse.Core.Services;
+using System;
 
 namespace DogHouse.Services
 {
@@ -13,5 +14,6 @@ namespace DogHouse.Services
         string ReadFile(string path);
 
         string[] ReadDirectory(string directoryPath, string[] omittedFileExtensions = null);
+        void ReadDirectoryAsync(string directoryPath, Action<string[]> callback, string[] omittedFileExtensions = null);
     }
 }

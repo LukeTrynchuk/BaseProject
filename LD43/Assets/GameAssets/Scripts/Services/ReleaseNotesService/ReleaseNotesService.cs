@@ -1,8 +1,6 @@
 ﻿using DogHouse.Core.Services;
 using UnityEngine;
-using System.Linq;
 using System.Text;
-using System.IO;
 
 namespace DogHouse.Services
 {
@@ -37,11 +35,14 @@ namespace DogHouse.Services
         private void HandleFileReaderRegistered()
         {
             string directory = Application.dataPath + FILE_DIRECTORY;
+            m_fileReader.Reference?.ReadDirectoryAsync(directory, 
+                                                       HandleDirectoryRead, 
+                                                       m_omitExtensions);
+        }
 
-            string[] files = m_fileReader.Reference?
-                                .ReadDirectory(directory, m_omitExtensions);
-
-            m_releaseNotes = BuildReleaseNotes(files);
+        private void HandleDirectoryRead(string[] fileContents)
+        {
+            m_releaseNotes = BuildReleaseNotes(fileContents);
         }
 
         private string BuildReleaseNotes(string[] fileContents)

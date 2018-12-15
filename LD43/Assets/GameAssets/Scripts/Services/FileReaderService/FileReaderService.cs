@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Threading;
 
 namespace DogHouse.Services
 {
@@ -57,6 +58,13 @@ namespace DogHouse.Services
 
             return default(string[]);
         }
+
+        public void ReadDirectoryAsync(string directoryPath, Action<string[]> callback, string[] omittedFileExtensions = null)
+        {
+            if (!Directory.Exists(directoryPath)) callback?.Invoke(default(string[]));
+            Thread thread = new Thread( ()=> ReadDirectoryAsynchonously(directoryPath, callback, omittedFileExtensions));
+            thread.Start();
+        }
         #endregion
 
         #region Utility Methods
@@ -78,6 +86,22 @@ namespace DogHouse.Services
             }
 
             return default(string[]);
+        }
+
+        private void ReadDirectoryAsynchonously(string directoryPath, Action<string[]> callback, string[] omittedFileExtensions = null)
+        {
+            string[] result = null;
+
+            try
+            {
+                result = ReadDirectory(directoryPath, omittedFileExtensions);    
+            }
+            catch (Exception e)
+            {
+                m_logService.Reference?.LogError(e.Message);
+            }
+
+            callback?.Invoke(result);
         }
         #endregion
     }
