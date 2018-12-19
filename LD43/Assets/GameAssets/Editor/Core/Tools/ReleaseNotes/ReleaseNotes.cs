@@ -149,9 +149,4 @@ namespace DogHouse.Core.Tools
                      .Where(x => x.EndsWith(".meta") == false).ToArray();
         #endregion
     }
-
-    public class ReleaseData
-    {
-        public string Message;
-    }
 }
