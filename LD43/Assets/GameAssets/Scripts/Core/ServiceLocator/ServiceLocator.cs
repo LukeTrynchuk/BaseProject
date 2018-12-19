@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
 using DogHouse.Services;
-using static UnityEngine.Debug;
 
 namespace DogHouse.Core.Services
 {
@@ -152,14 +151,11 @@ namespace DogHouse.Core.Services
 			foreach (Action handle in Handles) handle?.Invoke();
 		}
 
-
         private static bool CheckHandleIsRegistered<T>()        =>
             m_callbackDictionary.ContainsKey(typeof(T).Name);
 
         private static bool CheckHandleIsRegistered(string typeName) =>
             m_callbackDictionary.ContainsKey(typeName);
-
-
 
 		private static void UnregisterService<T>()              =>
 			m_serviceDictionary [typeof(T).Name] = default(T);
@@ -167,15 +163,11 @@ namespace DogHouse.Core.Services
         private static void UnregisterService(string typeName) =>
             m_serviceDictionary[typeName] = null;
 
-
-
         private static void SendServiceReplacementWarning<T>() =>
             m_logService.Reference?.LogWarning($"Service : {typeof(T).Name} is being replaced.");
 
         private static void SendServiceReplacementWarning(string typeName) =>
             m_logService.Reference?.LogWarning($"Service : {typeName} is being replaced.");
-
-
 
         private static bool CheckServiceIsRegistered<T>()       =>
             m_serviceDictionary.ContainsKey(typeof(T).Name);
@@ -183,14 +175,11 @@ namespace DogHouse.Core.Services
         private static bool CheckServiceIsRegisterd(string typeName) =>
             m_serviceDictionary.ContainsKey(typeName);
 
-
-
         private static T FetchServiceInstance<T>()              =>
             (T)m_serviceDictionary[typeof(T).Name];
 
         private static object FetchServiceInstance(string typeName) =>
             m_serviceDictionary[typeName];
-
 
         private static void SetServiceInstance<T>(T instance)   =>
             m_serviceDictionary[typeof(T).Name] = instance;
