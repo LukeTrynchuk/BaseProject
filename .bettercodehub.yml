@@ -1,0 +1,16 @@
+﻿exclude:
+- /LD43/Assets/AmplifyShaderEditor/.*
+- /LD43/Assets/ConsolePro/.*
+- /LD43/Assets/Editor/.*
+- /LD43/Assets/Field - Complete Main Menu/.*
+- /LD43/Assets/Gizmos/.*
+- /LD43/Assets/Loading Icons/.*
+- /LD43/Assets/Plugins/.*
+- /LD43/Assets/Tools/.*
+- /LD43/ProBuilder Data/.*
+- /LD43/Packages/.*
+- /LD43/Temp/.*
+- /LD43/Library/.*
+- /LD43/Logs/.*
+- /LD43/obj/.*
+- /LD43/ProjectSettings/.*
