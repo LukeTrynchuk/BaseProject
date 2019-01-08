@@ -84,9 +84,7 @@ namespace DogHouse.Services
                     //Debug.Log(col);
                 }
             }
-
         }
         #endregion
-
     }
 }
