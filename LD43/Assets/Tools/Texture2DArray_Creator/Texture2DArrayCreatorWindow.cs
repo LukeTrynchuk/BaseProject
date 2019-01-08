@@ -133,8 +133,6 @@ namespace DogHouse.Core.Tools
             if(!ValidateTextureFormat(textures))
             {
                 EditorUtility.DisplayDialog("Error", "Textures are different formats", "Ok");
-
-
                 return;
             }
 
@@ -210,7 +208,6 @@ namespace DogHouse.Core.Tools
                     string file = "Assets" + filePath.Replace(Application.dataPath, "");
                     var obj = AssetDatabase.LoadAssetAtPath(file, typeof(T));
                     returnList.Add(obj as T);
-
                 }
                 catch (Exception e)
                 {
