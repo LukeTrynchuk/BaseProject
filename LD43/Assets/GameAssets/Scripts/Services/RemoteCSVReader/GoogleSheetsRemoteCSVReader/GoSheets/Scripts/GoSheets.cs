@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 
 public static class GoSheets
 {
-
     public static string[][] GetGoogleSheet(string url, string gid = "0")
     {
         if (url.Equals("")) return null;
@@ -141,5 +140,4 @@ public static class GoSheets
             return Color.white;
         }
     }
-
 }
