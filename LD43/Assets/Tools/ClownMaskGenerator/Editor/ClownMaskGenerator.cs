@@ -44,7 +44,6 @@ namespace DogHouse.Core.Tools
             }
             GUILayout.EndHorizontal();
 
-
             for (int i = 0; i < m_pairs.Count; i++)
             {
                 m_pairs[i] = RenderTextureColorPair(m_pairs[i]);
@@ -202,7 +201,6 @@ namespace DogHouse.Core.Tools
         {
             List<Texture2D> textures = GetTextures();
 
-
             Texture2D newTexture = new Texture2D(textures[0].width,
                                                  textures[0].height);
 
@@ -244,5 +242,5 @@ namespace DogHouse.Core.Tools
     {
         public Texture2D Texture;
         public Color Color;
-    };
+    }
 }
