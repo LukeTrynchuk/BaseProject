@@ -25,14 +25,10 @@ namespace DogHouse.Core.Tools
         {
             Texture2DArrayCreatorWindow window = (Texture2DArrayCreatorWindow)EditorWindow.GetWindow(typeof(Texture2DArrayCreatorWindow), false, "Texture 2D Array Generator");
             window.Show();
-
         }
 
         private void OnGUI()
         {
-
-
-
             GUILayout.Space(15f);
 
             GUILayout.BeginHorizontal();
@@ -71,7 +67,6 @@ namespace DogHouse.Core.Tools
             {
                 GUILayout.Label("Output Path : " + "Assets" + m_outputPath.Replace(Application.dataPath, ""));
             }
-
 
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("Choose Path", GUILayout.Width(80)))
@@ -144,7 +139,6 @@ namespace DogHouse.Core.Tools
             }
 
             CreateArray(textures);
-
         }
 
         private void CreateArray(List<Texture2D> textures)
@@ -155,10 +149,11 @@ namespace DogHouse.Core.Tools
                 textures.Count,
                 textures[0].format,
                 m_mipmap,
-                m_normal);
-
-            texture2DArray.filterMode = FilterMode.Bilinear;
-            texture2DArray.wrapMode = TextureWrapMode.Repeat;
+                m_normal)
+            {
+                filterMode = FilterMode.Bilinear,
+                wrapMode = TextureWrapMode.Repeat
+            };
 
             for (int i = 0; i < textures.Count; i++)
             {
