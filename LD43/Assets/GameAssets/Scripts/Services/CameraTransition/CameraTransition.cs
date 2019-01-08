@@ -75,11 +75,7 @@ namespace DogHouse.Services
         #region Utility Methods
         private void SetTransitionValues(float Time, bool CheckBool, bool fadeIn, Action callback = null)
         {
-            if (!CheckBool)
-            {
-                m_logService.Reference?.LogError("CANNOT TRANSITION");
-                return;
-            }
+            if (!CheckCanTransition(CheckBool)) return;
 
             m_transitionTime = Time;
             m_callback = callback;
@@ -111,6 +107,16 @@ namespace DogHouse.Services
             m_imageColor = m_imageColorController.ImageColor;
             m_imageColor.a = m_alpha;
             m_imageColorController.SetColor(m_imageColor);
+        }
+
+        private bool CheckCanTransition(bool value)
+        {
+            if(!value)
+            {
+                m_logService.Reference?.LogError("CANNOT TRANSITION");
+            }
+
+            return value;
         }
         #endregion
     }
