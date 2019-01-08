@@ -43,13 +43,7 @@ namespace DogHouse.Services
 
             try
             {
-                string[] paths = FetchFilePaths(directoryPath, omittedFileExtensions);
-                string[] files = new string[paths.Length];
-
-                for (int i = 0; i < paths.Length; i++)
-                    files[i] = ReadFile(paths[i]);
-
-                return files;
+                return ExecuteDirectoryRead(directoryPath, omittedFileExtensions);
             } 
             catch(Exception e)
             {
@@ -125,6 +119,17 @@ namespace DogHouse.Services
             }
 
             callback?.Invoke(result);
+        }
+
+        private string[] ExecuteDirectoryRead(string directoryPath, string[] omittedFileExtensions = null)
+        {
+            string[] paths = FetchFilePaths(directoryPath, omittedFileExtensions);
+            string[] files = new string[paths.Length];
+
+            for (int i = 0; i < paths.Length; i++)
+                files[i] = ReadFile(paths[i]);
+
+            return files;
         }
         #endregion
     }
