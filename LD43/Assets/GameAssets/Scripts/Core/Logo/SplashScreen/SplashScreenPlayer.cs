@@ -31,67 +31,102 @@ namespace DogHouse.Core.Logo
 
         private const float BACKGROUND_LERP_TIME = 1f;
         private const float IMAGE_LERP_TIME = 0.5f;
+        private float m_tValue = 0f;
+        private Color m_startColor;
         #endregion
 
         #region Main Methods
+        private void Awake() => m_startColor = m_backgroundColor;
+
         private void Start() => StartCoroutine(_PlaySequence());
         #endregion
 
         #region Utility Methods
-        //Normally, a method should only have up to 1 level of indentation. I
-        //make the exception for Coroutines.
         private IEnumerator _PlaySequence()
         {
-            float tValue = 0f;
-            Color startColor = m_backgroundColor;
-
-            m_image.color = new Color(m_image.color.r, 
-                                      m_image.color.g, 
-                                      m_image.color.b, 
+            m_image.color = new Color(m_image.color.r,
+                                      m_image.color.g,
+                                      m_image.color.b,
                                       0f);
-
-            for (int i = 0; i < m_splashImages.Length; i++)
-            {
-                do
-                {
-                    LerpBackgroundColor(ref tValue, startColor, m_splashImages[i].BackgroundColor);
-                    yield return null;
-                } while (tValue < 1f);
-
-                m_image.overrideSprite = m_splashImages[i].Image;
-                m_image.rectTransform.sizeDelta = m_splashImages[i].m_imageSize;
-                tValue = 0f;
-
-                do
-                {
-                    LerpImageIn(ref tValue);
-                    yield return null;
-                } while (tValue < 1f);
-
-                yield return new WaitForSeconds(m_splashImages[i].TimeOnScreen);
-
-                tValue = 0f;
-
-                do
-                {
-                    LerpImageOut(ref tValue);
-                    yield return null;
-                } while (tValue < 1f);
-
-                startColor = m_camera.backgroundColor;
-                tValue = 0f;
-            }
-
-            do
-            {
-                LerpBackgroundColor(ref tValue, startColor, black);
-                yield return null;
-            } while (tValue < 1f);
-                
-
+            yield return SequenceLogos();
+            yield return FadeBackgroundToBlack();
             m_onFinishedSplashImages?.Invoke();
         }
 
+        private IEnumerator SequenceLogos()
+        {
+            for (int i = 0; i < m_splashImages.Length; i++)
+            {
+                yield return SequenceLogo(i);
+            }
+        }
+
+        private IEnumerator SequenceLogo(int i)
+        {
+            yield return FadeBackgroundIn(i);
+            SetLogoImage(i);
+            yield return FadeLogoIn();
+            yield return Wait(m_splashImages[i].TimeOnScreen);
+            yield return FadeLogoOut();
+
+            m_startColor = m_camera.backgroundColor;
+            m_tValue = 0f;
+        }
+
+        private void SetLogoImage(int i)
+        {
+            m_image.overrideSprite = m_splashImages[i].Image;
+            m_image.rectTransform.sizeDelta = m_splashImages[i].m_imageSize;
+            m_tValue = 0f;
+        }
+
+        private IEnumerator FadeBackgroundIn(int i)
+        {
+            do
+            {
+                LerpBackgroundColor(ref m_tValue, m_startColor, 
+                                    m_splashImages[i].BackgroundColor);
+
+                yield return null;
+            } while (m_tValue < 1f);
+        }
+
+        private IEnumerator FadeBackgroundToBlack()
+        {
+            do
+            {
+                LerpBackgroundColor(ref m_tValue, m_startColor, black);
+                yield return null;
+            } while (m_tValue < 1f);
+        }
+
+        private IEnumerator FadeLogoIn()
+        {
+            do
+            {
+                LerpImageIn(ref m_tValue);
+                yield return null;
+            } while (m_tValue < 1f);
+
+            m_tValue = 0f;
+        }
+
+        private IEnumerator Wait(float time)
+        {
+            yield return new WaitForSeconds(time);
+        }
+
+        private IEnumerator FadeLogoOut()
+        {
+            do
+            {
+                LerpImageOut(ref m_tValue);
+                yield return null;
+            } while (m_tValue < 1f);
+        }
+        #endregion
+
+        #region Low Level Functions
         private void LerpBackgroundColor(ref float TValue, Color StartColor, Color TargetColor)
         {
             TValue += deltaTime / BACKGROUND_LERP_TIME;
