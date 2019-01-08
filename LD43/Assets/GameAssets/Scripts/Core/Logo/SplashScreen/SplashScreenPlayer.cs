@@ -12,7 +12,8 @@ namespace DogHouse.Core.Logo
     /// splash images in order and invoke an event when
     /// all the images are finished playing.
     /// </summary>
-    public class SplashScreenPlayer : MonoBehaviour
+    public class 
+    SplashScreenPlayer : MonoBehaviour
     {
         #region Private Variables
         [SerializeField]
@@ -27,8 +28,10 @@ namespace DogHouse.Core.Logo
         [SerializeField]
         private UnityEvent m_onFinishedSplashImages = null;
 
-        private Color m_backgroundColor = black;
+        [SerializeField]
+        private bool m_skipInEditor = false;
 
+        private Color m_backgroundColor = black;
         private const float BACKGROUND_LERP_TIME = 1f;
         private const float IMAGE_LERP_TIME = 0.5f;
         private float m_tValue = 0f;
@@ -38,19 +41,46 @@ namespace DogHouse.Core.Logo
         #region Main Methods
         private void Awake() => m_startColor = m_backgroundColor;
 
-        private void Start() => StartCoroutine(_PlaySequence());
+        private void Start() 
+        {
+            #if UNITY_EDITOR
+            if(m_skipInEditor)
+            {
+                Invoke(nameof(InvokeOnFinishMethod), 3f);
+                return;
+            }
+            #endif
+
+            StartCoroutine(_PlaySequence());
+        }
         #endregion
 
         #region Utility Methods
         private IEnumerator _PlaySequence()
         {
-            m_image.color = new Color(m_image.color.r,
+            bool skip = false;
+            #if UNITY_EDITOR
+            skip = m_skipInEditor;
+            #endif
+
+            if(!skip)
+            {
+                m_image.color = new Color(m_image.color.r,
                                       m_image.color.g,
                                       m_image.color.b,
                                       0f);
-            yield return SequenceLogos();
-            yield return FadeBackgroundToBlack();
-            m_onFinishedSplashImages?.Invoke();
+                yield return SequenceLogos();
+                yield return FadeBackgroundToBlack();
+                InvokeOnFinishMethod();
+            }
+
+            if(skip)
+            {
+                yield return Wait(2.5f);
+                InvokeOnFinishMethod();
+            }
+
+            yield return null;
         }
 
         private IEnumerator SequenceLogos()
@@ -150,6 +180,11 @@ namespace DogHouse.Core.Logo
                                       m_image.color.g, 
                                       m_image.color.b, 
                                       TValue);
+        }
+
+        private void InvokeOnFinishMethod()
+        {
+            m_onFinishedSplashImages?.Invoke();
         }
         #endregion
     }
