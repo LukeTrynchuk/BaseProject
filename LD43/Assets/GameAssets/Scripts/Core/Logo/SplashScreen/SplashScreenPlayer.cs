@@ -55,6 +55,18 @@ namespace DogHouse.Core.Logo
         }
         #endregion
 
+        #region Editor Methods
+        #if UNITY_EDITOR
+        public void Setup(Camera cam, Image img, SplashScreen[] screens, bool skip)
+        {
+            m_camera = cam;
+            m_image = img;
+            m_splashImages = screens;
+            m_skipInEditor = skip;
+        }
+        #endif
+        #endregion
+
         #region Utility Methods
         private IEnumerator _PlaySequence()
         {

@@ -1,11 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using DogHouse.Core.Services;
-using DogHouse.Services;
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using UnityEngine.UI;
+using System.Diagnostics;
 using DogHouse.Core.Logo;
 
 namespace DogHouse.Tests
@@ -42,6 +40,13 @@ namespace DogHouse.Tests
     /// </summary>
     public class SplashScreenPlayerTests : MonoBehaviour 
     {
+        #region Private Variables
+        private Camera m_camera;
+        private Canvas m_canvas;
+        private Image m_image;
+        private SplashScreenPlayer m_player;
+        #endregion
+
         #region Test Setup Teardown
         [UnitySetUp]
         public IEnumerator _Setup()
@@ -50,6 +55,7 @@ namespace DogHouse.Tests
             GameObject cam = new GameObject();
             cam.AddComponent<Camera>();
             cam.tag = "MainCamera";
+
             //Create The Image
             GameObject canvas = new GameObject();
             canvas.AddComponent<Canvas>();
@@ -59,9 +65,15 @@ namespace DogHouse.Tests
             GameObject image = new GameObject();
             image.AddComponent<Image>();
             image.transform.SetParent(canvas.transform);
+
             //Create The Splash Screen Player 
             GameObject splashScreenPlayer = new GameObject();
             splashScreenPlayer.AddComponent<SplashScreenPlayer>();
+
+            m_camera = cam.GetComponent<Camera>();
+            m_canvas = canvas.GetComponent<Canvas>();
+            m_image = image.GetComponent<Image>();
+            m_player = splashScreenPlayer.GetComponent<SplashScreenPlayer>();
 
             yield return null;
         }
@@ -86,14 +98,24 @@ namespace DogHouse.Tests
         [UnityTest]
         public IEnumerator _Images_Sprite_Being_Set_To_Given_Logo()
         {
-            Image image = FindObjectOfType<Image>().GetComponent<Image>();
+            //Create splash screen
+            SplashScreen screen = ScriptableObject.CreateInstance<SplashScreen>();
+            screen.Image = Sprite.Create(default(Texture2D), default(Rect), default(Vector2));
+            screen.BackgroundColor = Color.white;
+            screen.TimeOnScreen = 1f;
+            SplashScreen[] screens = new SplashScreen[]{screen};
 
-            SplashScreenPlayer player = FindObjectOfType<SplashScreenPlayer>()
-                .GetComponent<SplashScreenPlayer>();
+            m_player.Setup(m_camera, m_image, screens, false);
 
-            Camera camera = FindObjectOfType<Camera>().GetComponent<Camera>();
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
 
-            Assert.True(false);
+            do
+            {
+                yield return null;
+            } while (stopwatch.ElapsedMilliseconds < 300);
+
+            Assert.AreSame(screen.Image, m_image.sprite);
 
             yield return null;
         }
@@ -111,6 +133,8 @@ namespace DogHouse.Tests
                 .GetComponent<SplashScreenPlayer>();
 
             Camera camera = FindObjectOfType<Camera>().GetComponent<Camera>();
+
+            player.Setup(camera, image, null, false);
 
             Assert.True(false);
 
@@ -130,6 +154,8 @@ namespace DogHouse.Tests
                 .GetComponent<SplashScreenPlayer>();
 
             Camera camera = FindObjectOfType<Camera>().GetComponent<Camera>();
+
+            player.Setup(camera, image, null, false);
 
             Assert.True(false);
 
@@ -152,6 +178,8 @@ namespace DogHouse.Tests
 
             Camera camera = FindObjectOfType<Camera>().GetComponent<Camera>();
 
+            player.Setup(camera, image, null, false);
+
             Assert.True(false);
 
             yield return null;
@@ -170,6 +198,8 @@ namespace DogHouse.Tests
                 .GetComponent<SplashScreenPlayer>();
 
             Camera camera = FindObjectOfType<Camera>().GetComponent<Camera>();
+
+            player.Setup(camera, image, null, false);
 
             Assert.True(false);
 
@@ -191,6 +221,8 @@ namespace DogHouse.Tests
 
             Camera camera = FindObjectOfType<Camera>().GetComponent<Camera>();
 
+            player.Setup(camera, image, null, false);
+
             Assert.True(false);
 
             yield return null;
@@ -209,6 +241,8 @@ namespace DogHouse.Tests
                 .GetComponent<SplashScreenPlayer>();
 
             Camera camera = FindObjectOfType<Camera>().GetComponent<Camera>();
+
+            player.Setup(camera, image, null, false);
 
             Assert.True(false);
 
@@ -229,6 +263,8 @@ namespace DogHouse.Tests
 
             Camera camera = FindObjectOfType<Camera>().GetComponent<Camera>();
 
+            player.Setup(camera, image, null, false);
+
             Assert.True(false);
 
             yield return null;
@@ -247,6 +283,8 @@ namespace DogHouse.Tests
                 .GetComponent<SplashScreenPlayer>();
 
             Camera camera = FindObjectOfType<Camera>().GetComponent<Camera>();
+
+            player.Setup(camera, image, null, false);
 
             Assert.True(false);
 
