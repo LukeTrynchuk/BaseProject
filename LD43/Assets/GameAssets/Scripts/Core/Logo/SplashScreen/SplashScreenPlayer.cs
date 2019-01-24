@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Collections;
+using System;
 using static UnityEngine.Time;
 using static UnityEngine.Color;
 
@@ -57,12 +58,18 @@ namespace DogHouse.Core.Logo
 
         #region Editor Methods
         #if UNITY_EDITOR
-        public void Setup(Camera cam, Image img, SplashScreen[] screens, bool skip)
+        public void Setup(Camera cam, Image img, SplashScreen[] screens, bool skip, UnityAction callback = null)
         {
             m_camera = cam;
             m_image = img;
             m_splashImages = screens;
             m_skipInEditor = skip;
+
+            if(callback != null)
+            {
+                m_onFinishedSplashImages = new UnityEvent();
+                m_onFinishedSplashImages.AddListener(callback);
+            }
         }
         #endif
         #endregion

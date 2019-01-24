@@ -5,6 +5,8 @@ using NUnit.Framework;
 using UnityEngine.UI;
 using System.Diagnostics;
 using DogHouse.Core.Logo;
+using System;
+using UnityEngine.Events;
 
 namespace DogHouse.Tests
 {
@@ -38,7 +40,7 @@ namespace DogHouse.Tests
     /// -> The Splash Screen Player invokes an event when the user has
     ///         chosen to skip the logos.
     /// </summary>
-    public class SplashScreenPlayerTests : MonoBehaviour 
+    public class SplashScreenPlayerTests : MonoBehaviour
     {
         #region Private Variables
         private Camera m_camera;
@@ -103,21 +105,13 @@ namespace DogHouse.Tests
             screen.Image = Sprite.Create(default(Texture2D), default(Rect), default(Vector2));
             screen.BackgroundColor = Color.white;
             screen.TimeOnScreen = 1f;
-            SplashScreen[] screens = new SplashScreen[]{screen};
+            SplashScreen[] screens = new SplashScreen[] { screen };
 
             m_player.Setup(m_camera, m_image, screens, false);
 
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-
-            do
-            {
-                yield return null;
-            } while (stopwatch.ElapsedMilliseconds < 300);
+            yield return Wait(0.3f);
 
             Assert.AreSame(screen.Image, m_image.sprite);
-
-            yield return null;
         }
 
         /// <summary>
@@ -256,18 +250,26 @@ namespace DogHouse.Tests
         [UnityTest]
         public IEnumerator _Event_Triggered_When_Logos_Are_Done_Playing()
         {
-            Image image = FindObjectOfType<Image>().GetComponent<Image>();
+            SplashScreen screen = ScriptableObject.CreateInstance<SplashScreen>();
+            screen.Image = Sprite.Create(default(Texture2D), default(Rect), default(Vector2));
+            screen.BackgroundColor = Color.white;
+            screen.TimeOnScreen = 1f;
+            SplashScreen[] screens = { screen };
 
-            SplashScreenPlayer player = FindObjectOfType<SplashScreenPlayer>()
-                .GetComponent<SplashScreenPlayer>();
+            bool finished = false;
 
-            Camera camera = FindObjectOfType<Camera>().GetComponent<Camera>();
+            Action test = () =>
+            {
+                finished = true;
+            };
 
-            player.Setup(camera, image, null, false);
+            UnityAction action = new UnityAction(test);
 
-            Assert.True(false);
+            m_player.Setup(m_camera, m_image, screens, false, action);
 
-            yield return null;
+            yield return Wait(8f);
+
+            Assert.True(finished);
         }
 
         /// <summary>
@@ -289,6 +291,26 @@ namespace DogHouse.Tests
             Assert.True(false);
 
             yield return null;
+        }
+        #endregion
+
+        #region Utility Methods
+        private void Callback()
+        {
+            UnityEngine.Debug.Log("Finished");
+        }
+
+        private IEnumerator Wait(float seconds)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            do
+            {
+                yield return null;
+            } while (stopwatch.ElapsedMilliseconds < seconds * 1000f);
+
+            stopwatch.Stop();
         }
         #endregion
     }
